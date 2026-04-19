@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Truss Types Reference · Bridge It</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+    </nav>
+  </div>
+</header>
+
+<section class="lesson-head">
+  <div class="container">
+    <span class="lesson-pill" style="background:#8b5cf6;">Reference</span>
+    <h1>Truss Types — 4 Standards Compared</h1>
+    <p class="lesson-meta">Pratt · Howe · Warren · K-truss — how they work, where to use them</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="callout info">
+    <strong>How to use this page:</strong> reference for your research (L06), sketching (L04, L07), and understanding failure modes (L21). Every diagram is drawn live with SVG — right-click → View Source to see how.
+  </div>
+
+  <h2>Shared truss vocabulary</h2>
+  <ul>
+    <li><strong>Top chord</strong> — the horizontal member along the top. Usually in compression.</li>
+    <li><strong>Bottom chord</strong> — the horizontal member along the bottom. Usually in tension.</li>
+    <li><strong>Vertical</strong> — upright members connecting top to bottom chord.</li>
+    <li><strong>Diagonal</strong> — slanted members forming triangles with verticals and chords.</li>
+    <li><strong>Panel</strong> — one section between two verticals (one triangle or rectangle).</li>
+  </ul>
+
+  <div class="grid grid-2">
+
+    <!-- Pratt -->
+    <div class="card">
+      <h3 style="color:#8b5cf6;">1. Pratt Truss</h3>
+      <p class="meta">Invented by Thomas and Caleb Pratt, 1844 (USA) · Most common school-build truss</p>
+      <svg class="bridge-svg" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowhead-red-1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <polygon points="0 0, 8 4, 0 8" fill="#dc2626"/>
+          </marker>
+          <marker id="arrowhead-blue-1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <polygon points="0 0, 8 4, 0 8" fill="#2563eb"/>
+          </marker>
+        </defs>
+        <!-- Chords -->
+        <line x1="20" y1="30" x2="380" y2="30" stroke="#dc2626" stroke-width="3"/>
+        <line x1="20" y1="120" x2="380" y2="120" stroke="#2563eb" stroke-width="3"/>
+        <!-- Verticals -->
+        <line x1="80" y1="30" x2="80" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="140" y1="30" x2="140" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="200" y1="30" x2="200" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="260" y1="30" x2="260" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="320" y1="30" x2="320" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <!-- Diagonals (sloping DOWN toward centre = Pratt) -->
+        <line x1="20" y1="120" x2="80" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="80" y1="120" x2="140" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="140" y1="120" x2="200" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="260" y1="30" x2="320" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="200" y1="30" x2="260" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="320" y1="30" x2="380" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <!-- Label -->
+        <text x="200" y="145" text-anchor="middle" font-size="10" fill="#4a5568">PRATT — diagonals slope DOWN toward centre</text>
+      </svg>
+      <p><strong>Members in tension</strong> (blue): bottom chord, diagonals</p>
+      <p><strong>Members in compression</strong> (red): top chord, verticals</p>
+      <p><strong>Typical use:</strong> short-to-medium span steel and timber bridges</p>
+      <p><strong>Good for Y7 build:</strong> diagonals in tension = less buckling risk. Easiest truss to build cleanly.</p>
+    </div>
+
+    <!-- Howe -->
+    <div class="card">
+      <h3 style="color:#3730a3;">2. Howe Truss</h3>
+      <p class="meta">Patented by William Howe, 1840 (USA) · Opposite of Pratt</p>
+      <svg class="bridge-svg" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="30" x2="380" y2="30" stroke="#dc2626" stroke-width="3"/>
+        <line x1="20" y1="120" x2="380" y2="120" stroke="#2563eb" stroke-width="3"/>
+        <!-- Verticals in tension (blue for Howe) -->
+        <line x1="80" y1="30" x2="80" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="140" y1="30" x2="140" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="200" y1="30" x2="200" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="260" y1="30" x2="260" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="320" y1="30" x2="320" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <!-- Diagonals sloping UP toward centre (opposite of Pratt) -->
+        <line x1="20" y1="30" x2="80" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="80" y1="30" x2="140" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="140" y1="30" x2="200" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="260" y1="120" x2="320" y2="30" stroke="#dc2626" stroke-width="2"/>
+        <line x1="200" y1="120" x2="260" y2="30" stroke="#dc2626" stroke-width="2"/>
+        <line x1="320" y1="120" x2="380" y2="30" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="145" text-anchor="middle" font-size="10" fill="#4a5568">HOWE — diagonals slope UP toward centre</text>
+      </svg>
+      <p><strong>Members in tension</strong> (blue): bottom chord, verticals</p>
+      <p><strong>Members in compression</strong> (red): top chord, diagonals</p>
+      <p><strong>Typical use:</strong> timber bridges (timber is good at compression)</p>
+      <p><strong>For Y7 build:</strong> watch out — diagonals in compression are prone to buckling with thin sticks.</p>
+    </div>
+
+    <!-- Warren -->
+    <div class="card">
+      <h3 style="color:#ea8b00;">3. Warren Truss</h3>
+      <p class="meta">Patented by James Warren, 1848 (UK) · Zigzag — alternating diagonals, no verticals</p>
+      <svg class="bridge-svg" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="30" x2="380" y2="30" stroke="#dc2626" stroke-width="3"/>
+        <line x1="20" y1="120" x2="380" y2="120" stroke="#2563eb" stroke-width="3"/>
+        <!-- Alternating diagonals forming equilateral triangles -->
+        <line x1="20" y1="120" x2="80" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="80" y1="30" x2="140" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="140" y1="120" x2="200" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="200" y1="30" x2="260" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="260" y1="120" x2="320" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="320" y1="30" x2="380" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="145" text-anchor="middle" font-size="10" fill="#4a5568">WARREN — equilateral triangles, no verticals</text>
+      </svg>
+      <p><strong>Members alternate compression and tension</strong> — each diagonal is one or the other</p>
+      <p><strong>Typical use:</strong> medium-span steel bridges, many Australian rail bridges</p>
+      <p><strong>For Y7 build:</strong> elegant and uses FEWER sticks than Pratt. But alignment is trickier because diagonals must meet at clean points.</p>
+    </div>
+
+    <!-- K-truss -->
+    <div class="card">
+      <h3 style="color:#10b981;">4. K-Truss</h3>
+      <p class="meta">Used for very tall or wide trusses · Splits a long vertical</p>
+      <svg class="bridge-svg" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+        <line x1="20" y1="30" x2="380" y2="30" stroke="#dc2626" stroke-width="3"/>
+        <line x1="20" y1="120" x2="380" y2="120" stroke="#2563eb" stroke-width="3"/>
+        <!-- Full verticals at every panel -->
+        <line x1="80" y1="30" x2="80" y2="120" stroke="#4a5568" stroke-width="2"/>
+        <line x1="160" y1="30" x2="160" y2="120" stroke="#4a5568" stroke-width="2"/>
+        <line x1="240" y1="30" x2="240" y2="120" stroke="#4a5568" stroke-width="2"/>
+        <line x1="320" y1="30" x2="320" y2="120" stroke="#4a5568" stroke-width="2"/>
+        <!-- Diagonals meeting at vertical midpoints -->
+        <line x1="80" y1="75" x2="20" y2="30" stroke="#dc2626" stroke-width="2"/>
+        <line x1="80" y1="75" x2="20" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="160" y1="75" x2="80" y2="30" stroke="#dc2626" stroke-width="2"/>
+        <line x1="160" y1="75" x2="80" y2="120" stroke="#2563eb" stroke-width="2"/>
+        <line x1="240" y1="75" x2="160" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="240" y1="75" x2="160" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="320" y1="75" x2="240" y2="30" stroke="#2563eb" stroke-width="2"/>
+        <line x1="320" y1="75" x2="240" y2="120" stroke="#dc2626" stroke-width="2"/>
+        <line x1="380" y1="30" x2="320" y2="75" stroke="#2563eb" stroke-width="2"/>
+        <line x1="380" y1="120" x2="320" y2="75" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="145" text-anchor="middle" font-size="10" fill="#4a5568">K-TRUSS — diagonals meet at vertical midpoints</text>
+      </svg>
+      <p><strong>Shorter diagonals</strong> = less buckling risk (critical for tall trusses)</p>
+      <p><strong>Typical use:</strong> Eiffel Tower (vertical use), tall highway signs, very wide bridges</p>
+      <p><strong>For Y7 build:</strong> complicated. Only attempt if you're confident with Pratt first. Uses the MOST sticks.</p>
+    </div>
+
+  </div>
+
+  <h2>Which should I pick?</h2>
+  <table>
+    <tr><th>Truss</th><th>Ease</th><th>Stick count</th><th>Load capacity</th><th>Recommended for</th></tr>
+    <tr><td>Pratt</td><td>⭐⭐⭐⭐⭐ Easiest</td><td>Medium</td><td>High</td><td>Most Y7 pairs</td></tr>
+    <tr><td>Howe</td><td>⭐⭐⭐ Medium</td><td>Medium</td><td>Medium (buckling risk)</td><td>Pairs confident in gluing</td></tr>
+    <tr><td>Warren</td><td>⭐⭐ Trickier</td><td>Fewer</td><td>Medium-high</td><td>Pairs who want lowest mass</td></tr>
+    <tr><td>K-truss</td><td>⭐ Hardest</td><td>Most</td><td>Very high</td><td>Extension students only</td></tr>
+  </table>
+
+  <p style="margin-top:2rem;"><a href="../term2.html" class="btn">← Back to Term 2</a></p>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Tech · Bridge It · Truss Reference</strong> · Arthur Phillip High School · Ms Y. Gao</p>
+</footer>
+
+</body>
+</html>
