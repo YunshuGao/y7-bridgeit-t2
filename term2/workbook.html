@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridge Workbook Folio · Y7 Technology · Term 2 2026</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .wb-section { background:#fff; border:1px solid #e4e7ec; border-left:5px solid #14b8a6; border-radius:10px; padding:1.25rem 1.5rem; margin:1.5rem 0; scroll-margin-top:80px; }
+  .wb-section h2 { margin-top:0; color:#1f3a68; }
+  .wb-section .wb-marks { float:right; background:#ea8b00; color:#fff; padding:2px 10px; border-radius:9999px; font-size:0.8em; font-weight:700; }
+  .wb-section .hint { font-size:0.9em; color:#6b7280; font-style:italic; margin:0.25rem 0 1rem; }
+  .wb-section.done { border-left-color:#10b981; background:#f0fdf4; }
+  .wb-section label { display:block; font-weight:600; color:#2e5b9e; margin-top:0.6rem; margin-bottom:0.2rem; font-size:0.95rem; }
+  .wb-section input[type="text"], .wb-section textarea {
+    width:100%; padding:0.55rem; border:1px solid #cbd5e1; border-radius:6px;
+    font-family:Inter, system-ui, sans-serif; font-size:0.95rem; box-sizing:border-box;
+  }
+  .wb-section textarea { min-height:70px; resize:vertical; }
+  .wb-section table { width:100%; border-collapse:collapse; margin:0.5rem 0; }
+  .wb-section th { background:#1f3a68; color:#fff; padding:0.5rem; text-align:left; font-size:0.9em; }
+  .wb-section td { padding:0.4rem; border:1px solid #e4e7ec; vertical-align:top; }
+  .wb-section td input, .wb-section td textarea { border:none; background:transparent; padding:0.2rem; }
+  .wb-section .status { font-size:0.85em; color:#6b7280; margin-top:0.6rem; }
+  .wb-section .status.saved { color:#047857; }
+  .nav-toc { position:sticky; top:80px; background:#fff; border:1px solid #e4e7ec; border-radius:10px; padding:0.75rem 1rem; margin:1rem 0; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .nav-toc a { display:inline-block; margin:0.2rem 0.3rem; padding:0.25rem 0.65rem; background:#f3f4f6; border-radius:6px; font-size:0.85em; text-decoration:none; color:#1f3a68; }
+  .nav-toc a:hover { background:#1f3a68; color:#fff; }
+  .nav-toc a.done { background:#d1fae5; color:#047857; font-weight:600; }
+  .export-bar { position:sticky; top:70px; background:#fff7ed; border:2px solid #ea8b00; border-radius:12px; padding:1rem 1.25rem; margin:1.5rem 0; display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; z-index:20; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .btn { padding:0.55rem 1.1rem; border:none; border-radius:6px; font-weight:600; cursor:pointer; font-size:0.95rem; }
+  .btn-primary { background:#1f3a68; color:#fff; }
+  .btn-secondary { background:#fff; color:#1f3a68; border:1.5px solid #1f3a68; }
+  .progress-bar { height:12px; background:#e5e7eb; border-radius:6px; overflow:hidden; margin:0.5rem 0; }
+  .progress-bar > div { height:100%; background:linear-gradient(90deg, #14b8a6, #10b981); transition:width 0.3s; }
+  .sentence-starter { background:#eff6ff; border-left:3px solid #2e5b9e; padding:0.4rem 0.8rem; font-size:0.88em; color:#1f3a68; margin:0.4rem 0; border-radius:4px; }
+  .sentence-starter em { color:#4b5563; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+      <a href="workbook.html">📓 Workbook</a>
+      <a href="journal.html">📔 Weekly Journal</a>
+    </nav>
+  </div>
+</header>
+
+<section class="lesson-head">
+  <div class="container">
+    <span class="lesson-pill" style="background:#ea8b00;">Workbook Folio</span>
+    <h1>📓 Bridge Workbook Folio</h1>
+    <p class="lesson-meta">APHS Year 7 Technology · Engineered Systems · Bridges · 50% assessment. Your answers save automatically on this laptop. Export to .txt when done to submit.</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <!-- Student info -->
+  <div class="wb-section" style="border-left-color:#1f3a68;">
+    <h2>Cover page</h2>
+    <label>Student name</label>
+    <input type="text" data-key="studentName" placeholder="Your full name">
+    <label>Partner name (if paired)</label>
+    <input type="text" data-key="partnerName" placeholder="Your build partner">
+    <label>Class</label>
+    <input type="text" data-key="className" value="7TECJ">
+    <label>Our chosen truss type</label>
+    <input type="text" data-key="trussType" placeholder="Pratt / Howe / Warren / K-truss">
+  </div>
+
+  <!-- Export bar -->
+  <div class="export-bar">
+    <strong>💾 Your work stays on THIS laptop only</strong>
+    <span style="color:#6b7280; font-size:0.9em;">Nothing is uploaded unless you click Export.</span>
+    <span style="flex:1;"></span>
+    <span id="progressText" style="font-weight:600; color:#1f3a68;">0% complete</span>
+    <button class="btn btn-primary" onclick="exportTxt()">📄 Export all answers (.txt)</button>
+    <button class="btn btn-secondary" onclick="if(confirm('Reset ALL your workbook answers? Cannot be undone.')) resetAll()">Reset</button>
+  </div>
+  <div class="progress-bar"><div id="progressFill" style="width:0%"></div></div>
+
+  <!-- Nav / TOC -->
+  <div class="nav-toc" id="tocNav"></div>
+
+  <!-- Q1 Glossary -->
+  <div class="wb-section" id="glossary">
+    <span class="wb-marks">§3 Research · Q1</span>
+    <h2>Q1. Bridge Glossary (23 terms)</h2>
+    <p class="hint">From PBS Building Big glossary: <a href="https://www.pbs.org/wgbh/buildingbig/glossary_head.html" target="_blank">pbs.org/wgbh/buildingbig/glossary_head</a> — type each definition below in your own words.</p>
+    <table id="glossaryTable"></table>
+  </div>
+
+  <!-- Q2 4 bridge types -->
+  <div class="wb-section" id="types">
+    <span class="wb-marks">§3 Research · Q2</span>
+    <h2>Q2. 4 Bridge Types Chart</h2>
+    <p class="hint">From PBS: <a href="https://www.pbs.org/wgbh/buildingbig/bridge/basics.html" target="_blank">pbs.org/wgbh/buildingbig/bridge/basics</a></p>
+    <table id="typesTable">
+      <tr><th>Type</th><th>Description (1–2 sentences)</th><th>Real-world example</th></tr>
+      <tr><td><strong>Beam</strong></td><td><textarea data-key="type_beam_desc" rows="2"></textarea></td><td><input type="text" data-key="type_beam_ex"></td></tr>
+      <tr><td><strong>Truss</strong></td><td><textarea data-key="type_truss_desc" rows="2"></textarea></td><td><input type="text" data-key="type_truss_ex"></td></tr>
+      <tr><td><strong>Arch</strong></td><td><textarea data-key="type_arch_desc" rows="2"></textarea></td><td><input type="text" data-key="type_arch_ex"></td></tr>
+      <tr><td><strong>Suspension</strong></td><td><textarea data-key="type_susp_desc" rows="2"></textarea></td><td><input type="text" data-key="type_susp_ex"></td></tr>
+    </table>
+  </div>
+
+  <!-- Q5 Forces Lab -->
+  <div class="wb-section" id="forces">
+    <span class="wb-marks">§3 Research · Q5</span>
+    <h2>Q5. Forces Lab — 5 Force Types</h2>
+    <p class="hint">From PBS: <a href="https://www.pbs.org/wgbh/buildingbig/lab/forces.html" target="_blank">pbs.org/wgbh/buildingbig/lab/forces</a></p>
+    <table>
+      <tr><th>Everyday name</th><th>Technical name</th><th>Effect description (1 sentence)</th></tr>
+      <tr><td><strong>Squeezing</strong></td><td><input type="text" data-key="force_squeeze_tech" placeholder="compression"></td><td><textarea data-key="force_squeeze_desc" rows="2"></textarea></td></tr>
+      <tr><td><strong>Stretching</strong></td><td><input type="text" data-key="force_stretch_tech" placeholder="tension"></td><td><textarea data-key="force_stretch_desc" rows="2"></textarea></td></tr>
+      <tr><td><strong>Bending</strong></td><td><input type="text" data-key="force_bend_tech" placeholder="bending"></td><td><textarea data-key="force_bend_desc" rows="2"></textarea></td></tr>
+      <tr><td><strong>Sliding</strong></td><td><input type="text" data-key="force_slide_tech" placeholder="shear"></td><td><textarea data-key="force_slide_desc" rows="2"></textarea></td></tr>
+      <tr><td><strong>Twisting</strong></td><td><input type="text" data-key="force_twist_tech" placeholder="torsion"></td><td><textarea data-key="force_twist_desc" rows="2"></textarea></td></tr>
+    </table>
+  </div>
+
+  <!-- Q6-Q7 Tacoma -->
+  <div class="wb-section" id="tacoma">
+    <span class="wb-marks">§3 Research · Q6-Q7</span>
+    <h2>Q6 & Q7. Tacoma Narrows Case Study</h2>
+    <p class="hint">Watch: <a href="https://www.youtube.com/watch?v=XggxeuFDaDU" target="_blank">Tacoma Narrows collapse video (1940)</a></p>
+    <label>Q6. Why did the Tacoma Narrows Bridge collapse? (2+ sentences — use words: <em>resonance, aeroelastic flutter, stiffening</em>)</label>
+    <textarea data-key="q6_tacoma_why" rows="3"></textarea>
+    <label>Q7. What could have been done during design and construction to prevent it? (2+ sentences)</label>
+    <textarea data-key="q7_tacoma_fix" rows="3"></textarea>
+  </div>
+
+  <!-- Q8 12 famous bridges -->
+  <div class="wb-section" id="famous">
+    <span class="wb-marks">§3 Research · Q8</span>
+    <h2>Q8. 12 Famous Bridges Data Table</h2>
+    <p class="hint">From PBS: <a href="https://www.pbs.org/wgbh/buildingbig/wonder/structure/browse.html" target="_blank">pbs.org/wgbh/buildingbig/wonder/structure/browse</a></p>
+    <table id="famousTable">
+      <tr><th>Bridge</th><th>Location</th><th>Length (feet)</th><th>Material</th><th>Date constructed</th></tr>
+    </table>
+  </div>
+
+  <!-- SHB 15 questions -->
+  <div class="wb-section" id="shb">
+    <span class="wb-marks">§3 Research · SHB</span>
+    <h2>Sydney Harbour Bridge — 15 Research Questions</h2>
+    <p class="hint">Reliable sources: <a href="https://www.cityofsydney.nsw.gov.au" target="_blank">City of Sydney</a> · <a href="https://en.wikipedia.org/wiki/Sydney_Harbour_Bridge" target="_blank">Wikipedia SHB</a></p>
+    <div id="shbQuestions"></div>
+    <h3 style="color:#1f3a68;">5 Famous People associated with the SHB</h3>
+    <table>
+      <tr><th>Name</th><th>Reason / connection</th></tr>
+      <tr><td><strong>Dr JJC Bradfield</strong></td><td><textarea data-key="shb_bradfield" rows="2"></textarea></td></tr>
+      <tr><td><strong>Jack Lang</strong></td><td><textarea data-key="shb_lang" rows="2"></textarea></td></tr>
+      <tr><td><strong>Francis Greenway</strong></td><td><textarea data-key="shb_greenway" rows="2"></textarea></td></tr>
+      <tr><td><strong>Paul Hogan</strong></td><td><textarea data-key="shb_hogan" rows="2"></textarea></td></tr>
+      <tr><td><strong>Capt. Francis deGroot</strong></td><td><textarea data-key="shb_degroot" rows="2"></textarea></td></tr>
+    </table>
+  </div>
+
+  <!-- §1 Design Brief -->
+  <div class="wb-section" id="brief">
+    <span class="wb-marks">§1 Brief</span>
+    <h2>§1. Design Brief</h2>
+    <p class="hint">A short description of what you are making, who it's for, and why.</p>
+    <div class="sentence-starter"><strong>Problem / Need:</strong> <em>"The challenge I am addressing is… because…"</em></div>
+    <textarea data-key="brief_problem" rows="2"></textarea>
+    <div class="sentence-starter"><strong>Audience / Users:</strong> <em>"The bridge is designed for… who need…"</em></div>
+    <textarea data-key="brief_users" rows="2"></textarea>
+    <div class="sentence-starter"><strong>Constraints:</strong> <em>"The bridge must… while still…"</em></div>
+    <textarea data-key="brief_constraints" rows="2"></textarea>
+  </div>
+
+  <!-- §2 Specification -->
+  <div class="wb-section" id="specification">
+    <span class="wb-marks">§2 Specification</span>
+    <h2>§2. Specification (checklist of rules)</h2>
+    <p class="hint">A list of requirements your bridge must follow. Think: what must it DO, what must it be MADE FROM, what SIZE, what LIMITS?</p>
+    <div class="sentence-starter"><strong>Function:</strong> <em>"The bridge must be able to…"</em></div>
+    <textarea data-key="spec_function" rows="2"></textarea>
+    <div class="sentence-starter"><strong>Materials:</strong> <em>"It will be made from… (119 plain sticks + 16 holed sticks + clothes pegs + PVA)"</em></div>
+    <textarea data-key="spec_materials" rows="2"></textarea>
+    <div class="sentence-starter"><strong>Size / Shape:</strong> <em>"The bridge must fit… It should be no bigger than…"</em></div>
+    <textarea data-key="spec_size" rows="2"></textarea>
+    <div class="sentence-starter"><strong>Other Limits:</strong> <em>"It cannot use more than… / must be completed in…"</em></div>
+    <textarea data-key="spec_limits" rows="2"></textarea>
+  </div>
+
+  <!-- §4 Sketches -->
+  <div class="wb-section" id="sketches">
+    <span class="wb-marks">§4 Sketches</span>
+    <h2>§4. Generation of Ideas — 3 Sketches</h2>
+    <p class="hint">Draw 3 sketches on paper (A4), photograph them, upload to your Google Doc folio. Describe each below.</p>
+    <label>Idea 1 name</label>
+    <input type="text" data-key="sketch1_name" placeholder="e.g. Classic Pratt">
+    <label>Idea 1 description (3–4 sentences — materials, features, supports, size)</label>
+    <textarea data-key="sketch1_desc" rows="3"></textarea>
+    <label>Idea 2 name</label>
+    <input type="text" data-key="sketch2_name" placeholder="e.g. Warren zigzag">
+    <label>Idea 2 description</label>
+    <textarea data-key="sketch2_desc" rows="3"></textarea>
+    <label>Idea 3 name</label>
+    <input type="text" data-key="sketch3_name" placeholder="e.g. K-truss hybrid">
+    <label>Idea 3 description</label>
+    <textarea data-key="sketch3_desc" rows="3"></textarea>
+  </div>
+
+  <!-- §5 PMI -->
+  <div class="wb-section" id="pmi">
+    <span class="wb-marks">§5 PMI Analysis</span>
+    <h2>§5. PMI Analysis — Plus / Minus / Interesting</h2>
+    <p class="hint">Compare your 3 ideas. Sentence starters: <em>"One good thing is… because…"</em> · <em>"A problem might be…"</em> · <em>"An interesting idea is…"</em></p>
+    <table>
+      <tr><th>Idea</th><th>Plus (+)</th><th>Minus (−)</th><th>Interesting (?)</th></tr>
+      <tr><td><strong>Idea 1</strong></td><td><textarea data-key="pmi1_p" rows="2"></textarea></td><td><textarea data-key="pmi1_m" rows="2"></textarea></td><td><textarea data-key="pmi1_i" rows="2"></textarea></td></tr>
+      <tr><td><strong>Idea 2</strong></td><td><textarea data-key="pmi2_p" rows="2"></textarea></td><td><textarea data-key="pmi2_m" rows="2"></textarea></td><td><textarea data-key="pmi2_i" rows="2"></textarea></td></tr>
+      <tr><td><strong>Idea 3</strong></td><td><textarea data-key="pmi3_p" rows="2"></textarea></td><td><textarea data-key="pmi3_m" rows="2"></textarea></td><td><textarea data-key="pmi3_i" rows="2"></textarea></td></tr>
+    </table>
+    <label>Our chosen design is Idea number ___ because…</label>
+    <textarea data-key="pmi_choice" rows="2"></textarea>
+  </div>
+
+  <p style="color:#6b7280; font-style:italic; font-size:0.9em; margin-top:2rem; text-align:center;">
+    More sections (§6 Manufacturing Process · §7 Destruction Video · §8 Strength-to-Weight Ratio · §9 Evaluation) unlock as Term 2 progresses.<br>
+    Your workbook autosaves as you type. Export anytime. No login, no upload — data stays on this laptop.
+  </p>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Tech · Term 2 · Bridge Workbook Folio</strong></p>
+  <p>Based on the APHS Bridge Workbook Folio 2026. All data stored locally via localStorage. Ms Y. Gao</p>
+</footer>
+
+<script>
+const GLOSSARY_TERMS = [
+  "Abutment","Aqueduct","Arch Bridge","Beam Bridge","Brace","Brittle","Buckle","Buttress",
+  "Cable-Stayed Bridge","Cantilever","Cement","Compression","Concrete","Deform","Masonry",
+  "Movable Bridge","Pier","Reinforced Concrete","Shear","Suspension Bridge","Tension","Torsion","Truss"
+];
+const FAMOUS_BRIDGES = [
+  "Akashi Kaikyo","Brooklyn","Charles River","Firth of Forth","Garabit","George P Coleman",
+  "Golden Gate","Iron","New River Gorge","Sunshine Skyway","Tacoma Narrows","Tower"
+];
+const SHB_QUESTIONS = [
+  ["shb_q1","Q1. When was the Sydney Harbour Bridge opened for public use?"],
+  ["shb_span","Q2a. What is the SPAN of the SHB?"],
+  ["shb_height_road","Q2b. Height of roadway above water?"],
+  ["shb_height_arch","Q2c. Height from water to top of arch?"],
+  ["shb_q9","Q9. How many nuts and bolts were used in construction?"],
+  ["shb_q10","Q10. By what OTHER name is the SHB commonly known?"],
+  ["shb_q11","Q11. How was the SHB tested before opening? Was this a good method? Why/why not?"],
+  ["shb_q12","Q12. What is the function of the 4 pylons (2 north + 2 south)?"],
+  ["shb_q13","Q13. How is the roadway supported?"],
+  ["shb_q14","Q14. Why is the southern-end roadway allowed to move horizontally?"],
+  ["shb_q16","Q16. Why is the SHB continuously being painted? (Not just for looks — what else?)"],
+];
+const TOC = [
+  ["Cover", "#"],
+  ["Q1 Glossary", "#glossary"],
+  ["Q2 Types", "#types"],
+  ["Q5 Forces", "#forces"],
+  ["Q6-7 Tacoma", "#tacoma"],
+  ["Q8 Bridges", "#famous"],
+  ["SHB", "#shb"],
+  ["§1 Brief", "#brief"],
+  ["§2 Spec", "#specification"],
+  ["§4 Sketches", "#sketches"],
+  ["§5 PMI", "#pmi"],
+];
+const STORAGE_KEY = "y7-bridgeit-workbook-v1";
+
+function loadAll() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; } }
+function saveField(key, v) { const d = loadAll(); d[key] = v; d._last = new Date().toISOString(); localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+function renderGlossary() {
+  const tbl = document.getElementById("glossaryTable");
+  tbl.innerHTML = "<tr><th>Term</th><th>Definition (in your own words)</th></tr>";
+  GLOSSARY_TERMS.forEach(term => {
+    const key = "gloss_" + term.toLowerCase().replace(/[^a-z]/g, "");
+    tbl.innerHTML += `<tr><td><strong>${term}</strong></td><td><textarea data-key="${key}" rows="2"></textarea></td></tr>`;
+  });
+}
+function renderFamous() {
+  const tbl = document.getElementById("famousTable");
+  FAMOUS_BRIDGES.forEach(name => {
+    const k = name.replace(/[^a-zA-Z]/g, "").toLowerCase();
+    tbl.innerHTML += `<tr>
+      <td><strong>${name}</strong></td>
+      <td><input type="text" data-key="fb_${k}_loc"></td>
+      <td><input type="text" data-key="fb_${k}_len"></td>
+      <td><input type="text" data-key="fb_${k}_mat"></td>
+      <td><input type="text" data-key="fb_${k}_date"></td>
+    </tr>`;
+  });
+}
+function renderSHB() {
+  const d = document.getElementById("shbQuestions");
+  SHB_QUESTIONS.forEach(([k, q]) => {
+    d.innerHTML += `<label>${q}</label><textarea data-key="${k}" rows="2"></textarea>`;
+  });
+}
+function renderTOC() {
+  const n = document.getElementById("tocNav");
+  n.innerHTML = TOC.map(([label, href]) => `<a href="${href}">${label}</a>`).join("");
+}
+
+function updateProgress() {
+  const all = document.querySelectorAll("[data-key]");
+  const filled = [...all].filter(el => (el.value || "").trim().length > 0).length;
+  const total = all.length;
+  const pct = Math.round(100 * filled / Math.max(total, 1));
+  document.getElementById("progressText").textContent = `${pct}% complete (${filled}/${total} fields)`;
+  document.getElementById("progressFill").style.width = pct + "%";
+  // Mark sections complete
+  document.querySelectorAll(".wb-section").forEach(s => {
+    const fields = s.querySelectorAll("[data-key]");
+    if (fields.length === 0) return;
+    const done = [...fields].every(el => (el.value || "").trim().length > 0);
+    s.classList.toggle("done", done);
+  });
+  // Update TOC
+  document.querySelectorAll(".nav-toc a").forEach(a => {
+    const href = a.getAttribute("href");
+    if (href === "#" || !href) return;
+    const sec = document.querySelector(href);
+    if (!sec) return;
+    a.classList.toggle("done", sec.classList.contains("done"));
+  });
+}
+
+function wireFields() {
+  const data = loadAll();
+  document.querySelectorAll("[data-key]").forEach(el => {
+    el.value = data[el.dataset.key] || el.value || "";
+    el.addEventListener("input", e => { saveField(e.target.dataset.key, e.target.value); updateProgress(); });
+  });
+  updateProgress();
+}
+
+function exportTxt() {
+  const data = loadAll();
+  const name = (data.studentName || "student").replace(/[^a-zA-Z0-9_ ]/g, "").replace(/ /g, "_");
+  const stamp = new Date().toISOString().slice(0, 10);
+  const lines = ["=".repeat(70),
+    `Y7 TECHNOLOGY · BRIDGE WORKBOOK FOLIO EXPORT`,
+    `Student: ${data.studentName || "(unnamed)"}  ·  Partner: ${data.partnerName || "(solo)"}`,
+    `Class: ${data.className || ""}  ·  Truss: ${data.trussType || ""}`,
+    `Exported: ${stamp}`,
+    "=".repeat(70), ""];
+  const add = (title, keys) => {
+    lines.push("--- " + title + " ---");
+    keys.forEach(([k, lbl]) => {
+      const v = (data[k] || "").trim();
+      lines.push(`${lbl}: ${v || "(not yet)"}`);
+    });
+    lines.push("");
+  };
+  // Glossary
+  lines.push("--- Q1 GLOSSARY (23 terms) ---");
+  GLOSSARY_TERMS.forEach(t => {
+    const k = "gloss_" + t.toLowerCase().replace(/[^a-z]/g, "");
+    lines.push(`${t}: ${(data[k] || "").trim() || "(not yet)"}`);
+  });
+  lines.push("");
+  // 4 types
+  lines.push("--- Q2 4 BRIDGE TYPES ---");
+  [["beam","Beam"],["truss","Truss"],["arch","Arch"],["susp","Suspension"]].forEach(([k, lbl]) => {
+    lines.push(`${lbl}: ${(data["type_"+k+"_desc"] || "").trim()} | Example: ${(data["type_"+k+"_ex"] || "").trim()}`);
+  });
+  lines.push("");
+  // Forces
+  add("Q5 FORCES LAB", [
+    ["force_squeeze_tech","Squeezing → technical"], ["force_squeeze_desc","Effect"],
+    ["force_stretch_tech","Stretching → technical"], ["force_stretch_desc","Effect"],
+    ["force_bend_tech","Bending → technical"], ["force_bend_desc","Effect"],
+    ["force_slide_tech","Sliding → technical"], ["force_slide_desc","Effect"],
+    ["force_twist_tech","Twisting → technical"], ["force_twist_desc","Effect"],
+  ]);
+  add("Q6-Q7 TACOMA NARROWS", [["q6_tacoma_why","Why it collapsed"], ["q7_tacoma_fix","How to prevent"]]);
+  lines.push("--- Q8 12 FAMOUS BRIDGES ---");
+  FAMOUS_BRIDGES.forEach(n => {
+    const k = n.replace(/[^a-zA-Z]/g, "").toLowerCase();
+    lines.push(`${n}: loc=${data["fb_"+k+"_loc"] || ""} · len=${data["fb_"+k+"_len"] || ""} · mat=${data["fb_"+k+"_mat"] || ""} · date=${data["fb_"+k+"_date"] || ""}`);
+  });
+  lines.push("");
+  add("SHB RESEARCH", SHB_QUESTIONS.map(([k, q]) => [k, q]));
+  add("SHB FAMOUS PEOPLE", [["shb_bradfield","Bradfield"],["shb_lang","Lang"],["shb_greenway","Greenway"],["shb_hogan","Hogan"],["shb_degroot","deGroot"]]);
+  add("§1 DESIGN BRIEF", [["brief_problem","Problem"],["brief_users","Users"],["brief_constraints","Constraints"]]);
+  add("§2 SPECIFICATION", [["spec_function","Function"],["spec_materials","Materials"],["spec_size","Size"],["spec_limits","Limits"]]);
+  add("§4 SKETCHES", [
+    ["sketch1_name","Idea 1 name"],["sketch1_desc","Idea 1 description"],
+    ["sketch2_name","Idea 2 name"],["sketch2_desc","Idea 2 description"],
+    ["sketch3_name","Idea 3 name"],["sketch3_desc","Idea 3 description"]]);
+  lines.push("--- §5 PMI ANALYSIS ---");
+  for (let i = 1; i <= 3; i++) {
+    lines.push(`Idea ${i}:  + ${(data["pmi"+i+"_p"] || "").trim()}  |  − ${(data["pmi"+i+"_m"] || "").trim()}  |  ? ${(data["pmi"+i+"_i"] || "").trim()}`);
+  }
+  lines.push(`Chosen: ${(data.pmi_choice || "").trim()}`);
+  lines.push("");
+  lines.push(`(End of export · ${stamp})`);
+  const blob = new Blob([lines.join("\n")], {type: "text/plain;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `${name}_BridgeWorkbook_${stamp}.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function resetAll() { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderTOC();
+  renderGlossary();
+  renderFamous();
+  renderSHB();
+  wireFields();
+});
+</script>
+
+</body>
+</html>
