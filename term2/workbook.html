@@ -61,17 +61,28 @@
 
 <main class="container">
 
+  <!-- First-time users banner -->
+  <div style="background:#fff7ed; border:2px solid #ea8b00; border-radius:12px; padding:1.25rem 1.5rem; margin:1.5rem 0; font-size:0.95rem;">
+    <h2 style="margin-top:0; color:#9a3412;">👋 New here? Read this first.</h2>
+    <p>This workbook fills in <strong>gradually across 11 weeks</strong>. You don't need to do it all at once — each section unlocks when the lesson introduces it.</p>
+    <p><strong>Today (Lesson 1, diagnostic day):</strong> close this tab 🚪 — you don't need the workbook yet. Ms Gao is handing out a paper test.</p>
+    <p><strong>Lesson 2 onwards:</strong> the lesson on the hub tells you which workbook section to open. Below, each section is tagged with the lesson it unlocks in.</p>
+    <p style="margin-bottom:0;"><em>Filling sections OUT OF ORDER is fine — your answers save either way. But don't stress about blank sections. That's how it's meant to look.</em></p>
+  </div>
+
   <!-- Student info -->
   <div class="wb-section" style="border-left-color:#1f3a68;">
+    <span class="wb-marks" style="background:#14b8a6;">Lesson 2 · Cover</span>
     <h2>Cover page</h2>
+    <p class="hint">Fill this in during Lesson 2 after you get your tier sticker back.</p>
     <label>Student name</label>
     <input type="text" data-key="studentName" placeholder="Your full name">
-    <label>Partner name (if paired)</label>
-    <input type="text" data-key="partnerName" placeholder="Your build partner">
+    <label>Partner name (if paired — set in Lesson 5)</label>
+    <input type="text" data-key="partnerName" placeholder="Leave blank until L05">
     <label>Class</label>
     <input type="text" data-key="className" value="7TECJ">
-    <label>Our chosen truss type</label>
-    <input type="text" data-key="trussType" placeholder="Pratt / Howe / Warren / K-truss">
+    <label>Our chosen truss type (decided in L04)</label>
+    <input type="text" data-key="trussType" placeholder="Leave blank until L04 — Pratt / Howe / Warren / K-truss">
   </div>
 
   <!-- Export bar -->
@@ -90,7 +101,7 @@
 
   <!-- Q1 Glossary -->
   <div class="wb-section" id="glossary">
-    <span class="wb-marks">§3 Research · Q1</span>
+    <span class="wb-marks" style="background:#8b5cf6;">L02 · Glossary</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§3 Research · Q1</span>
     <h2>Q1. Bridge Glossary (23 terms)</h2>
     <p class="hint">From PBS Building Big glossary: <a href="https://www.pbs.org/wgbh/buildingbig/glossary_head.html" target="_blank">pbs.org/wgbh/buildingbig/glossary_head</a> — type each definition below in your own words.</p>
     <table id="glossaryTable"></table>
@@ -98,7 +109,7 @@
 
   <!-- Q2 4 bridge types -->
   <div class="wb-section" id="types">
-    <span class="wb-marks">§3 Research · Q2</span>
+    <span class="wb-marks" style="background:#8b5cf6;">L02-L03 · 4 Types</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§3 Research · Q2</span>
     <h2>Q2. 4 Bridge Types Chart</h2>
     <p class="hint">From PBS: <a href="https://www.pbs.org/wgbh/buildingbig/bridge/basics.html" target="_blank">pbs.org/wgbh/buildingbig/bridge/basics</a></p>
     <table id="typesTable">
@@ -112,7 +123,7 @@
 
   <!-- Q5 Forces Lab -->
   <div class="wb-section" id="forces">
-    <span class="wb-marks">§3 Research · Q5</span>
+    <span class="wb-marks" style="background:#8b5cf6;">L03 · Forces Lab</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§3 Research · Q5</span>
     <h2>Q5. Forces Lab — 5 Force Types</h2>
     <p class="hint">From PBS: <a href="https://www.pbs.org/wgbh/buildingbig/lab/forces.html" target="_blank">pbs.org/wgbh/buildingbig/lab/forces</a></p>
     <table>
@@ -127,7 +138,7 @@
 
   <!-- Q6-Q7 Tacoma -->
   <div class="wb-section" id="tacoma">
-    <span class="wb-marks">§3 Research · Q6-Q7</span>
+    <span class="wb-marks" style="background:#8b5cf6;">L04 · Tacoma</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§3 Research · Q6-Q7</span>
     <h2>Q6 & Q7. Tacoma Narrows Case Study</h2>
     <p class="hint">Watch: <a href="https://www.youtube.com/watch?v=XggxeuFDaDU" target="_blank">Tacoma Narrows collapse video (1940)</a></p>
     <label>Q6. Why did the Tacoma Narrows Bridge collapse? (2+ sentences — use words: <em>resonance, aeroelastic flutter, stiffening</em>)</label>
@@ -138,7 +149,7 @@
 
   <!-- Q8 12 famous bridges -->
   <div class="wb-section" id="famous">
-    <span class="wb-marks">§3 Research · Q8</span>
+    <span class="wb-marks" style="background:#8b5cf6;">L04 · 12 Bridges</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§3 Research · Q8</span>
     <h2>Q8. 12 Famous Bridges Data Table</h2>
     <p class="hint">From PBS: <a href="https://www.pbs.org/wgbh/buildingbig/wonder/structure/browse.html" target="_blank">pbs.org/wgbh/buildingbig/wonder/structure/browse</a></p>
     <table id="famousTable">
@@ -148,7 +159,7 @@
 
   <!-- SHB 15 questions -->
   <div class="wb-section" id="shb">
-    <span class="wb-marks">§3 Research · SHB</span>
+    <span class="wb-marks" style="background:#8b5cf6;">L06 · SHB</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§3 Research · SHB</span>
     <h2>Sydney Harbour Bridge — 15 Research Questions</h2>
     <p class="hint">Reliable sources: <a href="https://www.cityofsydney.nsw.gov.au" target="_blank">City of Sydney</a> · <a href="https://en.wikipedia.org/wiki/Sydney_Harbour_Bridge" target="_blank">Wikipedia SHB</a></p>
     <div id="shbQuestions"></div>
@@ -165,7 +176,7 @@
 
   <!-- §1 Design Brief -->
   <div class="wb-section" id="brief">
-    <span class="wb-marks">§1 Brief</span>
+    <span class="wb-marks" style="background:#3730a3;">L05 · Design Brief</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§1 Brief</span>
     <h2>§1. Design Brief</h2>
     <p class="hint">A short description of what you are making, who it's for, and why.</p>
     <div class="sentence-starter"><strong>Problem / Need:</strong> <em>"The challenge I am addressing is… because…"</em></div>
@@ -178,7 +189,7 @@
 
   <!-- §2 Specification -->
   <div class="wb-section" id="specification">
-    <span class="wb-marks">§2 Specification</span>
+    <span class="wb-marks" style="background:#3730a3;">L05 · Specification</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§2 Specification</span>
     <h2>§2. Specification (checklist of rules)</h2>
     <p class="hint">A list of requirements your bridge must follow. Think: what must it DO, what must it be MADE FROM, what SIZE, what LIMITS?</p>
     <div class="sentence-starter"><strong>Function:</strong> <em>"The bridge must be able to…"</em></div>
@@ -193,7 +204,7 @@
 
   <!-- §4 Sketches -->
   <div class="wb-section" id="sketches">
-    <span class="wb-marks">§4 Sketches</span>
+    <span class="wb-marks" style="background:#3730a3;">L07 · Sketches</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§4 Sketches</span>
     <h2>§4. Generation of Ideas — 3 Sketches</h2>
     <p class="hint">Draw 3 sketches on paper (A4), photograph them, upload to your Google Doc folio. Describe each below.</p>
     <label>Idea 1 name</label>
@@ -212,7 +223,7 @@
 
   <!-- §5 PMI -->
   <div class="wb-section" id="pmi">
-    <span class="wb-marks">§5 PMI Analysis</span>
+    <span class="wb-marks" style="background:#3730a3;">L07 · PMI</span> <span class="wb-marks" style="background:#6b7280; margin-left:4px;">§5 PMI Analysis</span>
     <h2>§5. PMI Analysis — Plus / Minus / Interesting</h2>
     <p class="hint">Compare your 3 ideas. Sentence starters: <em>"One good thing is… because…"</em> · <em>"A problem might be…"</em> · <em>"An interesting idea is…"</em></p>
     <table>
