@@ -126,6 +126,28 @@
     <ul><li><a href="#" target="_blank" rel="noopener">WHS Briefing Sheet</a></li><li><a href="#" target="_blank" rel="noopener">Build journal template (Google Doc)</a></li><li><a href="#" target="_blank" rel="noopener">Video — PVA joining technique</a></li></ul>
   </section>
 
+  <section class="lesson-section" style="background:#f0fdf4; border:1px solid #10b981;">
+    <h2><span class="section-badge" style="background:#10b981;">Before you leave</span> Quick check-in</h2>
+    <div class="grid grid-2" style="margin-top:0.75rem;">
+      <div>
+        <h4 style="margin-top:0; color:#047857;">🚩 Stuck or confused?</h4>
+        <p style="color:#4b5563; font-size:0.95em;">Click this button to flag to Ms Gao that you need a 1-to-1 next lesson. Your message is copied — paste it into a Google Classroom private comment.</p>
+        <button type="button" onclick="flagForHelp('L11', 'WHS briefing + hot glue demo + start the base chord')"
+                style="background:#fff7ed; color:#9a3412; border:2px solid #ea8b00; padding:0.6rem 1.2rem; border-radius:6px; font-weight:600; cursor:pointer; font-size:0.95rem;">
+          🚩 Flag for 1-to-1 help
+        </button>
+      </div>
+      <div>
+        <h4 style="margin-top:0; color:#1f3a68;">📄 Export journal so far</h4>
+        <p style="color:#4b5563; font-size:0.95em;">Save your journal as a .txt file to upload to Google Classroom for Ms Gao's Friday review.</p>
+        <a href="../term2/journal.html#entry-w6"
+           style="display:inline-block; background:#1f3a68; color:#fff; padding:0.6rem 1.2rem; border-radius:6px; font-weight:600; font-size:0.95rem;">
+          📓 Open journal + export
+        </a>
+      </div>
+    </div>
+  </section>
+
   <nav class="lesson-nav">
     <a class="prev" href="l10.html">Previous lesson</a>
     <a class="next" href="l12.html">Next lesson</a>
@@ -136,6 +158,31 @@
 <footer class="site-footer">
   <p><strong>Y7 Technology · Term 2 · Bridge It · L11</strong> · Arthur Phillip High School</p>
 </footer>
+
+<script>
+function flagForHelp(lessonId, lessonTitle) {
+  const msg = `🚩 HELP REQUEST — ${lessonId} ${lessonTitle}
+
+` +
+              `Hi Ms Gao,
+
+` +
+              `I'm stuck in this lesson. The part I don't understand is:
+` +
+              `[type here — even one sentence helps]
+
+` +
+              `Can we do a 1-to-1 check-in in the next lesson?
+
+` +
+              `— [your name]`;
+  navigator.clipboard.writeText(msg).then(() => {
+    alert("✅ Help message copied to clipboard. Paste it into a Google Classroom PRIVATE comment on this lesson's post.");
+  }).catch(() => {
+    prompt("Copy this message and paste into Classroom private comment:", msg);
+  });
+}
+</script>
 
 </body>
 </html>

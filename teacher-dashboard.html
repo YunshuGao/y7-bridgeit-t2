@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard · Y7 Bridge It</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .drop-zone { border:3px dashed #cbd5e1; padding:3rem 2rem; text-align:center; border-radius:12px; margin:1.5rem 0; background:#fafbfc; transition:all 0.2s; cursor:pointer; }
+  .drop-zone.drag-over { border-color:#1f3a68; background:#eff6ff; }
+  .drop-zone h3 { margin-top:0; color:#1f3a68; }
+  .drop-zone p { color:#6b7280; margin:0.5rem 0; }
+  .drop-zone input[type="file"] { display:none; }
+  .drop-zone .btn { background:#1f3a68; color:#fff; border:none; padding:0.7rem 1.4rem; border-radius:6px; font-weight:600; cursor:pointer; font-size:0.95rem; }
+  table.dash { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.93rem; }
+  table.dash th { background:#1f3a68; color:#fff; padding:0.6rem; text-align:left; font-weight:600; }
+  table.dash td { padding:0.6rem; border-bottom:1px solid #e4e7ec; vertical-align:top; }
+  table.dash tr:nth-child(even) td { background:#fafbfc; }
+  table.dash tr:hover td { background:#eff6ff; }
+  .progress-mini { display:inline-flex; gap:2px; }
+  .progress-mini span { display:inline-block; width:14px; height:14px; border-radius:3px; background:#e5e7eb; font-size:0; }
+  .progress-mini span.c { background:#10b981; }
+  .progress-mini span.p { background:#fbbf24; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:9999px; font-size:0.8em; font-weight:600; }
+  .pill.ok  { background:#d1fae5; color:#047857; }
+  .pill.low { background:#fee2e2; color:#9a3412; }
+  .pill.mid { background:#fef3c7; color:#92400e; }
+  .summary { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:1rem; margin:1rem 0; }
+  .summary .card { background:#fff; border:1px solid #e4e7ec; border-radius:10px; padding:1rem; text-align:center; }
+  .summary .card .big { font-size:2.2em; font-weight:700; color:#1f3a68; }
+  .summary .card .label { font-size:0.85em; color:#6b7280; text-transform:uppercase; letter-spacing:0.05em; }
+  .flagged { background:#fff7ed; border-left:4px solid #ea8b00; padding:1rem 1.25rem; border-radius:10px; margin:1rem 0; }
+  .flagged h4 { color:#92400e; margin-top:0; }
+  details { margin:0.5rem 0; border-left:3px solid #cbd5e1; padding-left:1rem; }
+  details summary { cursor:pointer; font-weight:600; color:#1f3a68; }
+  details pre { white-space:pre-wrap; word-wrap:break-word; font-family:Menlo, Consolas, monospace; font-size:0.88em; background:#f9fafb; padding:0.75rem; border-radius:6px; }
+  .filter-bar { display:flex; gap:0.5rem; margin:1rem 0; flex-wrap:wrap; }
+  .filter-bar button { background:#fff; border:1.5px solid #cbd5e1; padding:0.4rem 0.9rem; border-radius:9999px; cursor:pointer; font-size:0.9em; }
+  .filter-bar button.active { background:#1f3a68; color:#fff; border-color:#1f3a68; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="term2.html">Term 2 · Bridge It</a>
+      <a href="teacher-dashboard.html">👩‍🏫 Teacher Dashboard</a>
+    </nav>
+  </div>
+</header>
+
+<section class="lesson-head">
+  <div class="container">
+    <span class="lesson-pill" style="background:#1f3a68;">Teacher only</span>
+    <h1>👩‍🏫 Teacher Dashboard — Y7 Bridge It</h1>
+    <p class="lesson-meta">Drag 22 student journal .txt exports onto the zone below. Everything runs in your browser — no file leaves this laptop.</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+    <h3>📥 Drop student .txt files here</h3>
+    <p>Or click to browse. Select multiple files at once (Ctrl+A in the folder).</p>
+    <p><button class="btn" type="button">Choose files</button></p>
+    <input type="file" id="fileInput" multiple accept=".txt">
+  </div>
+
+  <div id="results" style="display:none;">
+
+    <div class="summary" id="summary"></div>
+
+    <div class="flagged" id="flagged" style="display:none;">
+      <h4>⚠ Attention needed</h4>
+      <div id="flaggedList"></div>
+    </div>
+
+    <h2>Class at a glance</h2>
+    <div class="filter-bar">
+      <button data-filter="all" class="active" onclick="filterRows('all', this)">All students</button>
+      <button data-filter="complete" onclick="filterRows('complete', this)">✅ Complete only</button>
+      <button data-filter="partial"  onclick="filterRows('partial',  this)">🟡 Partial</button>
+      <button data-filter="stalled"  onclick="filterRows('stalled',  this)">⬜ No entries</button>
+    </div>
+    <table class="dash" id="summaryTable">
+      <thead>
+        <tr>
+          <th>Student (paired)</th>
+          <th>Week-by-week</th>
+          <th>Entries complete</th>
+          <th>Total words</th>
+          <th>Last export</th>
+          <th>Status</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody id="summaryTbody"></tbody>
+    </table>
+
+    <h2>Most common struggles</h2>
+    <p style="color:#6b7280; font-size:0.95em;">Keywords students are mentioning when they talk about what was "tricky" — useful for next-lesson re-teach priorities.</p>
+    <div id="keywordCloud" style="background:#fff; border:1px solid #e4e7ec; padding:1rem; border-radius:10px; min-height:80px;"></div>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Tech · Term 2 · Bridge It · Teacher Dashboard</strong></p>
+  <p>Arthur Phillip High School · Ms Y. Gao · Client-side only (no upload, no login)</p>
+</footer>
+
+<script>
+const WEEKS = Array.from({length:11}, (_, i) => i + 1);
+const TRICKY_KEYWORDS = {
+  "triangl":"triangulation", "compress":"compression", "tension":"tension",
+  "glue":"glue", "scale":"scale", "iso":"isometric", "sketch":"sketching",
+  "load":"load test", "deck":"deck", "measure":"measurement",
+  "bridge":"bridge shape", "scissor":"cutting", "buckle":"buckling",
+  "partner":"pair work", "brief":"design brief", "research":"research",
+  "evaluation":"evaluation writing", "teel":"TEEL", "vocab":"vocabulary",
+  "lamin":"lamination", "reinforce":"reinforcement"
+};
+
+let parsed = [];
+
+// ==== DRAG & DROP ====
+const dropZone = document.getElementById("dropZone");
+const fileInput = document.getElementById("fileInput");
+
+dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+dropZone.addEventListener("drop", e => {
+  e.preventDefault();
+  dropZone.classList.remove("drag-over");
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener("change", e => handleFiles(e.target.files));
+
+async function handleFiles(fileList) {
+  parsed = [];
+  for (const f of fileList) {
+    if (!f.name.toLowerCase().endsWith(".txt")) continue;
+    const text = await f.text();
+    parsed.push(parse(text, f.name));
+  }
+  renderAll();
+}
+
+// ==== PARSER ====
+function parse(text, filename) {
+  const result = {
+    filename,
+    studentName: "",
+    exportDate: "",
+    entries: {},  // w1: {built, tricky, next}
+    totalWords: 0,
+    final: {}
+  };
+  // Student name from "Student: ...."
+  const nameM = text.match(/^Student:\s*(.+)$/mi);
+  if (nameM) result.studentName = nameM[1].trim();
+  else result.studentName = filename.replace(/_BridgeIt_journal_.*$/, "").replace(/_/g, " ");
+  // Date
+  const dateM = text.match(/^Exported:\s*(.+)$/mi);
+  if (dateM) result.exportDate = dateM[1].trim();
+  // Weekly entries — match "--- Week N ..."
+  WEEKS.forEach(n => {
+    const wSection = text.match(new RegExp(`--- Week ${n}\\s*\\([^)]*\\)\\s*[^\\n]*---([\\s\\S]*?)(?=---\\s*(Week \\d|END-OF-TERM)|$)`, "i"));
+    if (!wSection) return;
+    const body = wSection[1];
+    const b = (body.match(/1\.\s*Built\/learned:\s*(.+)/i) || [,""])[1].trim();
+    const t = (body.match(/2\.\s*Tricky\s*\+\s*fix\s*:\s*(.+)/i) || [,""])[1].trim();
+    const nx = (body.match(/3\.\s*Next week\s*:\s*(.+)/i) || [,""])[1].trim();
+    const notYet = v => !v || /\(not yet\)/i.test(v);
+    if (!notYet(b) || !notYet(t) || !notYet(nx)) {
+      result.entries[`w${n}`] = {
+        built: notYet(b) ? "" : b,
+        tricky: notYet(t) ? "" : t,
+        next: notYet(nx) ? "" : nx,
+      };
+    }
+  });
+  // End-of-term
+  const finalM = text.match(/--- END-OF-TERM REFLECTION ---([\s\S]+)/i);
+  if (finalM) {
+    const s = (finalM[1].match(/New skill:\s*(.+)/i)  || [,""])[1].trim();
+    const f = (finalM[1].match(/Fav moment:\s*(.+)/i) || [,""])[1].trim();
+    const n = (finalM[1].match(/Build next:\s*(.+)/i) || [,""])[1].trim();
+    if (s || f || n) result.final = {skill:s, fav:f, next:n};
+  }
+  // Total words
+  result.totalWords = Object.values(result.entries).reduce((acc, e) =>
+    acc + (e.built + " " + e.tricky + " " + e.next).split(/\s+/).filter(w => w.length).length, 0);
+  return result;
+}
+
+// ==== RENDER ====
+function renderAll() {
+  if (parsed.length === 0) {
+    document.getElementById("results").style.display = "none";
+    return;
+  }
+  document.getElementById("results").style.display = "block";
+  renderSummary();
+  renderTable();
+  renderFlagged();
+  renderKeywords();
+}
+
+function renderSummary() {
+  const s = document.getElementById("summary");
+  const total = parsed.length;
+  const complete = parsed.filter(p => Object.keys(p.entries).length >= 10).length;
+  const partial  = parsed.filter(p => Object.keys(p.entries).length > 0 && Object.keys(p.entries).length < 10).length;
+  const stalled  = parsed.filter(p => Object.keys(p.entries).length === 0).length;
+  const totalWords = parsed.reduce((a, p) => a + p.totalWords, 0);
+  s.innerHTML = `
+    <div class="card"><div class="big">${total}</div><div class="label">Files parsed</div></div>
+    <div class="card"><div class="big" style="color:#047857;">${complete}</div><div class="label">10+ weeks done</div></div>
+    <div class="card"><div class="big" style="color:#92400e;">${partial}</div><div class="label">Partial</div></div>
+    <div class="card"><div class="big" style="color:#9a3412;">${stalled}</div><div class="label">No entries</div></div>
+    <div class="card"><div class="big">${totalWords.toLocaleString()}</div><div class="label">Total words</div></div>
+  `;
+}
+
+function renderTable() {
+  const tbody = document.getElementById("summaryTbody");
+  tbody.innerHTML = "";
+  parsed.forEach((p, idx) => {
+    const n = Object.keys(p.entries).length;
+    const status = n >= 10 ? "complete" : (n >= 5 ? "partial" : (n > 0 ? "partial" : "stalled"));
+    const statusPill = status === "complete" ? '<span class="pill ok">✅ on track</span>' :
+                       status === "partial"  ? '<span class="pill mid">🟡 partial</span>' :
+                       '<span class="pill low">⬜ no entries</span>';
+    let mini = '<div class="progress-mini">';
+    WEEKS.forEach(w => {
+      const e = p.entries[`w${w}`];
+      const allThree = e && e.built && e.tricky && e.next;
+      const partial = e && (e.built || e.tricky || e.next);
+      mini += `<span class="${allThree ? 'c' : (partial ? 'p' : '')}" title="Week ${w}"></span>`;
+    });
+    mini += '</div>';
+    let detailHtml = "<details><summary>View entries</summary>";
+    Object.entries(p.entries).forEach(([wk, e]) => {
+      const w = wk.replace("w","");
+      detailHtml += `<div style="margin-top:0.5rem;"><strong>Week ${w}:</strong><br>` +
+                    (e.built ? `<em>Built:</em> ${escapeHtml(e.built)}<br>` : "") +
+                    (e.tricky ? `<em>Tricky:</em> ${escapeHtml(e.tricky)}<br>` : "") +
+                    (e.next ? `<em>Next:</em> ${escapeHtml(e.next)}` : "") + "</div>";
+    });
+    if (p.final && (p.final.skill || p.final.fav || p.final.next)) {
+      detailHtml += `<div style="margin-top:0.75rem; border-top:1px dashed #cbd5e1; padding-top:0.5rem;"><strong>End of term:</strong><br>` +
+                    (p.final.skill ? `<em>New skill:</em> ${escapeHtml(p.final.skill)}<br>` : "") +
+                    (p.final.fav ? `<em>Fav:</em> ${escapeHtml(p.final.fav)}<br>` : "") +
+                    (p.final.next ? `<em>Build next:</em> ${escapeHtml(p.final.next)}` : "") + "</div>";
+    }
+    detailHtml += "</details>";
+    tbody.innerHTML += `
+      <tr data-status="${status}">
+        <td><strong>${escapeHtml(p.studentName)}</strong><br><span style="color:#6b7280; font-size:0.85em;">${escapeHtml(p.filename)}</span></td>
+        <td>${mini}</td>
+        <td>${n}/11</td>
+        <td>${p.totalWords}</td>
+        <td>${escapeHtml(p.exportDate || "—")}</td>
+        <td>${statusPill}</td>
+        <td>${detailHtml}</td>
+      </tr>
+    `;
+  });
+}
+
+function renderFlagged() {
+  const flaggedDiv = document.getElementById("flagged");
+  const list = document.getElementById("flaggedList");
+  const stalled = parsed.filter(p => Object.keys(p.entries).length === 0);
+  const lowWords = parsed.filter(p => p.totalWords > 0 && p.totalWords < 30);
+  if (stalled.length === 0 && lowWords.length === 0) {
+    flaggedDiv.style.display = "none"; return;
+  }
+  flaggedDiv.style.display = "block";
+  let html = "";
+  if (stalled.length) {
+    html += `<p><strong>No journal entries at all:</strong> ${stalled.map(p => escapeHtml(p.studentName)).join(", ")}. Check if they're submitting somewhere else, or flag for a 1-to-1 conference.</p>`;
+  }
+  if (lowWords.length) {
+    html += `<p><strong>Fewer than 30 total words this term:</strong> ${lowWords.map(p => escapeHtml(p.studentName)).join(", ")}. Could indicate disengagement — or EAL/D language barrier worth checking.</p>`;
+  }
+  list.innerHTML = html;
+}
+
+function renderKeywords() {
+  const cloud = document.getElementById("keywordCloud");
+  const counts = {};
+  parsed.forEach(p => {
+    Object.values(p.entries).forEach(e => {
+      const text = (e.tricky || "").toLowerCase();
+      Object.entries(TRICKY_KEYWORDS).forEach(([stem, label]) => {
+        if (text.includes(stem)) counts[label] = (counts[label] || 0) + 1;
+      });
+    });
+  });
+  const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+  if (sorted.length === 0) {
+    cloud.innerHTML = '<p style="color:#6b7280;">No tricky-section keywords matched yet. Keywords scanned: triangulation, compression, tension, glue, scale, isometric, sketching, load test, deck, measurement, cutting, buckling, pair work, design brief, research, evaluation, TEEL, vocabulary, lamination, reinforcement.</p>';
+    return;
+  }
+  cloud.innerHTML = sorted.map(([label, count]) => {
+    const size = Math.min(1.1 + count * 0.15, 2.2);
+    const weight = count >= 3 ? 700 : 500;
+    return `<span style="display:inline-block; margin:0.25rem 0.4rem; font-size:${size}em; font-weight:${weight}; color:#1f3a68;">${escapeHtml(label)} <span style="color:#6b7280; font-size:0.7em;">(${count})</span></span>`;
+  }).join("");
+}
+
+function filterRows(filter, btn) {
+  document.querySelectorAll(".filter-bar button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll("#summaryTbody tr").forEach(tr => {
+    tr.style.display = (filter === "all" || tr.dataset.status === filter) ? "" : "none";
+  });
+}
+
+function escapeHtml(s) {
+  return String(s || "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+</script>
+
+</body>
+</html>

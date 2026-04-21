@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Journal · Y7 Technology · Bridge It</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .journal-callout { background:#fff7ed; border-left:4px solid #ea8b00; padding:1rem 1.25rem; border-radius:10px; margin:1.5rem 0; }
+  .journal-callout h4 { color:#92400e; margin-top:0; }
+  .callout-note { font-size:0.92em; color:#6b7280; font-style:italic; margin-bottom:0; }
+  .week-entry { background:var(--c-surface, #fff); border:1px solid var(--c-border, #e4e7ec); border-left:4px solid var(--c-teal, #14b8a6); border-radius:10px; padding:1.25rem; margin:1rem 0; }
+  .week-entry h3 { margin-top:0; color:var(--c-navy, #1f3a68); }
+  .week-entry label { display:block; font-weight:600; color:var(--c-navy-light, #2e5b9e); margin-top:0.75rem; margin-bottom:0.25rem; font-size:0.95rem; }
+  .week-entry textarea { width:100%; min-height:70px; padding:0.6rem; border:1px solid #cbd5e1; border-radius:6px; font-family:Inter, system-ui, sans-serif; font-size:0.95rem; box-sizing:border-box; resize:vertical; }
+  .week-entry .status { font-size:0.85em; color:#6b7280; margin-top:0.5rem; }
+  .week-entry .status.saved { color:#047857; }
+  .week-entry.complete { border-left-color:#10b981; background:#f0fdf4; }
+  .export-bar { position:sticky; top:70px; background:#fff; border:1px solid #e4e7ec; border-radius:12px; padding:1rem 1.25rem; margin:1.5rem 0; display:flex; gap:0.75rem; align-items:center; flex-wrap:wrap; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+  .export-bar strong { color:var(--c-navy, #1f3a68); }
+  .btn { display:inline-block; padding:0.55rem 1.1rem; border:none; border-radius:6px; font-weight:600; cursor:pointer; font-size:0.95rem; }
+  .btn-primary { background:#1f3a68; color:#fff; }
+  .btn-primary:hover { background:#2e5b9e; }
+  .btn-secondary { background:#fff; color:#1f3a68; border:1.5px solid #1f3a68; }
+  .btn-secondary:hover { background:#eff6ff; }
+  .btn-danger { background:#fff; color:#9a3412; border:1.5px solid #9a3412; }
+  .btn-danger:hover { background:#fef2f2; }
+  .progress-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(90px, 1fr)); gap:0.4rem; margin:1rem 0; }
+  .progress-cell { padding:0.45rem; border-radius:6px; text-align:center; font-size:0.85rem; background:#f3f4f6; color:#6b7280; }
+  .progress-cell.complete { background:#d1fae5; color:#047857; font-weight:600; }
+  .progress-cell.partial  { background:#fef3c7; color:#92400e; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+      <a href="journal.html">📓 Build Journal</a>
+    </nav>
+  </div>
+</header>
+
+<section class="lesson-head">
+  <div class="container">
+    <span class="lesson-pill" style="background:#ea8b00;">Weekly Journal</span>
+    <h1>📓 Bridge It Build Journal</h1>
+    <p class="lesson-meta">Your weekly 3-sentence record of what you built, what was tricky, and what's next. Submit every Friday. Worth /5 marks per week.</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="journal-callout">
+    <h4>Each weekly entry needs:</h4>
+    <p>
+      (1) What did I BUILD or LEARN this week? <em>(be specific — name the lesson, the technique, the bridge part)</em><br>
+      (2) What was TRICKY and how did I fix it? <em>(name the problem, name the fix)</em><br>
+      (3) What do I want to TRY next week? <em>(one concrete goal)</em>
+    </p>
+    <p class="callout-note">3–5 sentences TOTAL is enough. Quality over quantity. Your answers save automatically as you type.</p>
+  </div>
+
+  <!-- Student info -->
+  <div class="week-entry" id="student-info" style="border-left-color:#1f3a68; background:#eff6ff;">
+    <h3>Who are you?</h3>
+    <label>Your name (and partner name if paired)</label>
+    <input type="text" id="studentName" style="width:100%; padding:0.6rem; border:1px solid #cbd5e1; border-radius:6px; font-family:Inter, system-ui, sans-serif; font-size:0.95rem; box-sizing:border-box;" placeholder="e.g. Amanda Guo &amp; Rudransh Chiluka — 7TECJ" />
+  </div>
+
+  <!-- Progress grid -->
+  <h2>Progress across 11 weeks</h2>
+  <div id="progressGrid" class="progress-grid"></div>
+
+  <!-- Export bar -->
+  <div class="export-bar">
+    <strong>🔒 Your work stays on THIS laptop only</strong>
+    <span style="color:#6b7280; font-size:0.9em;">Nothing is uploaded unless you click Export.</span>
+    <span style="flex:1;"></span>
+    <button class="btn btn-primary" onclick="exportTxt()">📄 Export all entries as .txt</button>
+    <button class="btn btn-secondary" onclick="if(confirm('Reset ALL entries? Cannot be undone.')) resetAll()">Reset</button>
+  </div>
+
+  <!-- Weekly entries rendered dynamically -->
+  <div id="entries"></div>
+
+  <!-- After the 11 weeks: end-of-term reflection -->
+  <div class="week-entry" style="border-left-color:#8b5cf6; background:#faf5ff;" id="final-entry">
+    <h3>🏆 End-of-Term Reflection (after L22)</h3>
+    <label>One skill I built this term that I didn't have in January</label>
+    <textarea id="finalSkill" rows="2" placeholder="e.g. I can draw an isometric cube properly now — before I used to just freehand."></textarea>
+    <label>My favourite moment of the term</label>
+    <textarea id="finalFav" rows="2" placeholder="e.g. When our bridge held 987g at load test!"></textarea>
+    <label>One thing I'd want to build next</label>
+    <textarea id="finalNext" rows="2" placeholder="e.g. A second bridge using balsa wood instead of popsicle sticks."></textarea>
+    <div class="status" id="finalStatus">Not yet saved.</div>
+  </div>
+
+  <p style="color:#6b7280; font-style:italic; font-size:0.9em; margin-top:2rem;">
+    <strong>How to submit to Ms Gao:</strong>
+    click <em>Export all entries as .txt</em> at the top, then upload the downloaded file to Google Classroom → Week X Check-in assignment.
+  </p>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Tech · Term 2 · Bridge It · Build Journal</strong></p>
+  <p>Arthur Phillip High School · Ms Y. Gao · All entries saved locally to your browser (localStorage)</p>
+</footer>
+
+<script>
+const WEEKS = [
+  {n: 1, date:"20–24 Apr", lessons:"L01–L02", hint:"Welcome week + 5 bridge types + index card mini-build"},
+  {n: 2, date:"27 Apr–1 May", lessons:"L03–L04", hint:"Forces experiment + truss geometry"},
+  {n: 3, date:"4–8 May", lessons:"L05–L06", hint:"Meet the task + design brief + research"},
+  {n: 4, date:"11–15 May", lessons:"L07–L08", hint:"SCAMPER sketches + scaled drawing (1:5)"},
+  {n: 5, date:"18–22 May", lessons:"L09–L10", hint:"Isometric drawing + materials + WHS"},
+  {n: 6, date:"25–29 May", lessons:"L11–L12", hint:"Build start — base chord + verticals"},
+  {n: 7, date:"1–5 Jun", lessons:"L13–L14", hint:"Diagonals + mirror truss (FOLIO PART A DUE)"},
+  {n: 8, date:"9–12 Jun*", lessons:"L15–L16", hint:"Deck + peer review (King's Birthday Mon)"},
+  {n: 9, date:"15–19 Jun", lessons:"L17–L18", hint:"Reinforcement + finishing + title block"},
+  {n:10, date:"22–26 Jun", lessons:"L19–L20", hint:"Dry-run + LOAD TEST DAY (PART B DUE)"},
+  {n:11, date:"29 Jun–3 Jul", lessons:"L21–L22", hint:"Evaluation writing + showcase (PART C DUE)"},
+];
+
+const STORAGE_KEY = "y7-bridgeit-journal-v1";
+
+function loadAll() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch { return {}; }
+}
+function saveField(key, value) {
+  const data = loadAll();
+  data[key] = value;
+  data._last = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+function renderEntries() {
+  const container = document.getElementById("entries");
+  const data = loadAll();
+  container.innerHTML = "";
+  WEEKS.forEach(w => {
+    const filled = data[`w${w.n}_built`] || data[`w${w.n}_tricky`] || data[`w${w.n}_next`];
+    const allThree = data[`w${w.n}_built`] && data[`w${w.n}_tricky`] && data[`w${w.n}_next`];
+    const div = document.createElement("div");
+    div.className = "week-entry" + (allThree ? " complete" : "");
+    div.id = `entry-w${w.n}`;
+    div.innerHTML = `
+      <h3>Week ${w.n} — ${w.date} (${w.lessons})</h3>
+      <p style="color:#6b7280; font-size:0.88em; margin-top:-0.5rem;">${w.hint}</p>
+      <label for="w${w.n}_built">1. What did I BUILD or LEARN this week?</label>
+      <textarea id="w${w.n}_built" data-key="w${w.n}_built" rows="2" placeholder="Be specific — name the lesson, the technique, the bridge part."></textarea>
+      <label for="w${w.n}_tricky">2. What was TRICKY and how did I fix it?</label>
+      <textarea id="w${w.n}_tricky" data-key="w${w.n}_tricky" rows="2" placeholder="Name the problem, name the fix."></textarea>
+      <label for="w${w.n}_next">3. What do I want to TRY next week?</label>
+      <textarea id="w${w.n}_next" data-key="w${w.n}_next" rows="2" placeholder="One concrete goal."></textarea>
+      <div class="status" id="w${w.n}_status">${allThree ? "✅ All 3 parts complete" : (filled ? "🟡 Partly done — finish all 3 parts" : "⬜ Not started")}</div>
+    `;
+    container.appendChild(div);
+  });
+  // Student name
+  const sn = document.getElementById("studentName");
+  sn.value = data.studentName || "";
+  sn.addEventListener("input", e => saveField("studentName", e.target.value));
+  // Attach listeners
+  container.querySelectorAll("textarea").forEach(t => {
+    t.value = data[t.dataset.key] || "";
+    t.addEventListener("input", e => {
+      saveField(e.target.dataset.key, e.target.value);
+      const status = document.getElementById(e.target.id.replace("_built","_status").replace("_tricky","_status").replace("_next","_status"));
+      if (status) { status.textContent = "💾 Saved just now"; status.classList.add("saved"); }
+      renderProgress();
+    });
+  });
+  // Final entry
+  ["finalSkill","finalFav","finalNext"].forEach(k => {
+    const el = document.getElementById(k);
+    if (el) { el.value = data[k] || "";
+      el.addEventListener("input", e => {
+        saveField(k, e.target.value);
+        document.getElementById("finalStatus").textContent = "💾 Saved";
+      });
+    }
+  });
+  renderProgress();
+}
+function renderProgress() {
+  const grid = document.getElementById("progressGrid");
+  const data = loadAll();
+  grid.innerHTML = "";
+  WEEKS.forEach(w => {
+    const allThree = data[`w${w.n}_built`] && data[`w${w.n}_tricky`] && data[`w${w.n}_next`];
+    const partial  = data[`w${w.n}_built`] || data[`w${w.n}_tricky`] || data[`w${w.n}_next`];
+    const cls = allThree ? "complete" : (partial ? "partial" : "");
+    const icon = allThree ? "✅" : (partial ? "🟡" : "⬜");
+    grid.innerHTML += `<a href="#entry-w${w.n}" class="progress-cell ${cls}" title="${w.hint}">${icon} W${w.n}</a>`;
+  });
+}
+function exportTxt() {
+  const data = loadAll();
+  const name = (data.studentName || "student").replace(/[^a-zA-Z0-9_ ]/g, "").replace(/ /g, "_");
+  const stamp = new Date().toISOString().slice(0, 10);
+  const lines = [];
+  lines.push("=".repeat(60));
+  lines.push(`Y7 TECHNOLOGY · BRIDGE IT · BUILD JOURNAL EXPORT`);
+  lines.push(`Student: ${data.studentName || "(unnamed)"}`);
+  lines.push(`Exported: ${stamp}`);
+  lines.push("=".repeat(60));
+  lines.push("");
+  WEEKS.forEach(w => {
+    const b = (data[`w${w.n}_built`]  || "").trim();
+    const t = (data[`w${w.n}_tricky`] || "").trim();
+    const n = (data[`w${w.n}_next`]   || "").trim();
+    lines.push(`--- Week ${w.n} (${w.date}) — ${w.lessons} ---`);
+    lines.push(`1. Built/learned: ${b || "(not yet)"}`);
+    lines.push(`2. Tricky + fix : ${t || "(not yet)"}`);
+    lines.push(`3. Next week    : ${n || "(not yet)"}`);
+    lines.push("");
+  });
+  // Final reflection
+  if (data.finalSkill || data.finalFav || data.finalNext) {
+    lines.push("--- END-OF-TERM REFLECTION ---");
+    lines.push(`New skill: ${data.finalSkill || ""}`);
+    lines.push(`Fav moment: ${data.finalFav || ""}`);
+    lines.push(`Build next: ${data.finalNext || ""}`);
+  }
+  lines.push("");
+  lines.push(`(End of export · ${stamp})`);
+  const blob = new Blob([lines.join("\n")], {type: "text/plain;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = `${name}_BridgeIt_journal_${stamp}.txt`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function resetAll() {
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+document.addEventListener("DOMContentLoaded", renderEntries);
+</script>
+
+</body>
+</html>
