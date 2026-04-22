@@ -101,6 +101,24 @@
 
   .tiny{font-size:.82rem;color:#64748b}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  /* --------- Extension Corner (7TECJ gifted-class early finishers) --------- */
+  .extension-corner{background:linear-gradient(135deg,#ede9fe,#fef3c7);border:1.5px solid #8b5cf6;border-radius:14px;padding:1.6rem 1.8rem;margin:2rem 0}
+  .extension-corner h3{margin:0 0 .4rem;color:#5b21b6;font-size:1.4rem}
+  .extension-corner .ec-intro{color:#4c1d95;margin:0 0 1.2rem;font-size:1rem;line-height:1.5}
+  .ec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+  .ec-card{background:#fff;border:1.5px solid #ddd6fe;border-radius:10px;padding:1rem 1.2rem;position:relative;transition:transform .15s,box-shadow .15s;display:flex;flex-direction:column}
+  .ec-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(91,33,182,.15);border-color:#8b5cf6}
+  .ec-card.ec-bonus{background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#d97706}
+  .ec-card.ec-bonus:hover{border-color:#b45309}
+  .ec-num{position:absolute;top:-.7rem;left:1rem;background:#8b5cf6;color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;box-shadow:0 2px 6px rgba(91,33,182,.35)}
+  .ec-card.ec-bonus .ec-num{background:#d97706;box-shadow:0 2px 6px rgba(217,119,6,.4)}
+  .ec-card h4{margin:.35rem 0 .5rem;color:#1f3a68;font-size:1.08rem;padding-left:.1rem}
+  .ec-card p,.ec-card ol,.ec-card ul{color:#334155;font-size:.93rem;line-height:1.5;margin:.3rem 0}
+  .ec-card ol,.ec-card ul{padding-left:1.2rem}
+  .ec-card .ec-why{color:#6b7280;font-size:.85rem;margin-top:auto;padding-top:.5rem;border-top:1px dashed #e5e7eb}
+  .ec-card a{color:#6d28d9;text-decoration:underline;font-weight:600}
+  .ec-card a:hover{color:#5b21b6}
 </style>
 </head>
 <body>
@@ -184,6 +202,84 @@
     <h3 style="margin-top:1.8rem;">Question-by-question review</h3>
     <p class="tiny">Green = correct, red = incorrect, orange = you marked yourself. For short-answer questions, compare your answer with the model answer and use the buttons to award yourself marks honestly.</p>
     <div id="reviewList"></div>
+
+    <!-- ============================================
+         EXTENSION CORNER — for gifted/fast finishers (7TECJ).
+         Appears inside the results view so it only shows AFTER the
+         student has submitted (no distraction during the test).
+         ============================================ -->
+    <div class="extension-corner" id="extensionCorner">
+      <h3>🚀 Extension Corner — for early finishers</h3>
+      <p class="ec-intro">Already done and the bell hasn't gone? Pick <strong>ANY ONE</strong> task below. Do it in your exercise book, a Google Doc, or a new note — then mention in your private comment which task you chose. These count toward your first Phase-1 folio stamps.</p>
+
+      <div class="ec-grid">
+        <div class="ec-card" data-task="1">
+          <div class="ec-num">1</div>
+          <h4>🔍 Bridge Spotter Challenge</h4>
+          <p>Open this tab: <a href="https://www.pbs.org/wgbh/buildingbig/bridge/index.html" target="_blank" rel="noopener">PBS Building Big — Bridge Basics</a>. Pick <strong>3 bridges</strong> you've never heard of. For each, write:</p>
+          <ul>
+            <li>Its name + country</li>
+            <li>Bridge type (beam / arch / truss / suspension / cable-stayed)</li>
+            <li>ONE reason the engineer chose that type (span length? water below? cost?)</li>
+          </ul>
+          <p class="ec-why"><em>Why it matters:</em> In L02 we study exactly this — you'll be ahead.</p>
+        </div>
+
+        <div class="ec-card" data-task="2">
+          <div class="ec-num">2</div>
+          <h4>📖 Glossary head-start</h4>
+          <p>Open the <a href="workbook.html" target="_blank" rel="noopener">Bridge Workbook Folio</a> and jump to the <strong>Glossary (23 terms)</strong>. Define any <strong>10 terms</strong> in your own words — don't just copy a dictionary. Examples of words you'll see: <em>span · pier · abutment · deck · truss · compression · tension · triangulation · cantilever · load.</em></p>
+          <p class="ec-why"><em>Why it matters:</em> The folio is 50% of your term grade. Starting early = stress-free later.</p>
+        </div>
+
+        <div class="ec-card" data-task="3">
+          <div class="ec-num">3</div>
+          <h4>🇦🇺 Sydney Harbour Bridge deep-dive</h4>
+          <p>Find the answers to all <strong>5 questions</strong> (use Wikipedia or britannica.com, cite your source):</p>
+          <ol>
+            <li>What year did the SHB open?</li>
+            <li>How long is the main arch span (in metres)?</li>
+            <li>Who was the chief engineer?</li>
+            <li>Approximately how many tonnes of steel does it contain?</li>
+            <li>Why was an ARCH shape chosen for the span rather than a suspension bridge?</li>
+          </ol>
+          <p class="ec-why"><em>Why it matters:</em> You'll reference SHB 15 times this term — know it cold.</p>
+        </div>
+
+        <div class="ec-card" data-task="4">
+          <div class="ec-num">4</div>
+          <h4>✏️ Sketch 3 bridge ideas</h4>
+          <p>You'll soon design a bridge that spans a <strong>500 mm gorge</strong> using only <strong>119 plain paddle-pop sticks + 16 holed sticks + clothes pegs + PVA</strong> (NO hot glue, NO middle piers). In your exercise book, sketch <strong>3 very different bridge concepts</strong> that would fit these rules. Label each with the bridge type it's based on (truss? arch? beam? cable-stayed?). Circle your favourite and write ONE sentence on why.</p>
+          <p class="ec-why"><em>Why it matters:</em> Saves you a whole lesson in Phase 2 (idea generation).</p>
+        </div>
+
+        <div class="ec-card" data-task="5">
+          <div class="ec-num">5</div>
+          <h4>🎯 Predict the load test</h4>
+          <p>A typical Year-7 paddle-pop bridge (500 mm span, PVA glue, all triangulated) breaks somewhere between <strong>2 kg and 30 kg</strong> of applied load. Write a short <strong>prediction</strong> (3 sentences) answering:</p>
+          <ul>
+            <li>What weight do YOU think your team's bridge will hold?</li>
+            <li>What ONE design choice will make the biggest difference — more triangles, stronger joints, fewer sticks wasted, or shorter span?</li>
+            <li>How would you TEST your prediction before Load Test Day (Lesson 20)?</li>
+          </ul>
+          <p class="ec-why"><em>Why it matters:</em> The Evaluation at the end of term is 30% of your grade and asks exactly these questions.</p>
+        </div>
+
+        <div class="ec-card ec-bonus" data-task="6">
+          <div class="ec-num">★</div>
+          <h4>🧠 BONUS — Learn from your own diagnostic</h4>
+          <p>Scroll up and find <strong>ONE question you got wrong</strong> (red border in the review). In 3 sentences in your exercise book:</p>
+          <ol>
+            <li>What was the correct answer?</li>
+            <li>Why do you think you got it wrong — careless, never seen it, or confused between two options?</li>
+            <li>How will you remember it next time?</li>
+          </ol>
+          <p class="ec-why"><em>Why it matters:</em> Metacognition — knowing HOW you learn is a gifted-student superpower.</p>
+        </div>
+      </div>
+
+      <p class="tiny" style="margin-top:1.2rem;">Remember: one task is plenty. Quality over quantity — Ms Gao would rather see one thoughtful task than five rushed ones. Add a short note about your chosen task in your Google Classroom private comment.</p>
+    </div>
 
     <div class="submit-info">
       <h3>📤 How to send your result to Ms Gao</h3>
@@ -1079,11 +1175,25 @@ document.addEventListener("DOMContentLoaded", () => {
     head && head.parentNode.insertBefore(banner, head.nextSibling);
   }
 
-  // If already submitted last session, offer to show results
+  // If already submitted last session, offer an in-page banner with a button
+  // (no scary blocking confirm dialog for a Y7 student)
   if (state.submitted) {
-    if (confirm("You've already submitted the diagnostic. Show your previous results?")) {
+    const submittedBanner = document.createElement("div");
+    submittedBanner.className = "diag-callout";
+    submittedBanner.style.cssText = "border-left-color:#1f3a68;background:#eff6ff;";
+    submittedBanner.innerHTML = `<h4 style="color:#1f3a68;">✅ You've already submitted this diagnostic</h4>
+      <p>Your answers and result are safely saved. You can jump back to your previous result at any time.</p>
+      <button type="button" id="showPrevResults" style="background:#1f3a68;color:#fff;border:none;padding:.55rem 1.1rem;border-radius:6px;font-weight:600;cursor:pointer;">📊 Show my previous result</button>
+      <button type="button" id="dismissSubmittedBanner" style="background:#fff;color:#1f3a68;border:1.5px solid #1f3a68;padding:.55rem 1.1rem;border-radius:6px;font-weight:600;cursor:pointer;margin-left:.5rem;">Keep reviewing answers</button>`;
+    const head = document.querySelector(".diag-callout");
+    head && head.parentNode.insertBefore(submittedBanner, head.nextSibling);
+    document.getElementById("showPrevResults").addEventListener("click", () => {
+      submittedBanner.remove();
       showResults();
-    }
+    });
+    document.getElementById("dismissSubmittedBanner").addEventListener("click", () => {
+      submittedBanner.remove();
+    });
   }
 });
 </script>
