@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridge It Diagnostic · Y7 Technology · Term 2</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* --------- Page-specific styles --------- */
+  .diag-callout{background:#fff7ed;border-left:4px solid #ea8b00;padding:1rem 1.25rem;border-radius:10px;margin:1.5rem 0}
+  .diag-callout h4{color:#92400e;margin-top:0}
+  .diag-callout p.small{font-size:.92em;color:#6b7280;font-style:italic;margin-bottom:0}
+
+  .progress-bar{position:sticky;top:66px;z-index:20;background:#fff;border:1.5px solid #e4e7ec;border-radius:12px;padding:.9rem 1.1rem;margin:1.25rem 0;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .progress-bar .bar{flex:1;min-width:180px;height:12px;background:#f1f5f9;border-radius:8px;overflow:hidden}
+  .progress-bar .bar .fill{height:100%;width:0%;background:linear-gradient(90deg,#14b8a6,#10b981);border-radius:8px;transition:width .3s}
+  .progress-bar .count{font-weight:700;color:#1f3a68;min-width:160px}
+  .progress-bar.complete .bar .fill{background:linear-gradient(90deg,#10b981,#059669)}
+  .progress-bar.complete .count{color:#059669}
+
+  .part-block{background:#fff;border:1px solid #e4e7ec;border-radius:12px;padding:1.4rem 1.6rem;margin:1.5rem 0;box-shadow:0 1px 6px rgba(0,0,0,.03)}
+  .part-header{display:flex;align-items:center;gap:.8rem;margin-bottom:.5rem;flex-wrap:wrap}
+  .part-header h2{margin:0;color:#1f3a68;font-size:1.45rem}
+  .part-meta{font-size:.88rem;color:#64748b;font-style:italic}
+  .part-pill{background:#1f3a68;color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:999px;letter-spacing:.04em}
+  .part-pill.auto{background:#14b8a6}
+  .part-pill.self{background:#ea8b00}
+
+  .q{border-top:1px solid #f1f5f9;padding:1.1rem 0 .6rem}
+  .q:first-of-type{border-top:none;padding-top:.5rem}
+  .q-code{font-weight:700;color:#14b8a6;font-size:.95rem;letter-spacing:.02em}
+  .q-marks{color:#64748b;font-size:.85em;font-weight:500;margin-left:.5rem}
+  .q-prompt{margin:.4rem 0 .7rem;font-size:1.02rem;line-height:1.5}
+  .q-img{max-width:100%;height:auto;border:1px solid #e4e7ec;border-radius:8px;margin:.5rem 0 .9rem;display:block}
+  .q-img.narrow{max-width:420px}
+
+  .opt-group{display:flex;flex-direction:column;gap:.45rem;margin-top:.2rem}
+  .opt-group.inline{flex-direction:row;flex-wrap:wrap;gap:.45rem .85rem}
+  .opt{display:flex;align-items:flex-start;gap:.55rem;padding:.55rem .7rem;border:1.5px solid #e4e7ec;border-radius:8px;cursor:pointer;background:#fff;font-size:.95rem;line-height:1.35}
+  .opt:hover{background:#f8fafc;border-color:#14b8a6}
+  .opt input{margin-top:.15rem;cursor:pointer;accent-color:#14b8a6}
+  .opt.selected{background:#e0f7f5;border-color:#14b8a6}
+
+  .q input[type="text"],.q input[type="number"],.q textarea{width:100%;padding:.55rem .7rem;border:1.5px solid #cbd5e1;border-radius:6px;font-family:inherit;font-size:.95rem;box-sizing:border-box}
+  .q input[type="text"]:focus,.q input[type="number"]:focus,.q textarea:focus{outline:none;border-color:#14b8a6;box-shadow:0 0 0 3px rgba(20,184,166,.15)}
+  .q textarea{min-height:80px;resize:vertical}
+  .q .unit{margin-left:.5rem;font-size:.9rem;color:#64748b}
+  .twin-input{display:flex;gap:.8rem;flex-wrap:wrap}
+  .twin-input label{flex:1;min-width:180px;font-size:.9rem;color:#334155;font-weight:600}
+
+  .submit-bar{position:sticky;bottom:0;background:#fff;border:2px solid #1f3a68;border-radius:12px;padding:1.1rem 1.4rem;margin:2rem 0 3rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;box-shadow:0 -3px 16px rgba(0,0,0,.06);z-index:25}
+  .submit-bar .status{flex:1;min-width:240px;color:#64748b;font-size:.95rem}
+  .submit-bar .status.ready{color:#059669;font-weight:600}
+  .submit-bar button{background:#1f3a68;color:#fff;border:none;padding:.85rem 1.6rem;border-radius:8px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:background .2s}
+  .submit-bar button:not(:disabled):hover{background:#2e5b9e}
+  .submit-bar button:disabled{background:#cbd5e1;color:#f8fafc;cursor:not-allowed}
+
+  /* --------- Results view --------- */
+  #results{display:none}
+  #results.shown{display:block}
+  .result-hero{background:linear-gradient(135deg,#1f3a68,#2e5b9e);color:#fff;border-radius:14px;padding:1.8rem 2rem;margin:1.5rem 0;text-align:center}
+  .result-hero h2{margin:0 0 .4rem;font-size:1.5rem}
+  .result-hero .score{font-size:3.3rem;font-weight:800;margin:.4rem 0;letter-spacing:-.03em}
+  .result-hero .score .denom{font-size:1.9rem;opacity:.72;font-weight:500}
+  .result-hero .band{font-size:1.15rem;font-weight:600;padding:.4rem 1.2rem;border-radius:999px;display:inline-block;margin-top:.4rem}
+  .band.extension{background:#10b981}
+  .band.core{background:#14b8a6}
+  .band.support{background:#ea8b00}
+
+  .part-score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin:1.3rem 0}
+  .part-score-cell{background:#fff;border:1.5px solid #e4e7ec;border-radius:10px;padding:.9rem 1rem;text-align:center}
+  .part-score-cell .lbl{font-size:.8rem;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .part-score-cell .val{font-size:1.7rem;font-weight:800;color:#1f3a68;margin:.15rem 0}
+  .part-score-cell .pct{font-size:.85rem;color:#64748b}
+
+  .rev-q{background:#fafbfc;border:1px solid #e4e7ec;border-left:4px solid #cbd5e1;border-radius:8px;padding:.85rem 1.1rem;margin:.7rem 0}
+  .rev-q.correct{border-left-color:#10b981;background:#f0fdf4}
+  .rev-q.wrong{border-left-color:#ef4444;background:#fef2f2}
+  .rev-q.self{border-left-color:#ea8b00;background:#fff7ed}
+  .rev-q .rev-code{font-weight:700;color:#1f3a68;font-size:.95rem}
+  .rev-q .rev-prompt{color:#334155;font-size:.95rem;margin:.15rem 0 .5rem}
+  .rev-q .rev-label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#64748b}
+  .rev-q .rev-your{color:#1e3a8a;margin:.15rem 0}
+  .rev-q .rev-correct{color:#047857;margin:.15rem 0}
+  .rev-q .rev-model{color:#92400e;margin:.15rem 0;font-style:italic}
+  .rev-q .rev-self{margin-top:.55rem;display:flex;gap:.4rem;flex-wrap:wrap}
+  .rev-q .rev-self button{padding:.4rem .85rem;border:1.5px solid #cbd5e1;background:#fff;border-radius:6px;cursor:pointer;font-size:.88rem;font-weight:600;color:#334155}
+  .rev-q .rev-self button:hover{border-color:#ea8b00}
+  .rev-q .rev-self button.picked{background:#ea8b00;color:#fff;border-color:#ea8b00}
+
+  .submit-info{background:#eff6ff;border:1.5px solid #2e5b9e;border-radius:12px;padding:1.4rem 1.6rem;margin:2rem 0}
+  .submit-info h3{margin-top:0;color:#1f3a68}
+  .submit-info ol{margin:0.4rem 0 .8rem 1.4rem;padding:0}
+  .submit-info ol li{margin:.4rem 0;line-height:1.5}
+  .submit-info pre{background:#fff;border:1px solid #cbd5e1;border-radius:6px;padding:.9rem 1rem;margin:.7rem 0;font-size:.85rem;overflow-x:auto;white-space:pre-wrap;color:#334155}
+  .submit-info .btn-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.7rem}
+  .submit-info .btn-row button{background:#1f3a68;color:#fff;border:none;padding:.55rem 1.1rem;border-radius:6px;font-weight:600;cursor:pointer;font-size:.92rem}
+  .submit-info .btn-row button:hover{background:#2e5b9e}
+  .submit-info .btn-row button.secondary{background:#fff;color:#1f3a68;border:1.5px solid #1f3a68}
+  .submit-info .btn-row button.secondary:hover{background:#eff6ff}
+
+  .tiny{font-size:.82rem;color:#64748b}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+      <a href="diagnostic.html">📝 Diagnostic</a>
+      <a href="workbook.html">📘 Workbook</a>
+      <a href="journal.html">📓 Journal</a>
+    </nav>
+  </div>
+</header>
+
+<section class="lesson-head">
+  <div class="container">
+    <span class="lesson-pill" style="background:#ea8b00;">Lesson 1 · Diagnostic</span>
+    <h1>📝 Bridge It Diagnostic Test</h1>
+    <p class="lesson-meta">50 minutes · 40 marks · 5 parts (A 10 · B 10 · C 10 · D 5 · E 5). Your tier placement (Support / Core / Extension) will be posted in Google Classroom by Friday.</p>
+  </div>
+</section>
+
+<main class="container">
+
+  <div class="diag-callout">
+    <h4>How this works</h4>
+    <p>
+      <strong>1.</strong> Answer every question — auto-mark items (Parts A, C, D) tell you immediately if you got it right.
+      Short-answer items (Part B) are checked against a model answer, and sketch tasks (Part E) you upload to Google Classroom.<br>
+      <strong>2.</strong> Your answers save automatically as you type. You can close the browser and come back.<br>
+      <strong>3.</strong> When every question is answered, the <em>Submit</em> button at the bottom unlocks. Click it to see your score and the correct answers.<br>
+      <strong>4.</strong> After you submit, follow the instructions to share your result in Google Classroom (details appear when you submit).
+    </p>
+    <p class="small">Tip: skip if stuck and come back — don't spend more than 5 minutes on any single question.</p>
+  </div>
+
+  <!-- Student info -->
+  <div class="part-block" id="student-info" style="border-left:4px solid #1f3a68;background:#eff6ff;">
+    <div class="part-header"><h2>Who are you?</h2></div>
+    <div class="twin-input">
+      <label>Your full name
+        <input type="text" id="studentName" placeholder="e.g. Amanda Guo" data-required="1">
+      </label>
+      <label>Class
+        <input type="text" id="studentClass" placeholder="e.g. 7TECJ" data-required="1">
+      </label>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progressBar">
+    <div class="count" id="progressCount">0 / 0 questions answered</div>
+    <div class="bar"><div class="fill" id="progressFill"></div></div>
+    <div id="saveIndicator" style="font-size:.82rem;color:#64748b;min-width:140px;text-align:right;">💾 Not saved yet</div>
+  </div>
+
+  <!-- Quiz sections will be rendered here -->
+  <div id="quiz"></div>
+
+  <!-- Submit bar -->
+  <div class="submit-bar">
+    <div class="status" id="submitStatus">Answer every question to unlock Submit.</div>
+    <button id="submitBtn" type="button" disabled>Submit answers</button>
+  </div>
+
+  <!-- Results view -->
+  <div id="results">
+    <div class="result-hero">
+      <h2>Your diagnostic result</h2>
+      <div class="score"><span id="resultScore">0</span><span class="denom"> / 40</span></div>
+      <div class="band" id="resultBand">—</div>
+      <p id="resultMsg" style="margin:.7rem 0 0;opacity:.9"></p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;">Score by part</h3>
+    <div class="part-score-grid" id="partScoreGrid"></div>
+
+    <h3 style="margin-top:1.8rem;">Question-by-question review</h3>
+    <p class="tiny">Green = correct, red = incorrect, orange = you marked yourself. For short-answer questions, compare your answer with the model answer and use the buttons to award yourself marks honestly.</p>
+    <div id="reviewList"></div>
+
+    <div class="submit-info">
+      <h3>📤 How to send your result to Ms Gao</h3>
+      <ol>
+        <li>Copy the summary below (click <strong>Copy result</strong>).</li>
+        <li>Go to <strong>Google Classroom → Bridge It Diagnostic (Lesson 1)</strong>.</li>
+        <li>Click <strong>Private comment</strong> on the assignment and paste your result. Add a photo of your Part E sketches if you did them on paper.</li>
+        <li>Mark the assignment as <strong>Done</strong>. Your tier placement will be posted by Friday.</li>
+      </ol>
+      <pre id="submitText">Your result summary will appear here after you click Submit.</pre>
+      <div class="btn-row">
+        <button id="copyResult" type="button">📋 Copy result</button>
+        <button id="downloadResult" type="button" class="secondary">💾 Download as .txt</button>
+        <button id="retakeBtn" type="button" class="secondary">🔄 Retake (clear all)</button>
+      </div>
+      <p class="tiny" style="margin-top:.8rem">Can't copy? Use the download button, then attach the .txt file to your Google Classroom private comment instead.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ================================================================
+     QUESTION DATA + MARKING LOGIC + UI RENDERING
+     ================================================================ -->
+<script>
+"use strict";
+
+/* ==================================================================
+   QUESTIONS
+   ================================================================== */
+const PARTS = [
+  /* ---------- PART A: Bridge Recognition (10 marks) ---------- */
+  {
+    id: "A",
+    title: "Part A — Bridge Recognition",
+    meta: "10 marks · auto-marked",
+    pill: "Auto-mark",
+    pillClass: "auto",
+    intro: "Each question has a bridge image above it. Look carefully, then choose or type the answer.",
+    questions: [
+      {
+        code: "A1", marks: 1, type: "radio", image: "../assets/diag/A1.jpg",
+        prompt: "Which ONE type of bridge is shown in A1?",
+        options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+        correct: "truss",
+        explain: "It's a Pratt TRUSS — diagonals + verticals between two horizontal chords."
+      },
+      {
+        code: "A2", marks: 1, type: "radio", image: "../assets/diag/A2.jpg",
+        prompt: "The red arrow in A2 is pointing to which ONE part of the bridge?",
+        options: ["deck", "pier", "abutment", "truss", "cable"],
+        correct: "deck",
+        explain: "The DECK is the top horizontal surface where the road or walkway sits."
+      },
+      {
+        code: "A3-LEFT", marks: 1, type: "radio", image: "../assets/diag/A3.jpg", imageSharedWith: "A3-RIGHT",
+        prompt: "A3 shows TWO bridges. Which type is on the LEFT?",
+        options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+        correct: "arch",
+        explain: "Left = ARCH bridge (the Pont du Gard in France — stone arches in compression)."
+      },
+      {
+        code: "A3-RIGHT", marks: 1, type: "radio",
+        prompt: "And which type is on the RIGHT?",
+        options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+        correct: "suspension",
+        explain: "Right = SUSPENSION bridge (the Golden Gate Bridge — cables hang from tall towers)."
+      },
+      {
+        code: "A4", marks: 2, type: "checkbox", image: "../assets/diag/A4.png", expectCount: 2,
+        prompt: "A4 shows a Pratt truss with members coloured RED (compression) and BLUE (tension). Tick TWO types of member that are in COMPRESSION.",
+        options: ["top chord", "bottom chord", "diagonals", "verticals", "end posts"],
+        correct: ["top chord", "verticals", "end posts"],
+        correctDisplay: "TOP CHORD, VERTICALS and END POSTS are all in compression (red).",
+        explain: "In a Pratt truss: top chord + verticals + end posts all carry compression. Diagonals + bottom chord carry tension."
+      },
+      {
+        code: "A5", marks: 1, type: "radio", image: "../assets/diag/A5.jpg",
+        prompt: "A5 is the Sydney Harbour Bridge. Choose ONE: is it an ARCH, a TRUSS, or a HYBRID of both?",
+        options: ["arch only", "truss only", "hybrid (arch + truss)"],
+        correct: "hybrid (arch + truss)",
+        explain: "HYBRID — it's a steel arch with truss bracing between the chords of the arch."
+      },
+      {
+        code: "A6", marks: 1, type: "radio", image: "../assets/diag/A6.png",
+        prompt: "Which shape in A6 holds its form when pushed from the side — it cannot be squashed without breaking a side?",
+        options: ["square", "rectangle", "triangle", "circle", "hexagon"],
+        correct: "triangle",
+        explain: "TRIANGLE — this is why engineers use triangulation to make structures rigid."
+      },
+      {
+        code: "A7", marks: 1, type: "radio", image: "../assets/diag/A7.jpg",
+        prompt: "A7 shows the Leaning Tower of Pisa — a tall tower that began to tilt soon after it was built. Which ONE reason best explains WHY it is leaning?",
+        options: ["wide base", "narrow base on soft ground", "strong walls", "gravity alone"],
+        correct: "narrow base on soft ground",
+        explain: "NARROW BASE ON SOFT GROUND — the foundation was too small and the ground beneath sank unevenly, so the tower lost stability."
+      },
+      {
+        code: "A8", marks: 1, type: "radio", image: "../assets/diag/A8.png",
+        prompt: "A8 shows 3 paper shapes supporting a book. Which shape held the book BEST?",
+        options: ["A — flat sheet", "B — rolled tube", "C — concertina fold"],
+        correct: "B — rolled tube",
+        explain: "B — the ROLLED TUBE distributes compression around its walls. A flat sheet collapses. A concertina crumples under enough load."
+      }
+    ]
+  },
+
+  /* ---------- PART B: Short Answer (10 marks) ---------- */
+  {
+    id: "B",
+    title: "Part B — Short Answer",
+    meta: "10 marks · self-marked against a model answer",
+    pill: "Self-mark",
+    pillClass: "self",
+    intro: "Answer in your own words. Full sentences are best, but bullet points are OK. After you submit, you'll compare your answer with the model answer and mark yourself honestly.",
+    questions: [
+      {
+        code: "B1", marks: 2, type: "text",
+        prompt: "In your own words, what does the word COMPRESSION mean when engineers use it?",
+        model: "A pushing (squashing) force that squashes or shortens a material. Examples: a book sitting on a shelf, a column under a roof, the spine carrying weight."
+      },
+      {
+        code: "B2", marks: 2, type: "text",
+        prompt: "In your own words, what is TENSION?",
+        model: "A pulling (stretching) force that stretches a material. Examples: a rubber band, a suspension bridge cable, a guitar string."
+      },
+      {
+        code: "B3", marks: 2, type: "text",
+        prompt: "What is TRIANGULATION and why do engineers use it?",
+        model: "Using triangles in a structure to make it rigid. A triangle cannot change shape without breaking one of its sides, so it locks the structure in place. Squares and rectangles can collapse into parallelograms."
+      },
+      {
+        code: "B4", marks: 2, type: "text",
+        prompt: "Name the 4 stages of the design process in order.",
+        model: "(1) Investigate / Explore  (2) Develop ideas / Design  (3) Produce / Build  (4) Test & Evaluate. Order matters — you investigate before you design, and you test at the end."
+      },
+      {
+        code: "B5", marks: 1, type: "text",
+        prompt: "Name ONE thing that makes a tower or bridge MORE stable.",
+        model: "Accept any ONE of: wide base · low centre of gravity · triangulation · even weight distribution · strong materials · bracing."
+      },
+      {
+        code: "B6", marks: 1, type: "text",
+        prompt: "Explain the difference between an ELEMENT of design and a PRINCIPLE of design.",
+        model: "ELEMENTS are the building blocks (point, line, shape, form, colour, tone, texture). PRINCIPLES are the rules for arranging them (balance, unity, proportion, contrast, emphasis, movement, rhythm)."
+      }
+    ]
+  },
+
+  /* ---------- PART C: Scale & Measurement (10 marks) — Term 1 review ---------- */
+  {
+    id: "C",
+    title: "Part C — Scale & Measurement",
+    meta: "10 marks · auto-marked · includes Term 1 review",
+    pill: "Auto-mark",
+    pillClass: "auto",
+    intro: "These questions review scale-drawing and measurement skills from Term 1. Show your working in your head — then type the final number.",
+    questions: [
+      {
+        code: "C1", marks: 2, type: "number", unit: "mm",
+        prompt: "A scaled drawing of a bridge is drawn at 1:5. On the drawing, the bridge measures 90 mm. How long is the REAL bridge?",
+        correct: 450,
+        explain: "1:5 means the real object is 5× bigger than the drawing. 90 mm × 5 = 450 mm."
+      },
+      {
+        code: "C2", marks: 1, type: "number", unit: "cm",
+        prompt: "Convert 85 mm into centimetres.",
+        correct: 8.5,
+        tolerance: 0.01,
+        explain: "10 mm = 1 cm, so 85 mm ÷ 10 = 8.5 cm."
+      },
+      {
+        code: "C3", marks: 1, type: "number", unit: "mm",
+        prompt: "Convert 1.2 metres into millimetres.",
+        correct: 1200,
+        explain: "1 m = 1000 mm. 1.2 × 1000 = 1200 mm."
+      },
+      {
+        code: "C4", marks: 2, type: "number", unit: "mm", image: "../assets/diag/C.png",
+        prompt: "Look at the dimensioned drawing above. The drawing is at 1:10 scale. The real bridge span shown on the drawing is labelled 600 mm. What would that same span measure on a printed drawing at 1:10?",
+        correct: 60,
+        explain: "1:10 means drawing is 10× smaller. 600 mm ÷ 10 = 60 mm on paper."
+      },
+      {
+        code: "C5", marks: 1, type: "number", unit: "mm",
+        prompt: "A top chord on the drawing measures 60 mm. The scale is 1:5. How long is the REAL top chord?",
+        correct: 300,
+        explain: "60 mm × 5 = 300 mm."
+      },
+      {
+        code: "C6", marks: 1, type: "radio",
+        prompt: "What does a scale of 1:20 MEAN?",
+        options: [
+          "For every 1 unit on the drawing, the real object is 20 units (the drawing is 20× smaller).",
+          "For every 20 units on the drawing, the real object is 1 unit.",
+          "The drawing is 20× bigger than the real object.",
+          "The drawing shows 20 separate views of the object."
+        ],
+        correct: "For every 1 unit on the drawing, the real object is 20 units (the drawing is 20× smaller).",
+        explain: "Scale ratios are written as drawing : real. 1:20 means 1 drawing unit = 20 real units."
+      },
+      {
+        code: "C7", marks: 1, type: "checkbox", expectCount: 2,
+        prompt: "Pick the TWO MAIN rules of technical lettering (tick exactly 2):",
+        options: ["UPPERCASE letters", "curly / cursive letters", "SAME HEIGHT for all letters", "decorative flourishes", "joined-up writing"],
+        correct: ["UPPERCASE letters", "SAME HEIGHT for all letters"],
+        correctDisplay: "UPPERCASE letters + SAME HEIGHT (also acceptable: vertical).",
+        explain: "Technical lettering must be clear and consistent: uppercase, same height, vertical, no decoration."
+      },
+      {
+        code: "C8", marks: 1, type: "radio",
+        prompt: "Which ONE of these scales gives the SMALLEST drawing of the same real object?",
+        options: ["1:2", "1:10", "1:50", "1:100"],
+        correct: "1:100",
+        explain: "The bigger the second number, the more the drawing shrinks. 1:100 is the smallest."
+      }
+    ]
+  },
+
+  /* ---------- PART D: Views & Isometric (5 marks) — Term 1 review ---------- */
+  {
+    id: "D",
+    title: "Part D — Views & Isometric",
+    meta: "5 marks · auto-marked · Term 1 drawing review",
+    pill: "Auto-mark",
+    pillClass: "auto",
+    intro: "These review technical-drawing views from Term 1. One correct answer per question.",
+    questions: [
+      {
+        code: "D1", marks: 1, type: "radio",
+        prompt: "A PLAN VIEW shows an object as if you were looking at it from…",
+        options: ["directly above (looking down)", "directly in front", "directly from the side", "at a 45° angle"],
+        correct: "directly above (looking down)",
+        explain: "PLAN VIEW = top-down view, as if you're a bird directly above."
+      },
+      {
+        code: "D2", marks: 1, type: "radio",
+        prompt: "An ISOMETRIC drawing shows how many faces of a 3D object at once?",
+        options: ["1 face", "2 faces", "3 faces", "all 6 faces"],
+        correct: "3 faces",
+        explain: "Isometric shows 3 faces (top + two sides) at the same time. That's why it looks 3D on 2D paper."
+      },
+      {
+        code: "D3", marks: 1, type: "radio",
+        prompt: "In an isometric drawing, at what angle from the horizontal are the two side axes drawn?",
+        options: ["15°", "30°", "45°", "60°"],
+        correct: "30°",
+        explain: "30° from horizontal — that's the isometric 'dot paper' grid."
+      },
+      {
+        code: "D4", marks: 1, type: "radio",
+        prompt: "The 'Y method' for starting an isometric cube begins with which line?",
+        options: ["one horizontal line", "one vertical line with two 30° lines leaving the top", "a cross (+) through the centre", "a zig-zag"],
+        correct: "one vertical line with two 30° lines leaving the top",
+        explain: "Y method: vertical stem first, then two 30° lines out of the top — looks like the letter Y."
+      },
+      {
+        code: "D5", marks: 1, type: "radio",
+        prompt: "The view showing an object as if you are standing directly in FRONT of it (head-on) is called…",
+        options: ["plan view", "front elevation", "isometric view", "side elevation"],
+        correct: "front elevation",
+        explain: "FRONT ELEVATION = looking head-on from in front. Side elevation is from the side. Plan is from above."
+      }
+    ]
+  },
+
+  /* ---------- PART E: Drawing Tasks (5 marks, photo upload + self-mark) ---------- */
+  {
+    id: "E",
+    title: "Part E — Drawing Tasks",
+    meta: "5 marks · on paper · photo upload + self-mark",
+    pill: "Upload + self-mark",
+    pillClass: "self",
+    intro: "Do these two sketches on PAPER with a ruler, then take a photo and upload it to Google Classroom. Use the checkboxes below to confirm you completed each task — you'll self-assess the marks after submitting.",
+    questions: [
+      {
+        code: "E1", marks: 3, type: "taskcheck",
+        prompt: "Sketch a simple TRUSS BRIDGE (side view) on paper. Include: a top chord, a bottom chord, at least 3 verticals, and at least 2 diagonals. Then LABEL one member that is in COMPRESSION (mark it C) and one in TENSION (mark it T).",
+        model: "Expected: two parallel chords, ≥3 verticals, ≥2 diagonals, ruler used (no wobbly freehand), C and T labels clearly placed on DIFFERENT members (e.g. C on top chord, T on bottom chord for a Pratt)."
+      },
+      {
+        code: "E2", marks: 2, type: "taskcheck",
+        prompt: "On isometric dot paper, draw a CUBE using the Y method. Mark the 3 axes.",
+        model: "Expected: Y-method start visible (vertical stem + two 30° lines). All 3 axes marked. Parallel lines parallel. Cube closed. Ruler used throughout."
+      }
+    ]
+  }
+];
+
+const TOTAL_MARKS = PARTS.reduce((t, p) => t + p.questions.reduce((s, q) => s + q.marks, 0), 0);
+
+/* ==================================================================
+   STATE MANAGEMENT — HARDENED LOCAL SAVE
+   Triple redundancy: localStorage + sessionStorage + in-memory.
+   If localStorage is full / disabled / cleared, we fall back to
+   sessionStorage so the student's 做题记录 never disappears mid-test.
+   Every save writes a timestamp the student can see on screen.
+   ================================================================== */
+const STORAGE_KEY = "y7-bridgeit-t2-diagnostic-v1";
+
+function _readRaw(storage) {
+  try { return storage && storage.getItem(STORAGE_KEY); } catch (e) { return null; }
+}
+
+function _writeRaw(storage, payload) {
+  try { storage && storage.setItem(STORAGE_KEY, payload); return true; }
+  catch (e) { return false; }
+}
+
+function loadState() {
+  // Prefer the newer of localStorage vs sessionStorage (by savedAt)
+  let ls = null, ss = null;
+  try { const r = _readRaw(window.localStorage); if (r) ls = JSON.parse(r); } catch (e) {}
+  try { const r = _readRaw(window.sessionStorage); if (r) ss = JSON.parse(r); } catch (e) {}
+  let pick = null;
+  if (ls && ss) pick = (ls.savedAt || 0) >= (ss.savedAt || 0) ? ls : ss;
+  else pick = ls || ss;
+  if (!pick) return {answers:{}, selfMarks:{}, submitted:false, savedAt:0};
+  // Guarantee all top-level keys exist
+  if (!pick.answers) pick.answers = {};
+  if (!pick.selfMarks) pick.selfMarks = {};
+  if (typeof pick.submitted !== "boolean") pick.submitted = false;
+  return pick;
+}
+
+let lastSaveOk = false;
+function saveState(state) {
+  state.savedAt = Date.now();
+  const payload = JSON.stringify(state);
+  // Write to BOTH storages. Even if one fails (quota / incognito / blocked),
+  // the other usually succeeds.
+  const ok1 = _writeRaw(window.localStorage, payload);
+  const ok2 = _writeRaw(window.sessionStorage, payload);
+  lastSaveOk = ok1 || ok2;
+  updateSaveIndicator(ok1, ok2);
+}
+
+function updateSaveIndicator(ok1, ok2) {
+  const el = document.getElementById("saveIndicator");
+  if (!el) return;
+  const t = new Date();
+  const stamp = t.toLocaleTimeString("en-AU", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+  if (ok1 && ok2) {
+    el.textContent = `✅ Saved ${stamp}`;
+    el.style.color = "#059669";
+  } else if (ok1 || ok2) {
+    el.textContent = `⚠️ Saved (one store only) ${stamp}`;
+    el.style.color = "#d97706";
+  } else {
+    el.textContent = `❌ Couldn't save — screenshot your answers!`;
+    el.style.color = "#dc2626";
+    // Loud warning
+    if (!window._saveFailWarned) {
+      window._saveFailWarned = true;
+      alert("Your browser is blocking local save (e.g. private/incognito mode). Your answers may not survive closing the tab. Take screenshots, or switch to a normal browser window.");
+    }
+  }
+}
+
+/* Heartbeat save — belt & braces, in case a 'change' event missed. */
+function startHeartbeatSave() {
+  setInterval(() => { saveState(state); }, 20000);  // every 20 s
+}
+
+/* Warn before leaving if there are answers and they haven't submitted */
+function installUnloadGuard() {
+  window.addEventListener("beforeunload", (e) => {
+    const hasAnswers = Object.keys(state.answers).some(k => k !== "studentName" && k !== "studentClass");
+    if (hasAnswers && !state.submitted) {
+      e.preventDefault();
+      e.returnValue = "Your answers are saved on this computer, but if you navigate away you'll have to come back to finish. Continue?";
+      return e.returnValue;
+    }
+  });
+}
+
+let state = loadState();
+
+/* ==================================================================
+   RENDER THE QUIZ
+   ================================================================== */
+function renderQuiz() {
+  const host = document.getElementById("quiz");
+  host.innerHTML = "";
+  for (const part of PARTS) {
+    const block = document.createElement("section");
+    block.className = "part-block";
+    block.id = "part-" + part.id;
+    block.innerHTML = `
+      <div class="part-header">
+        <h2>${part.title}</h2>
+        <span class="part-pill ${part.pillClass}">${part.pill}</span>
+        <span class="part-meta">${part.meta}</span>
+      </div>
+      <p class="part-meta" style="margin:.2rem 0 .9rem;font-style:italic;">${part.intro}</p>
+      <div class="part-questions"></div>
+    `;
+    const qHost = block.querySelector(".part-questions");
+    for (const q of part.questions) {
+      qHost.appendChild(renderQuestion(q));
+    }
+    host.appendChild(block);
+  }
+}
+
+function renderQuestion(q) {
+  const wrap = document.createElement("div");
+  wrap.className = "q";
+  wrap.id = "q-" + q.code;
+
+  const marksLbl = q.marks === 1 ? "1 mark" : `${q.marks} marks`;
+  let inner = `<div><span class="q-code">${q.code}</span><span class="q-marks">(${marksLbl})</span></div>`;
+  if (q.image) {
+    const narrow = q.image.includes("A7") ? " narrow" : "";
+    inner += `<img class="q-img${narrow}" src="${q.image}" alt="${q.code} illustration">`;
+  }
+  inner += `<div class="q-prompt">${q.prompt}</div>`;
+
+  const saved = state.answers[q.code];
+
+  if (q.type === "radio") {
+    inner += `<div class="opt-group${q.options.length <= 4 ? "" : ""}">`;
+    for (const opt of q.options) {
+      const checked = saved === opt ? "checked" : "";
+      const selClass = saved === opt ? " selected" : "";
+      inner += `<label class="opt${selClass}"><input type="radio" name="${q.code}" value="${escapeAttr(opt)}" ${checked}> <span>${opt}</span></label>`;
+    }
+    inner += `</div>`;
+  } else if (q.type === "checkbox") {
+    const savedList = Array.isArray(saved) ? saved : [];
+    inner += `<div class="opt-group">`;
+    for (const opt of q.options) {
+      const checked = savedList.includes(opt) ? "checked" : "";
+      const selClass = savedList.includes(opt) ? " selected" : "";
+      inner += `<label class="opt${selClass}"><input type="checkbox" name="${q.code}" value="${escapeAttr(opt)}" ${checked}> <span>${opt}</span></label>`;
+    }
+    inner += `</div>`;
+    if (q.expectCount) {
+      inner += `<div class="tiny" style="margin-top:.4rem;">Tick exactly ${q.expectCount}.</div>`;
+    }
+  } else if (q.type === "number") {
+    const val = saved != null ? `value="${escapeAttr(saved)}"` : "";
+    inner += `<div><input type="number" step="any" name="${q.code}" ${val} placeholder="Type your answer"><span class="unit">${q.unit || ""}</span></div>`;
+  } else if (q.type === "text") {
+    const val = saved != null ? saved : "";
+    inner += `<textarea name="${q.code}" placeholder="Type your answer — full sentence or bullet points">${escapeHtml(val)}</textarea>`;
+  } else if (q.type === "taskcheck") {
+    const checked = saved === true ? "checked" : "";
+    inner += `<label class="opt${checked ? " selected" : ""}" style="max-width:560px;">
+      <input type="checkbox" name="${q.code}" ${checked}>
+      <span>I have done this sketch on paper and will upload a photo of it to Google Classroom.</span>
+    </label>`;
+  }
+
+  wrap.innerHTML = inner;
+  return wrap;
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+function escapeAttr(s) { return escapeHtml(s); }
+
+/* ==================================================================
+   INPUT HANDLING  —  save on every change + update progress
+   ================================================================== */
+function wireInputs() {
+  const quiz = document.getElementById("quiz");
+  quiz.addEventListener("change", onInputChange);
+  quiz.addEventListener("input", onInputChange);
+
+  // Also listen to student info fields
+  document.getElementById("studentName").addEventListener("input", onInputChange);
+  document.getElementById("studentClass").addEventListener("input", onInputChange);
+}
+
+function onInputChange(e) {
+  const t = e.target;
+  if (!t) return;
+
+  // Student info
+  if (t.id === "studentName" || t.id === "studentClass") {
+    state.answers[t.id] = t.value.trim();
+    saveState(state);
+    updateProgress();
+    return;
+  }
+
+  const name = t.name;
+  if (!name) return;
+  const q = findQuestion(name);
+  if (!q) return;
+
+  if (q.type === "radio") {
+    state.answers[name] = t.value;
+    // Toggle .selected class
+    const group = t.closest(".opt-group");
+    if (group) group.querySelectorAll(".opt").forEach(o => {
+      const input = o.querySelector("input");
+      o.classList.toggle("selected", !!(input && input.checked));
+    });
+  } else if (q.type === "checkbox") {
+    // Gather all checked values
+    const inputs = document.querySelectorAll(`input[type="checkbox"][name="${CSS.escape(name)}"]`);
+    const vals = [];
+    inputs.forEach(i => { if (i.checked) vals.push(i.value); });
+    state.answers[name] = vals;
+    // Toggle .selected class
+    const group = t.closest(".opt-group");
+    if (group) group.querySelectorAll(".opt").forEach(o => {
+      const input = o.querySelector("input");
+      o.classList.toggle("selected", !!(input && input.checked));
+    });
+  } else if (q.type === "number") {
+    const v = t.value.trim();
+    state.answers[name] = v === "" ? null : parseFloat(v);
+  } else if (q.type === "text") {
+    state.answers[name] = t.value;
+  } else if (q.type === "taskcheck") {
+    state.answers[name] = t.checked;
+    const lbl = t.closest(".opt");
+    if (lbl) lbl.classList.toggle("selected", t.checked);
+  }
+
+  saveState(state);
+  updateProgress();
+}
+
+function findQuestion(code) {
+  for (const p of PARTS) {
+    for (const q of p.questions) {
+      if (q.code === code) return q;
+    }
+  }
+  return null;
+}
+
+/* ==================================================================
+   PROGRESS + SUBMIT UNLOCK
+   ================================================================== */
+function isAnswered(q) {
+  const v = state.answers[q.code];
+  if (q.type === "radio") return !!v;
+  if (q.type === "checkbox") {
+    if (!Array.isArray(v) || v.length === 0) return false;
+    if (q.expectCount && v.length !== q.expectCount) return false;
+    return true;
+  }
+  if (q.type === "number") return v != null && !isNaN(v);
+  if (q.type === "text") return typeof v === "string" && v.trim().length >= 2;
+  if (q.type === "taskcheck") return v === true;
+  return false;
+}
+
+function allQuestions() {
+  return PARTS.flatMap(p => p.questions);
+}
+
+function updateProgress() {
+  const all = allQuestions();
+  let answered = 0;
+  for (const q of all) if (isAnswered(q)) answered++;
+
+  const pct = Math.round(answered / all.length * 100);
+  document.getElementById("progressCount").textContent = `${answered} / ${all.length} questions answered (${pct}%)`;
+  document.getElementById("progressFill").style.width = pct + "%";
+  const bar = document.getElementById("progressBar");
+  bar.classList.toggle("complete", answered === all.length);
+
+  // Require name + class too
+  const nameOk = (state.answers.studentName || "").trim().length >= 1;
+  const classOk = (state.answers.studentClass || "").trim().length >= 1;
+
+  const ready = answered === all.length && nameOk && classOk;
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = !ready;
+  const status = document.getElementById("submitStatus");
+  if (ready) {
+    status.textContent = "All done! Click Submit to see your score and correct answers.";
+    status.classList.add("ready");
+  } else {
+    const missing = all.length - answered;
+    let msg = missing > 0 ? `${missing} question${missing===1?"":"s"} still to answer.` : "";
+    if (!nameOk || !classOk) msg += (msg ? " " : "") + "Fill in your name + class at the top.";
+    status.textContent = msg || "Keep going…";
+    status.classList.remove("ready");
+  }
+}
+
+/* ==================================================================
+   MARKING LOGIC
+   ================================================================== */
+function markQuestion(q) {
+  const v = state.answers[q.code];
+  if (q.type === "radio") {
+    return v === q.correct ? q.marks : 0;
+  }
+  if (q.type === "checkbox") {
+    // 2-mark "tick exactly 2 from the correct list"
+    if (!Array.isArray(v)) return 0;
+    const correctList = q.correct;
+    const inCorrect = v.filter(x => correctList.includes(x));
+    const wrongPicks = v.filter(x => !correctList.includes(x)).length;
+    if (q.expectCount && v.length !== q.expectCount) {
+      // Penalty: wrong number of ticks => partial credit based on how many of their picks were correct
+      if (inCorrect.length >= q.expectCount) return q.marks;   // had the right ones but too many — still award
+      return Math.max(0, inCorrect.length - wrongPicks) * (q.marks / q.expectCount);
+    }
+    // Standard: full marks if they ticked at least expectCount from the correct list and no wrong ticks
+    if (inCorrect.length >= (q.expectCount || 1) && wrongPicks === 0) return q.marks;
+    return Math.max(0, inCorrect.length - wrongPicks) * (q.marks / (q.expectCount || correctList.length));
+  }
+  if (q.type === "number") {
+    if (v == null || isNaN(v)) return 0;
+    const tol = q.tolerance != null ? q.tolerance : 0.001;
+    return Math.abs(v - q.correct) <= tol ? q.marks : 0;
+  }
+  if (q.type === "text") {
+    // Self-marked — return null so results view presents buttons
+    const sm = state.selfMarks[q.code];
+    return (typeof sm === "number") ? sm : null;
+  }
+  if (q.type === "taskcheck") {
+    const sm = state.selfMarks[q.code];
+    return (typeof sm === "number") ? sm : null;
+  }
+  return 0;
+}
+
+function computeTotals() {
+  const partScores = {};
+  let total = 0, totalOutOf = 0;
+  for (const part of PARTS) {
+    let got = 0, out = 0;
+    for (const q of part.questions) {
+      out += q.marks;
+      const m = markQuestion(q);
+      if (m != null) got += m;
+    }
+    partScores[part.id] = {got, out};
+    total += got;
+    totalOutOf += out;
+  }
+  return {partScores, total, totalOutOf};
+}
+
+function computeBand(total) {
+  if (total >= 32) return {name: "Extension", cls: "extension", msg: "Outstanding — you're ready for extension-tier challenges."};
+  if (total >= 20) return {name: "Core", cls: "core", msg: "Solid — you're on track for the core bridge-building programme."};
+  return {name: "Support", cls: "support", msg: "No stress — you're ready for scaffolded support this term. You'll build skills fast."};
+}
+
+/* ==================================================================
+   RESULTS VIEW
+   ================================================================== */
+function showResults() {
+  document.getElementById("results").classList.add("shown");
+  renderResults();
+  document.getElementById("results").scrollIntoView({behavior: "smooth", block: "start"});
+}
+
+function renderResults() {
+  const totals = computeTotals();
+  document.getElementById("resultScore").textContent = roundHalf(totals.total);
+  const band = computeBand(totals.total);
+  const bandEl = document.getElementById("resultBand");
+  bandEl.textContent = band.name + " tier";
+  bandEl.className = "band " + band.cls;
+  document.getElementById("resultMsg").textContent = band.msg;
+
+  // Part scores grid
+  const grid = document.getElementById("partScoreGrid");
+  grid.innerHTML = "";
+  for (const part of PARTS) {
+    const s = totals.partScores[part.id];
+    const pct = s.out > 0 ? Math.round(s.got / s.out * 100) : 0;
+    grid.insertAdjacentHTML("beforeend", `
+      <div class="part-score-cell">
+        <div class="lbl">Part ${part.id}</div>
+        <div class="val">${roundHalf(s.got)}<span style="font-size:1rem;color:#64748b">/${s.out}</span></div>
+        <div class="pct">${pct}%</div>
+      </div>`);
+  }
+
+  // Review list
+  const rev = document.getElementById("reviewList");
+  rev.innerHTML = "";
+  for (const part of PARTS) {
+    const h = document.createElement("h4");
+    h.style.margin = "1.2rem 0 .4rem";
+    h.style.color = "#1f3a68";
+    h.textContent = part.title;
+    rev.appendChild(h);
+    for (const q of part.questions) {
+      rev.appendChild(renderReview(q));
+    }
+  }
+
+  // Submission text
+  buildSubmitText(totals, band);
+}
+
+function renderReview(q) {
+  const card = document.createElement("div");
+  const v = state.answers[q.code];
+  const m = markQuestion(q);
+  const isSelf = q.type === "text" || q.type === "taskcheck";
+  let cls = "rev-q";
+  if (isSelf) cls += " self";
+  else if (m === q.marks) cls += " correct";
+  else if (m === 0) cls += " wrong";
+  else cls += " correct"; // partial credit still shown as correct
+  card.className = cls;
+
+  const marksAwarded = m == null ? "—" : roundHalf(m);
+  let inner = `<div><span class="rev-code">${q.code}</span> <span class="tiny">(${marksAwarded} / ${q.marks})</span></div>`;
+  inner += `<div class="rev-prompt">${q.prompt}</div>`;
+
+  // Your answer
+  let shown = "(no answer)";
+  if (q.type === "radio") shown = v || "(no answer)";
+  else if (q.type === "checkbox") shown = Array.isArray(v) && v.length ? v.join(", ") : "(no answer)";
+  else if (q.type === "number") shown = v == null ? "(no answer)" : (v + " " + (q.unit || ""));
+  else if (q.type === "text") shown = v && v.trim() ? v : "(empty)";
+  else if (q.type === "taskcheck") shown = v ? "Confirmed done on paper" : "(not confirmed)";
+  inner += `<div class="rev-label">Your answer</div><div class="rev-your">${escapeHtml(shown)}</div>`;
+
+  // Correct answer / model
+  if (q.type === "text" || q.type === "taskcheck") {
+    inner += `<div class="rev-label">Model answer</div><div class="rev-model">${escapeHtml(q.model || "")}</div>`;
+    // Self-mark buttons
+    inner += `<div class="rev-label" style="margin-top:.6rem;">Mark yourself honestly — how well does your answer match the model?</div>`;
+    inner += `<div class="rev-self" data-code="${q.code}" data-marks="${q.marks}">`;
+    const sm = state.selfMarks[q.code];
+    for (const [label, frac] of [["Got it all",1], ["Partial",0.5], ["Didn't get it",0]]) {
+      const mk = Math.round(q.marks * frac * 2) / 2;  // allow 0.5 increments
+      const picked = (typeof sm === "number" && Math.abs(sm - mk) < 0.01) ? " picked" : "";
+      inner += `<button type="button" data-mk="${mk}" class="${picked.trim()}">${label} (${mk}/${q.marks})</button>`;
+    }
+    inner += `</div>`;
+  } else {
+    const corr = q.correctDisplay || (Array.isArray(q.correct) ? q.correct.join(" + ") : String(q.correct) + (q.unit ? " " + q.unit : ""));
+    inner += `<div class="rev-label">Correct answer</div><div class="rev-correct">${escapeHtml(corr)}</div>`;
+    if (q.explain) inner += `<div class="rev-label" style="margin-top:.3rem;">Why</div><div class="tiny">${escapeHtml(q.explain)}</div>`;
+  }
+  card.innerHTML = inner;
+
+  // Wire self-mark buttons
+  card.querySelectorAll(".rev-self button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const container = btn.closest(".rev-self");
+      const code = container.getAttribute("data-code");
+      const mk = parseFloat(btn.getAttribute("data-mk"));
+      state.selfMarks[code] = mk;
+      saveState(state);
+      container.querySelectorAll("button").forEach(b => b.classList.remove("picked"));
+      btn.classList.add("picked");
+      // Re-render top scores (total will change)
+      renderResults();
+    });
+  });
+  return card;
+}
+
+function roundHalf(n) { return Math.round(n * 2) / 2; }
+
+/* ==================================================================
+   SUBMISSION TEXT
+   ================================================================== */
+function buildSubmitText(totals, band) {
+  const name = (state.answers.studentName || "").trim() || "(no name)";
+  const cls = (state.answers.studentClass || "").trim() || "(no class)";
+  const date = new Date().toLocaleDateString("en-AU", {day:"2-digit", month:"short", year:"numeric"});
+
+  const lines = [];
+  lines.push("BRIDGE IT DIAGNOSTIC — RESULT");
+  lines.push("================================");
+  lines.push(`Student : ${name}`);
+  lines.push(`Class   : ${cls}`);
+  lines.push(`Date    : ${date}`);
+  lines.push("");
+  lines.push(`TOTAL   : ${roundHalf(totals.total)} / ${totals.totalOutOf}`);
+  lines.push(`Tier    : ${band.name}`);
+  lines.push("");
+  lines.push("Scores by part:");
+  for (const part of PARTS) {
+    const s = totals.partScores[part.id];
+    lines.push(`  Part ${part.id}: ${roundHalf(s.got)} / ${s.out}   (${part.title.replace(/^Part [A-E] — /, "")})`);
+  }
+  lines.push("");
+  lines.push("Answers (auto-marked only):");
+  for (const part of PARTS) {
+    for (const q of part.questions) {
+      if (q.type === "text" || q.type === "taskcheck") continue;
+      const v = state.answers[q.code];
+      const got = markQuestion(q);
+      const tick = got === q.marks ? "✓" : (got > 0 ? "~" : "✗");
+      let shown = v;
+      if (Array.isArray(v)) shown = v.join(", ");
+      lines.push(`  ${q.code} ${tick} → ${shown}`);
+    }
+  }
+  lines.push("");
+  lines.push("Short-answer self-marks (Part B):");
+  for (const q of PARTS[1].questions) {
+    const sm = state.selfMarks[q.code];
+    lines.push(`  ${q.code}: self-marked ${sm != null ? roundHalf(sm) : "—"} / ${q.marks}`);
+  }
+  lines.push("");
+  lines.push("Sketch self-marks (Part E — photo to be uploaded):");
+  for (const q of PARTS[4].questions) {
+    const sm = state.selfMarks[q.code];
+    lines.push(`  ${q.code}: self-marked ${sm != null ? roundHalf(sm) : "—"} / ${q.marks}`);
+  }
+  lines.push("");
+  lines.push("Paste this into the PRIVATE COMMENT of the Bridge It Diagnostic assignment.");
+  document.getElementById("submitText").textContent = lines.join("\n");
+}
+
+/* ==================================================================
+   BUTTON WIRING
+   ================================================================== */
+function wireButtons() {
+  document.getElementById("submitBtn").addEventListener("click", () => {
+    state.submitted = true;
+    saveState(state);
+    showResults();
+  });
+
+  document.getElementById("copyResult").addEventListener("click", () => {
+    const txt = document.getElementById("submitText").textContent;
+    navigator.clipboard.writeText(txt).then(() => {
+      const b = document.getElementById("copyResult");
+      const orig = b.textContent;
+      b.textContent = "✅ Copied!";
+      setTimeout(() => { b.textContent = orig; }, 1500);
+    }).catch(() => alert("Copy failed — use the Download button instead."));
+  });
+
+  document.getElementById("downloadResult").addEventListener("click", () => {
+    const txt = document.getElementById("submitText").textContent;
+    const name = (state.answers.studentName || "result").trim().replace(/[^A-Za-z0-9_-]/g, "_");
+    const blob = new Blob([txt], {type: "text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `Bridge-Diagnostic-${name}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+
+  document.getElementById("retakeBtn").addEventListener("click", () => {
+    if (!confirm("This will CLEAR all your answers and start over. Are you sure?")) return;
+    // Clear from BOTH storages so retake is a real reset
+    try { window.localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    try { window.sessionStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    state = {answers: {}, selfMarks: {}, submitted: false, savedAt: 0};
+    location.reload();
+  });
+}
+
+/* ==================================================================
+   INIT
+   ================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  renderQuiz();
+  // Restore student info
+  if (state.answers.studentName) document.getElementById("studentName").value = state.answers.studentName;
+  if (state.answers.studentClass) document.getElementById("studentClass").value = state.answers.studentClass;
+  wireInputs();
+  wireButtons();
+  updateProgress();
+
+  // Silently write one "proof-of-life" save so the indicator updates on load
+  // and we detect any storage issue BEFORE the student has typed anything.
+  saveState(state);
+
+  // Belt & braces: 20-second heartbeat save and warn-before-leaving
+  startHeartbeatSave();
+  installUnloadGuard();
+
+  // Tell the student explicitly that their work is being restored
+  const hasAnyAnswer = Object.keys(state.answers).filter(k =>
+    k !== "studentName" && k !== "studentClass"
+  ).length > 0;
+  if (hasAnyAnswer && !state.submitted) {
+    const stamp = state.savedAt ? new Date(state.savedAt).toLocaleString("en-AU") : "a previous session";
+    const banner = document.createElement("div");
+    banner.className = "diag-callout";
+    banner.style.borderLeftColor = "#10b981";
+    banner.style.background = "#f0fdf4";
+    banner.innerHTML = `<h4 style="color:#047857;">✅ Your previous answers have been restored</h4>
+      <p>Last saved: <strong>${stamp}</strong>. You can keep going where you left off — just scroll down.</p>`;
+    const head = document.querySelector(".diag-callout");
+    head && head.parentNode.insertBefore(banner, head.nextSibling);
+  }
+
+  // If already submitted last session, offer to show results
+  if (state.submitted) {
+    if (confirm("You've already submitted the diagnostic. Show your previous results?")) {
+      showResults();
+    }
+  }
+});
+</script>
+</body>
+</html>
