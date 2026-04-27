@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 Vocab Presentation Assignment · Y7 Tech · Bridge It</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ---------- Page-specific styles ---------- */
+  .vp-hero{background:linear-gradient(135deg,#1f3a68,#2e5b9e);color:#fff;border-radius:14px;padding:1.8rem 2rem;margin:1.5rem 0;box-shadow:0 4px 18px rgba(31,58,104,.25)}
+  .vp-hero h1{margin:.3rem 0;font-size:2rem;color:#fff}
+  .vp-hero p{margin:.4rem 0;opacity:.95;font-size:1.05rem;line-height:1.5}
+  .vp-hero .meta{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:.8rem;font-size:.95rem;opacity:.9}
+  .vp-hero .meta strong{color:#fff;display:block;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.1rem}
+
+  .vp-section{background:#fff;border:1.5px solid #e4e7ec;border-radius:12px;padding:1.4rem 1.6rem;margin:1.5rem 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .vp-section h2{color:#1f3a68;margin:0 0 .8rem;font-size:1.45rem;display:flex;align-items:center;gap:.6rem}
+  .vp-section h2 .step-num{background:#1f3a68;color:#fff;width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:1.05rem;flex-shrink:0}
+
+  /* Vocab table */
+  .vocab-table-wrap{overflow-x:auto;margin:.8rem 0}
+  .vocab-table{width:100%;border-collapse:collapse;font-size:.95rem}
+  .vocab-table th{background:#1f3a68;color:#fff;text-align:left;padding:.75rem .9rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+  .vocab-table td{padding:.7rem .9rem;border-bottom:1px solid #f1f5f9;vertical-align:top}
+  .vocab-table tr:hover td{background:#f8fafc}
+  .vocab-table .term{font-weight:700;color:#1f3a68;font-size:1.02rem}
+  .vocab-table .say{font-size:.82rem;color:#64748b;font-style:italic;display:block}
+  .vocab-table .difficulty{font-size:.82rem;font-weight:700}
+  .difficulty.easy{color:#059669}
+  .difficulty.med{color:#d97706}
+  .difficulty.hard{color:#dc2626}
+  .vocab-table .bucket-pill{display:inline-block;padding:.18rem .6rem;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff}
+  .pill-type{background:#10b981}
+  .pill-part{background:#ea8b00}
+  .pill-force{background:#5b21b6}
+  .pill-fail{background:#dc2626}
+  .pill-mat{background:#0891b2}
+  .pill-spec{background:#7c3aed}
+  .vocab-table .claim-btn{padding:.32rem .8rem;border:1.5px solid #1f3a68;background:#fff;color:#1f3a68;border-radius:6px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .12s}
+  .vocab-table .claim-btn:hover{background:#1f3a68;color:#fff}
+  .vocab-table tr.claimed{background:#d1fae5}
+  .vocab-table tr.claimed .claim-btn{background:#10b981;color:#fff;border-color:#10b981}
+  .vocab-table tr.claimed-by-me{background:#dbeafe;border-left:4px solid #1f3a68}
+  .vocab-table tr.claimed-by-me .claim-btn{background:#1f3a68;color:#fff}
+  .vocab-table .claimed-by{font-size:.82rem;color:#059669;font-style:italic}
+
+  /* Slide template grid */
+  .slide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.2rem;margin:1.2rem 0}
+  .slide-card{background:#fff;border:1.5px solid #e4e7ec;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:transform .15s,box-shadow .15s}
+  .slide-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+  .slide-card .slide-num{background:linear-gradient(135deg,#5b21b6,#8b5cf6);color:#fff;padding:1rem 1.3rem;display:flex;align-items:center;gap:.7rem}
+  .slide-card .slide-num .badge{background:rgba(255,255,255,.25);padding:.3rem .65rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.05em}
+  .slide-card .slide-num h3{margin:0;color:#fff;font-size:1.15rem;line-height:1.3}
+  .slide-card .slide-body{padding:1.1rem 1.3rem;flex:1;display:flex;flex-direction:column;gap:.8rem}
+  .slide-card .sb{padding:.7rem .85rem;border-radius:8px;background:#f8fafc;border-left:3px solid #cbd5e1}
+  .slide-card .sb h4{margin:0 0 .25rem;font-size:.78rem;font-weight:700;color:#1f3a68;text-transform:uppercase;letter-spacing:.05em}
+  .slide-card .sb p{margin:0;font-size:.92rem;line-height:1.45;color:#334155}
+  .slide-card .sb.what{background:#eff6ff;border-left-color:#2e5b9e}
+  .slide-card .sb.what h4{color:#1e3a8a}
+  .slide-card .sb.say{background:#f0fdf4;border-left-color:#10b981}
+  .slide-card .sb.say h4{color:#065f46}
+  .slide-card .sb.tip{background:#fff7ed;border-left-color:#ea8b00}
+  .slide-card .sb.tip h4{color:#9a3412}
+  .slide-card .sb.avoid{background:#fee2e2;border-left-color:#ef4444}
+  .slide-card .sb.avoid h4{color:#991b1b}
+  .slide-card .duration{padding:.5rem 1.3rem;background:#1f3a68;color:#fff;font-size:.85rem;font-weight:600;text-align:center}
+
+  /* Rubric */
+  .rubric-table{width:100%;border-collapse:collapse;font-size:.92rem;margin:.8rem 0}
+  .rubric-table th{background:#5b21b6;color:#fff;text-align:left;padding:.7rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+  .rubric-table td{padding:.7rem;border:1px solid #e4e7ec;vertical-align:top;line-height:1.45}
+  .rubric-table .crit{background:#f8fafc;font-weight:700;color:#1f3a68;width:22%}
+  .rubric-table .marks{background:#ede9fe;font-weight:700;color:#5b21b6;text-align:center;width:8%}
+  .rubric-table tr:nth-child(even) td{background:#fafbfc}
+
+  /* Filter buttons */
+  .filter-row{display:flex;gap:.4rem;margin:.6rem 0 1rem;flex-wrap:wrap}
+  .filter-btn{padding:.4rem .9rem;border:1.5px solid #cbd5e1;background:#fff;border-radius:999px;font-size:.85rem;font-weight:700;cursor:pointer;color:#334155}
+  .filter-btn:hover{border-color:#1f3a68}
+  .filter-btn.active{background:#1f3a68;color:#fff;border-color:#1f3a68}
+
+  /* Claim panel */
+  .claim-panel{background:#eff6ff;border:1.5px solid #2e5b9e;border-radius:12px;padding:1.2rem 1.4rem;margin:1rem 0}
+  .claim-panel h3{margin:0 0 .5rem;color:#1f3a68}
+  .claim-panel input{padding:.55rem;border:1.5px solid #cbd5e1;border-radius:6px;font-size:.95rem;width:300px;max-width:100%;box-sizing:border-box}
+  .claim-stats{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.7rem}
+  .claim-stats .pill{background:#fff;padding:.4rem .9rem;border-radius:999px;font-size:.85rem;font-weight:700;color:#1f3a68;border:1px solid #cbd5e1}
+
+  .nav-card{background:#f8fafc;border:1.5px solid #e4e7ec;border-radius:10px;padding:.9rem 1.1rem;margin:1rem 0;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+  .nav-card a{color:#1f3a68;text-decoration:none;font-weight:700;background:#fff;border:1.5px solid #1f3a68;padding:.5rem 1rem;border-radius:8px;font-size:.92rem}
+  .nav-card a:hover{background:#1f3a68;color:#fff}
+
+  .deliverable{background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #d97706;border-radius:12px;padding:1.3rem 1.5rem;margin:1.4rem 0}
+  .deliverable h3{color:#9a3412;margin:.2rem 0 .5rem;font-size:1.25rem}
+  .deliverable ul{margin:.4rem 0;padding-left:1.4rem}
+  .deliverable li{margin:.3rem 0;line-height:1.5;color:#7c2d12}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+      <a href="diagnostic.html">📝 Diagnostic</a>
+      <a href="vocab-arena.html">🎮 Vocab Arena</a>
+      <a href="vocab-presentation.html">📊 Vocab Presentation</a>
+      <a href="workbook.html">📘 Workbook</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <div class="vp-hero">
+    <h1>📊 Vocab Presentation — Each Student, One Word</h1>
+    <p>You're going to BECOME the class expert on ONE bridge vocabulary word. Build a 6-slide presentation, then teach the rest of us in 2–3 minutes. By the end of the day everyone will have heard 23 mini-lessons — taught by you.</p>
+    <div class="meta">
+      <div><strong>Format</strong>6 slides · 2–3 min each</div>
+      <div><strong>Tool</strong>Canva (recommended) — or PowerPoint</div>
+      <div><strong>Marks</strong>10 (formative — feeds into folio)</div>
+      <div><strong>Due</strong>Bring it next lesson (L03) · present in L03 or L04</div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       STEP 1 — Claim your word
+       ============================================ -->
+  <div class="vp-section">
+    <h2><span class="step-num">1</span> Claim your word</h2>
+    <p>Pick any ONE word from the table below. <strong>First in, best dressed</strong> — once a word is claimed it's yours, but a second student can also pick it (max 2 students per word). The colour shows which category the word belongs to (Type / Part / Force / Failure / Material / Special).</p>
+
+    <div class="claim-panel">
+      <h3>Type your name to claim a word</h3>
+      <p style="margin:.2rem 0 .6rem;font-size:.95rem;">Once you've typed your name + class, click <strong>Claim</strong> on any unclaimed row. Your name will appear next to that word for the whole class to see (saved on this laptop only — not sent anywhere).</p>
+      <input type="text" id="claimerName" placeholder="e.g. Amanda Guo · 7TECJ" maxlength="60">
+      <div class="claim-stats" id="claimStats"></div>
+    </div>
+
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-filter="all">All 23 words</button>
+      <button class="filter-btn" data-filter="type">Bridge Types (5)</button>
+      <button class="filter-btn" data-filter="part">Parts of a Bridge (4)</button>
+      <button class="filter-btn" data-filter="force">Forces (4)</button>
+      <button class="filter-btn" data-filter="fail">Failure modes (3)</button>
+      <button class="filter-btn" data-filter="mat">Materials (4)</button>
+      <button class="filter-btn" data-filter="spec">Special types (3)</button>
+      <button class="filter-btn" data-filter="unclaimed">Not yet claimed</button>
+    </div>
+
+    <div class="vocab-table-wrap">
+      <table class="vocab-table" id="vocabTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Word</th>
+            <th>Category</th>
+            <th>Difficulty</th>
+            <th>One-line meaning</th>
+            <th>Claimed by</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody><!-- rows injected --></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================
+       STEP 2 — Build your 6 slides
+       ============================================ -->
+  <div class="vp-section">
+    <h2><span class="step-num">2</span> Build your 6 slides — exactly this template</h2>
+    <p><strong>Each slide does ONE job.</strong> Don't combine slides; don't add extras (unless you're going for the bonus). Keep text small — say it, don't read it.</p>
+
+    <div style="background:linear-gradient(135deg,#dbeafe,#cffafe);border:2px solid #0891b2;border-radius:12px;padding:1.2rem 1.4rem;margin:1rem 0;">
+      <h3 style="color:#0e7490;margin:.2rem 0 .6rem;font-size:1.2rem;">🎨 Quick-start in Canva (recommended)</h3>
+      <ol style="margin:.4rem 0 .6rem;padding-left:1.4rem;color:#155e75;line-height:1.6;">
+        <li>Go to <a href="https://www.canva.com/education/" target="_blank" rel="noopener" style="color:#0e7490;font-weight:700;">canva.com/education</a> and sign up with your <strong>school email</strong> — Canva for Education is FREE for students.</li>
+        <li>From the homepage, click <strong>+ Create a design → Presentation (16:9)</strong>.</li>
+        <li>In the Templates panel on the left, search for <code>"education presentation"</code> or <code>"student presentation"</code> — pick a CLEAN template (not too busy). The simpler templates score higher because the focus stays on YOUR content.</li>
+        <li>Delete any extra template slides — you only need <strong>6 slides</strong> (or 7 if you do the bonus).</li>
+        <li>For real bridge photos, use Canva's <strong>Photos panel</strong> and search "bridge truss", "Sydney Harbour Bridge" etc. — these are free and copyright-safe. Or download from <a href="https://commons.wikimedia.org/wiki/Main_Page" target="_blank" rel="noopener" style="color:#0e7490;font-weight:700;">Wikimedia Commons</a> (also free, but credit the photographer).</li>
+        <li>To present in class: click <strong>Present</strong> at the top right (or download as PDF as a backup).</li>
+        <li>Share with Ms Gao: click <strong>Share → Get link → Anyone with the link can view</strong> → copy the link → paste into Google Classroom private comment.</li>
+      </ol>
+      <p style="margin:.5rem 0 0;font-size:.92rem;color:#155e75;font-style:italic;"><strong>Tip:</strong> if your school doesn't have Canva for Education set up, the regular free Canva account works too — you just see fewer premium templates.</p>
+    </div>
+
+    <div class="slide-grid">
+
+      <!-- Slide 1 -->
+      <div class="slide-card">
+        <div class="slide-num">
+          <span class="badge">Slide 1</span>
+          <h3>🏷️ TITLE — your word + you</h3>
+        </div>
+        <div class="slide-body">
+          <div class="sb what"><h4>📝 What goes on this slide</h4><p>The WORD in BIG letters (centre, 80–120 pt). Below in smaller text: your name, class (7TECJ), date. ONE photo or icon related to the word as a hook.</p></div>
+          <div class="sb say"><h4>🎤 What you say (~20 sec)</h4><p>"Hi everyone, I'm [name]. Today I'm going to teach you about [WORD]. By the end of this you'll be able to recognise it AND remember it."</p></div>
+          <div class="sb tip"><h4>💡 Tip</h4><p>Pick a hook image that's INTERESTING — not just a generic clip-art. For "Suspension" use the Golden Gate Bridge. For "Torsion" use a wrung-out towel. The image is a memory hook.</p></div>
+          <div class="sb avoid"><h4>⛔ Avoid</h4><p>Long subtitle. Cluttered title slide. Forgetting your name on the slide.</p></div>
+        </div>
+        <div class="duration">~20 seconds</div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide-card">
+        <div class="slide-num">
+          <span class="badge">Slide 2</span>
+          <h3>🔤 SAY IT + CATEGORY</h3>
+        </div>
+        <div class="slide-body">
+          <div class="sb what"><h4>📝 What goes on this slide</h4><p>(1) The word again, big. (2) The PHONETIC pronunciation in brackets — e.g. <em>abutment (uh-BUT-ment)</em>. (3) Which category it belongs to — Bridge Type / Bridge Part / Force / Failure / Material / Special.</p></div>
+          <div class="sb say"><h4>🎤 What you say (~20 sec)</h4><p>"This word is pronounced [pronounce it slowly]. Say it with me: [class repeats]. It's a [category] word — that means it describes [a part of a bridge / a force / a material / etc.]"</p></div>
+          <div class="sb tip"><h4>💡 Tip</h4><p>Get the class to SAY the word out loud once. Words you've said with your mouth stick better than words you've only seen.</p></div>
+          <div class="sb avoid"><h4>⛔ Avoid</h4><p>Skipping pronunciation because "everyone knows it". Trust me — half the class can't say "buttress" or "torsion" before this lesson.</p></div>
+        </div>
+        <div class="duration">~20 seconds</div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide-card">
+        <div class="slide-num">
+          <span class="badge">Slide 3</span>
+          <h3>📖 WHAT IT MEANS — your own words</h3>
+        </div>
+        <div class="slide-body">
+          <div class="sb what"><h4>📝 What goes on this slide</h4><p>A 1–2 sentence definition <strong>in YOUR OWN WORDS</strong>. Year-7-friendly language. Include a small simple labelled diagram or icon if it helps.</p></div>
+          <div class="sb say"><h4>🎤 What you say (~30 sec)</h4><p>"[WORD] means [your definition]." Then expand: "Another way to say it is [paraphrase]." Slow down — this is the important part.</p></div>
+          <div class="sb tip"><h4>💡 Tip</h4><p>Read 2–3 different definitions (Wikipedia, PBS Building Big, your folio glossary), then close those tabs and write yours from memory. That's how you make sure it's in your own words.</p></div>
+          <div class="sb avoid"><h4>⛔ Avoid</h4><p>Copy-pasting from Wikipedia. Long sentences with words your audience won't know. Definitions that use other technical words you haven't explained.</p></div>
+        </div>
+        <div class="duration">~30 seconds</div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide-card">
+        <div class="slide-num">
+          <span class="badge">Slide 4</span>
+          <h3>🖼️ PICTURE THIS — real-world example</h3>
+        </div>
+        <div class="slide-body">
+          <div class="sb what"><h4>📝 What goes on this slide</h4><p>A REAL photo (Wikimedia Commons or similar) showing your word in the real world. Caption with photo source. 1 sentence connecting the photo to the word.</p></div>
+          <div class="sb say"><h4>🎤 What you say (~30 sec)</h4><p>"You can see [WORD] right here on the [Sydney Harbour Bridge / Golden Gate / etc.]. Look at [point at the photo] — that's the [WORD]. So when an engineer says [WORD], they mean exactly this."</p></div>
+          <div class="sb tip"><h4>💡 Tip</h4><p>Use a photo your class will RECOGNISE — Sydney Harbour Bridge, Anzac Bridge, your local overpass. Familiar > exotic.</p></div>
+          <div class="sb avoid"><h4>⛔ Avoid</h4><p>Using a photo that's only loosely related. Forgetting the photo source/credit. Choosing a confusing photo where the word isn't easily visible.</p></div>
+        </div>
+        <div class="duration">~30 seconds</div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="slide-card">
+        <div class="slide-num">
+          <span class="badge">Slide 5</span>
+          <h3>💡 REMEMBER IT — your memory hook</h3>
+        </div>
+        <div class="slide-body">
+          <div class="sb what"><h4>📝 What goes on this slide</h4><p>YOUR memory trick. Could be: a rhyme, an etymology (where the word comes from), an image-association, a story, a gesture. ONE memorable hook.</p></div>
+          <div class="sb say"><h4>🎤 What you say (~20 sec)</h4><p>"Here's how I remember it: [memory hook]. So next time you see [WORD] you can think of [hook] and you'll know what it means."</p></div>
+          <div class="sb tip"><h4>💡 Tip — examples that work</h4><p>"TRUSS = TRIANGLES (both start with TR)" · "ABUTMENT — the bridge ABUTS the abutment" · "Compression = compress = squeeze" · "Torsion = TWIST, like a tornado". Make it personal — what helps YOU remember will probably help others.</p></div>
+          <div class="sb avoid"><h4>⛔ Avoid</h4><p>"Just memorise it." No one remembers anything by being told to memorise it.</p></div>
+        </div>
+        <div class="duration">~20 seconds</div>
+      </div>
+
+      <!-- Slide 6 -->
+      <div class="slide-card">
+        <div class="slide-num">
+          <span class="badge">Slide 6</span>
+          <h3>⚠️ WATCH OUT — common confusions</h3>
+        </div>
+        <div class="slide-body">
+          <div class="sb what"><h4>📝 What goes on this slide</h4><p>What is your word OFTEN confused with? Show the two side-by-side and explain the difference. Examples: pier vs abutment, suspension vs cable-stayed, tension vs compression, shear vs share.</p></div>
+          <div class="sb say"><h4>🎤 What you say (~30 sec)</h4><p>"The most common mistake is mixing up [WORD] with [SIMILAR WORD]. The difference is: [explain]. So if you see [feature], it's [WORD]. If you see [other feature], it's [the other one]."</p></div>
+          <div class="sb tip"><h4>💡 Tip</h4><p>Use a side-by-side comparison: two photos, two arrows, two short labels. Visual contrast makes the difference stick.</p></div>
+          <div class="sb avoid"><h4>⛔ Avoid</h4><p>Skipping this slide. EVERY word has at least one common confusion — finding it shows you understand the word deeply.</p></div>
+        </div>
+        <div class="duration">~30 seconds</div>
+      </div>
+
+    </div>
+
+    <div class="deliverable">
+      <h3>🌟 Optional bonus slide (for an extra mark) — Slide 7</h3>
+      <ul>
+        <li><strong>"Why this word matters for OUR bridge build"</strong> — show how your word will appear in the Term 2 paddle-pop bridge build. Will your bridge have one of these? Will it feel this force? How will you handle it?</li>
+        <li>This is the slide that takes a Y7 vocabulary task and turns it into ENGINEERING. If you're 7TECJ aiming high, do this slide.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============================================
+       STEP 3 — Practise + present
+       ============================================ -->
+  <div class="vp-section">
+    <h2><span class="step-num">3</span> Practise out loud — at least twice</h2>
+    <p>The slides are your script outline, NOT your script. Speak naturally — the bullets are reminders, not a paragraph to read.</p>
+    <ul style="line-height:1.6;">
+      <li><strong>Practise once alone</strong> — phone-record yourself. Watch it back. Are you reading the slides? Talking too fast? Saying "um" too much?</li>
+      <li><strong>Practise once with someone</strong> — a parent, a sibling, your dog. If they don't get it, revise.</li>
+      <li><strong>Time yourself</strong> — total should be 2–3 minutes. If you're at 4+, you're reading too much from slides; cut text.</li>
+    </ul>
+    <p><strong>On presentation day:</strong></p>
+    <ul style="line-height:1.6;">
+      <li>Stand at the front. Project so the back row hears you.</li>
+      <li>Look at the audience, not at your slides. The slides are for THEM, not you.</li>
+      <li>If you forget what to say, look at the slide → the slide will remind you.</li>
+      <li>End with: "Any questions?" Take 1 question. Sit down.</li>
+    </ul>
+  </div>
+
+  <!-- ============================================
+       STEP 4 — Marking rubric
+       ============================================ -->
+  <div class="vp-section">
+    <h2><span class="step-num">4</span> How you'll be marked — 10 marks total</h2>
+    <p>Ms Gao will mark you on these 5 criteria, 2 marks each. The rubric is shared with you up-front — no surprises.</p>
+    <div class="vocab-table-wrap">
+      <table class="rubric-table">
+        <thead>
+          <tr>
+            <th>Criterion</th>
+            <th style="text-align:center;">Marks</th>
+            <th>2 marks (Excellent)</th>
+            <th>1 mark (Developing)</th>
+            <th>0 marks (Missing)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crit">📝 Definition in own words</td>
+            <td class="marks">/2</td>
+            <td>Definition is clear, accurate, and in your own words. A Year 7 friend who'd never seen the word would get it.</td>
+            <td>Mostly accurate but copy-paste-feel, OR uses other tech words without explaining them.</td>
+            <td>Copied directly from Wikipedia / inaccurate / missing.</td>
+          </tr>
+          <tr>
+            <td class="crit">🖼️ Real photo + connection</td>
+            <td class="marks">/2</td>
+            <td>Real photo with source credit. The photo CLEARLY shows the word in action. You explain the connection out loud.</td>
+            <td>Photo present but not strongly connected, OR no source credit.</td>
+            <td>No photo, or generic clip-art only.</td>
+          </tr>
+          <tr>
+            <td class="crit">💡 Memory hook</td>
+            <td class="marks">/2</td>
+            <td>Original memory hook (your own — rhyme, etymology, image-association, gesture). Memorable.</td>
+            <td>Hook is OK but generic ("just memorise it").</td>
+            <td>No hook offered.</td>
+          </tr>
+          <tr>
+            <td class="crit">⚠️ Common confusion</td>
+            <td class="marks">/2</td>
+            <td>Names a real common confusion AND explains how to tell the two apart with a clear example.</td>
+            <td>Names a confusion but doesn't fully resolve it.</td>
+            <td>Skipped or trivial confusion.</td>
+          </tr>
+          <tr>
+            <td class="crit">🎤 Delivery</td>
+            <td class="marks">/2</td>
+            <td>Speaks clearly, looks at audience, doesn't read slides word-for-word, finishes within 2–3 min, takes 1 audience question confidently.</td>
+            <td>Reads from slides OR rushes OR doesn't take questions.</td>
+            <td>Inaudible / over 4 min / didn't present.</td>
+          </tr>
+          <tr style="background:#fef3c7;">
+            <td class="crit" style="background:#fef3c7;">🌟 Bonus slide 7</td>
+            <td class="marks" style="background:#fde68a;">+1</td>
+            <td colspan="3">If included AND meaningfully connects to the Term 2 bridge build (not just a sentence).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================
+       Quick links
+       ============================================ -->
+  <!-- ============================================
+       STEP 5 — How to submit
+       ============================================ -->
+  <div class="vp-section">
+    <h2><span class="step-num">5</span> How to submit your presentation</h2>
+    <p>Two simple steps:</p>
+    <ol style="line-height:1.7;">
+      <li><strong>Get the share link from Canva.</strong> Click the <strong>Share</strong> button in the top right → <strong>"Anyone with the link can view"</strong> → <strong>Copy link</strong>. (If you used PowerPoint, upload the .pptx file to your Google Drive and use the Drive share link instead.)</li>
+      <li><strong>Paste it in Google Classroom.</strong> Go to the <em>"T2-L02 Vocab Presentation"</em> assignment → <strong>Private comment</strong> → paste your link → write one line: <em>"My word is [WORD] — link to my Canva."</em> → click Send. Mark the assignment as <strong>Done</strong>.</li>
+    </ol>
+    <p style="margin-top:.6rem;"><strong>If your laptop can't open Canva:</strong> ask Ms Gao for a paper version of the 6-slide template — you can hand-draw it on A3 instead. Same rubric applies.</p>
+  </div>
+
+  <div class="nav-card">
+    <strong style="color:#1f3a68;">Useful links while you build:</strong>
+    <a href="https://www.canva.com/education/" target="_blank" rel="noopener">🎨 Canva for Education (free for students)</a>
+    <a href="vocab-arena.html" target="_blank">🎮 Vocab Arena (refresh the 13 anchor words)</a>
+    <a href="workbook.html#glossary" target="_blank">📓 Workbook glossary</a>
+    <a href="https://www.pbs.org/wgbh/buildingbig/glossary_head.html" target="_blank" rel="noopener">PBS Building Big Glossary (research)</a>
+    <a href="https://commons.wikimedia.org/wiki/Main_Page" target="_blank" rel="noopener">Wikimedia Commons (free real photos)</a>
+    <a href="../lessons/l02.html">← Back to L02</a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Technology · Term 2 · Bridge It · Vocab Presentation Assignment</strong> · Arthur Phillip High School</p>
+</footer>
+
+<!-- ====================================================
+     Vocab table data + claim logic
+     ==================================================== -->
+<script>
+"use strict";
+
+const VOCAB = [
+  // bucket: type / part / force / fail / mat / spec
+  // difficulty: easy / med / hard
+  {n:1,  word:"Beam Bridge",          say:"BEEM",                bucket:"type",  diff:"easy", line:"Simplest bridge — flat deck on supports."},
+  {n:2,  word:"Arch Bridge",          say:"ARCH",                bucket:"type",  diff:"easy", line:"Curved bridge — load pushes outwards to abutments."},
+  {n:3,  word:"Truss",                say:"TRUSS (rhymes 'bus')",bucket:"type",  diff:"easy", line:"Triangular framework, light AND strong."},
+  {n:4,  word:"Suspension Bridge",    say:"sus-PEN-shun",        bucket:"type",  diff:"med",  line:"Deck hangs from cables draped between towers."},
+  {n:5,  word:"Cable-Stayed Bridge",  say:"KAY-bull stayed",     bucket:"type",  diff:"med",  line:"Cables run STRAIGHT from tower to deck."},
+
+  {n:6,  word:"Pier",                 say:"PEER",                bucket:"part",  diff:"easy", line:"Vertical column standing in the middle of a span."},
+  {n:7,  word:"Abutment",             say:"uh-BUT-ment",         bucket:"part",  diff:"med",  line:"Support at each END where the bridge meets the ground."},
+  {n:8,  word:"Brace",                say:"BRAYS",               bucket:"part",  diff:"easy", line:"A stiffening member added to a frame."},
+  {n:9,  word:"Buttress",             say:"BUTT-russ",           bucket:"part",  diff:"hard", line:"Side support pushing back against an arch's outward thrust."},
+
+  {n:10, word:"Compression",          say:"kum-PRESH-un",        bucket:"force", diff:"easy", line:"Pushing or squashing force — material gets shorter."},
+  {n:11, word:"Tension",              say:"TEN-shun",            bucket:"force", diff:"easy", line:"Pulling or stretching force — material gets longer."},
+  {n:12, word:"Shear",                say:"SHEER",               bucket:"force", diff:"med",  line:"Sliding cut force, like scissors."},
+  {n:13, word:"Torsion",              say:"TOR-shun",            bucket:"force", diff:"med",  line:"Twisting force, like wringing a towel."},
+
+  {n:14, word:"Buckle",               say:"BUK-ul",              bucket:"fail",  diff:"med",  line:"Sudden bending failure under compression — wall pops out."},
+  {n:15, word:"Brittle",              say:"BRIT-ul",             bucket:"fail",  diff:"med",  line:"Snaps with no warning (no bending first) — like glass."},
+  {n:16, word:"Deform",               say:"dee-FORM",            bucket:"fail",  diff:"med",  line:"To change shape under load — permanent or temporary."},
+
+  {n:17, word:"Cement",               say:"see-MENT",            bucket:"mat",   diff:"easy", line:"Grey powder that hardens with water (an INGREDIENT, not concrete!)."},
+  {n:18, word:"Concrete",             say:"KON-kreet",           bucket:"mat",   diff:"easy", line:"Cement + sand + gravel + water — hardens into stone-like material."},
+  {n:19, word:"Reinforced Concrete",  say:"ree-in-FORST",        bucket:"mat",   diff:"hard", line:"Concrete with STEEL bars inside — strong in compression AND tension."},
+  {n:20, word:"Masonry",              say:"MAY-sun-ree",         bucket:"mat",   diff:"hard", line:"Construction using stone or brick blocks held by mortar."},
+
+  {n:21, word:"Aqueduct",             say:"AK-wuh-dukt",         bucket:"spec",  diff:"hard", line:"A bridge that carries WATER (often Roman, in stone arches)."},
+  {n:22, word:"Cantilever",           say:"KAN-til-ee-ver",      bucket:"spec",  diff:"hard", line:"A beam supported only at ONE end (like a diving board)."},
+  {n:23, word:"Movable Bridge",       say:"MOO-vuh-bul",         bucket:"spec",  diff:"hard", line:"A bridge that lifts, swings, or rolls to let boats pass."}
+];
+
+const STORAGE_KEY = "y7-bridgeit-vocab-presentation-claims-v1";
+
+function loadClaims() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) { return {}; }
+}
+function saveClaims(c) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(c)); } catch (e) {}
+}
+
+let claims = loadClaims();    // {n: ["Amanda Guo · 7TECJ", ...]}  (max 2 per word)
+let myName = "";
+let activeFilter = "all";
+
+function bucketLabel(b) {
+  return ({type:"Bridge Type", part:"Bridge Part", force:"Force", fail:"Failure", mat:"Material", spec:"Special"})[b] || b;
+}
+
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+
+function renderTable() {
+  const tbody = document.querySelector("#vocabTable tbody");
+  tbody.innerHTML = "";
+  const filtered = VOCAB.filter(v => {
+    if (activeFilter === "all") return true;
+    if (activeFilter === "unclaimed") return !(claims[v.n] && claims[v.n].length >= 2);
+    return v.bucket === activeFilter;
+  });
+  for (const v of filtered) {
+    const claimList = claims[v.n] || [];
+    const isFull = claimList.length >= 2;
+    const isMine = myName && claimList.includes(myName);
+    const tr = document.createElement("tr");
+    if (isMine) tr.className = "claimed-by-me";
+    else if (isFull) tr.className = "claimed";
+
+    const claimedText = claimList.length === 0
+      ? `<span style="color:#94a3b8;">— available —</span>`
+      : `<span class="claimed-by">${claimList.map(escapeHtml).join("<br>")}</span>`;
+
+    let btnHtml;
+    if (isMine) {
+      btnHtml = `<button class="claim-btn" data-action="release" data-n="${v.n}">↩︎ Release</button>`;
+    } else if (isFull) {
+      btnHtml = `<button class="claim-btn" disabled style="opacity:.4;cursor:not-allowed;">Full</button>`;
+    } else {
+      btnHtml = `<button class="claim-btn" data-action="claim" data-n="${v.n}">+ Claim</button>`;
+    }
+
+    tr.innerHTML = `
+      <td>${v.n}</td>
+      <td><span class="term">${escapeHtml(v.word)}</span><span class="say">${escapeHtml(v.say)}</span></td>
+      <td><span class="bucket-pill pill-${v.bucket}">${bucketLabel(v.bucket)}</span></td>
+      <td><span class="difficulty ${v.diff}">${v.diff === 'easy' ? '⭐' : v.diff === 'med' ? '⭐⭐' : '⭐⭐⭐'}</span></td>
+      <td>${escapeHtml(v.line)}</td>
+      <td>${claimedText}</td>
+      <td>${btnHtml}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+  // Wire claim/release buttons
+  tbody.querySelectorAll(".claim-btn[data-action]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const n = parseInt(btn.dataset.n);
+      const action = btn.dataset.action;
+      handleClaim(n, action);
+    });
+  });
+  renderStats();
+}
+
+function renderStats() {
+  const totalSlots = VOCAB.length * 2;
+  let claimed = 0;
+  for (const k in claims) claimed += (claims[k] || []).length;
+  const mine = myName ? VOCAB.filter(v => (claims[v.n]||[]).includes(myName)).length : 0;
+  const stats = document.getElementById("claimStats");
+  stats.innerHTML = `
+    <div class="pill">📊 ${claimed} / ${totalSlots} slots claimed</div>
+    <div class="pill">📝 ${VOCAB.filter(v => !(claims[v.n] && claims[v.n].length >= 2)).length} words still open</div>
+    ${myName ? `<div class="pill" style="background:#dbeafe;color:#1f3a68;">✅ Your claims: ${mine}</div>` : ""}
+  `;
+}
+
+function handleClaim(n, action) {
+  if (!myName) {
+    alert("Type your name in the box above first.");
+    document.getElementById("claimerName").focus();
+    return;
+  }
+  const list = claims[n] || [];
+  if (action === "claim") {
+    if (list.length >= 2) { alert("This word is already taken by 2 students."); return; }
+    if (list.includes(myName)) { alert("You already claimed this word."); return; }
+    list.push(myName);
+    claims[n] = list;
+    saveClaims(claims);
+    renderTable();
+  } else if (action === "release") {
+    claims[n] = list.filter(x => x !== myName);
+    if (claims[n].length === 0) delete claims[n];
+    saveClaims(claims);
+    renderTable();
+  }
+}
+
+function wireFilters() {
+  document.querySelectorAll("#filterRow .filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#filterRow .filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeFilter = btn.dataset.filter;
+      renderTable();
+    });
+  });
+}
+
+function wireClaimer() {
+  const inp = document.getElementById("claimerName");
+  // Restore last typed name
+  try { const last = localStorage.getItem("y7-bridgeit-vocab-presentation-lastname"); if (last) inp.value = last; } catch (e) {}
+  myName = inp.value.trim();
+  inp.addEventListener("input", () => {
+    myName = inp.value.trim();
+    try { localStorage.setItem("y7-bridgeit-vocab-presentation-lastname", myName); } catch (e) {}
+    renderTable();
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  wireClaimer();
+  wireFilters();
+  renderTable();
+});
+</script>
+
+</body>
+</html>
