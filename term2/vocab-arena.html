@@ -93,6 +93,92 @@
   .start-btn{margin-top:.8rem;background:#5b21b6;color:#fff;border:none;padding:.85rem 1.6rem;border-radius:8px;font-weight:700;font-size:1.05rem;cursor:pointer;width:100%}
   .start-btn:hover{background:#4c1d95}
   .start-btn:disabled{background:#cbd5e1;cursor:not-allowed}
+
+  /* ---------- Mode-choice buttons on intro ---------- */
+  .mode-choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1.4rem 0 .5rem}
+  .mode-card{padding:1.4rem 1.5rem;border-radius:12px;text-align:left;cursor:pointer;border:2px solid transparent;transition:all .15s;text-decoration:none;color:inherit;display:block}
+  .mode-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.1)}
+  .mode-card.study{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#2e5b9e}
+  .mode-card.study:hover{border-color:#1f3a68}
+  .mode-card.play{background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#d97706}
+  .mode-card.play:hover{border-color:#b45309}
+  .mode-card h3{margin:.2rem 0 .4rem;font-size:1.25rem}
+  .mode-card.study h3{color:#1f3a68}
+  .mode-card.play h3{color:#92400e}
+  .mode-card p{margin:.2rem 0;font-size:.93rem;line-height:1.45}
+  .mode-card .badge{display:inline-block;padding:.2rem .55rem;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.5rem}
+  .mode-card.study .badge{background:#1f3a68;color:#fff}
+  .mode-card.play .badge{background:#d97706;color:#fff}
+
+  /* ---------- Study Mode card ---------- */
+  .study-screen{margin:1rem 0}
+  .study-card{background:#fff;border:2px solid #e4e7ec;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.06);margin:1rem 0}
+  .study-head{padding:1.4rem 1.6rem;color:#fff;text-align:center}
+  .study-head .bucket-tag{display:inline-block;background:rgba(255,255,255,.25);padding:.25rem .85rem;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem}
+  .study-head .word{font-size:2.6rem;font-weight:800;margin:.15rem 0;letter-spacing:-.02em;color:#fff;text-transform:uppercase}
+  .study-head .say{margin:.1rem 0;font-size:1rem;opacity:.92;font-style:italic}
+  /* Bucket-coloured headers */
+  .study-card.b-type .study-head{background:linear-gradient(135deg,#10b981,#059669)}
+  .study-card.b-part .study-head{background:linear-gradient(135deg,#ea8b00,#d97706)}
+  .study-card.b-force .study-head{background:linear-gradient(135deg,#5b21b6,#7c3aed)}
+
+  .study-visual{padding:1rem 1.6rem;background:#f8fafc;border-bottom:1px solid #e4e7ec;text-align:center;min-height:160px;display:flex;align-items:center;justify-content:center}
+  .study-visual img{max-width:100%;max-height:220px;border-radius:10px;border:1.5px solid #e4e7ec}
+  .study-visual svg{max-width:100%;max-height:220px}
+  .study-visual .force-emoji{font-size:5rem;line-height:1;padding:.5rem 1rem;background:#fef3c7;border:2px dashed #ea8b00;border-radius:50%}
+  .study-visual .gesture-hint{font-size:.95rem;color:#92400e;font-style:italic;margin-top:.6rem}
+
+  .study-body{padding:1.4rem 1.6rem}
+  .sb-block{margin:.9rem 0;padding:.85rem 1rem;border-radius:8px;background:#f8fafc;border-left:4px solid #cbd5e1}
+  .sb-block.meaning{background:#eff6ff;border-left-color:#2e5b9e}
+  .sb-block.picture{background:#f0fdf4;border-left-color:#10b981}
+  .sb-block.remember{background:#fef3c7;border-left-color:#d97706}
+  .sb-block.watchout{background:#fee2e2;border-left-color:#ef4444}
+  .sb-block h4{margin:0 0 .35rem;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#1f3a68}
+  .sb-block.meaning h4{color:#1e3a8a}
+  .sb-block.picture h4{color:#065f46}
+  .sb-block.remember h4{color:#92400e}
+  .sb-block.watchout h4{color:#991b1b}
+  .sb-block p{margin:0;line-height:1.55;color:#1a202c;font-size:1rem}
+
+  .study-deeper{margin:.6rem 0 0;padding:0;border:1.5px dashed #94a3b8;border-radius:8px;overflow:hidden}
+  .study-deeper summary{padding:.7rem 1rem;cursor:pointer;background:#f1f5f9;font-weight:600;color:#334155;list-style:none;user-select:none}
+  .study-deeper summary:hover{background:#e2e8f0}
+  .study-deeper summary::-webkit-details-marker{display:none}
+  .study-deeper summary::before{content:"💭 ";margin-right:.3rem}
+  .study-deeper[open] summary{background:#dbeafe;color:#1e3a8a}
+  .study-deeper[open] summary::before{content:"✨ "}
+  .study-deeper .deeper-body{padding:.85rem 1rem;background:#fff;color:#1a202c;line-height:1.55;font-size:.95rem}
+
+  .study-foot{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:1rem 1.6rem;background:#f8fafc;border-top:1px solid #e4e7ec;flex-wrap:wrap}
+  .study-foot .progress{font-weight:700;color:#1f3a68;font-size:.95rem}
+  .study-foot button{padding:.7rem 1.3rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem;border:none}
+  .study-foot button.prev{background:#fff;color:#1f3a68;border:1.5px solid #cbd5e1}
+  .study-foot button.prev:hover:not(:disabled){border-color:#1f3a68;background:#eff6ff}
+  .study-foot button.prev:disabled{opacity:.4;cursor:not-allowed}
+  .study-foot button.next{background:#1f3a68;color:#fff}
+  .study-foot button.next:hover{background:#2e5b9e}
+
+  .study-bucket-progress{display:flex;gap:.3rem;justify-content:center;margin:.6rem 0 1rem;flex-wrap:wrap}
+  .sbp-dot{width:14px;height:14px;border-radius:50%;background:#e4e7ec;border:2px solid transparent}
+  .sbp-dot.b-type{background:#a7f3d0}
+  .sbp-dot.b-part{background:#fde68a}
+  .sbp-dot.b-force{background:#ddd6fe}
+  .sbp-dot.current{border-color:#1f3a68;transform:scale(1.3)}
+  .sbp-dot.seen{filter:saturate(2)}
+
+  .study-finish-card{background:linear-gradient(135deg,#10b981,#059669);color:#fff;border-radius:14px;padding:1.8rem 2rem;text-align:center;margin:1.5rem 0}
+  .study-finish-card h2{color:#fff;margin:.2rem 0;font-size:1.55rem}
+  .study-finish-card p{margin:.4rem 0;opacity:.95}
+  .study-finish-card button{background:#fff;color:#065f46;border:none;padding:.85rem 1.6rem;border-radius:8px;font-weight:700;font-size:1.05rem;cursor:pointer;margin-top:.7rem}
+  .study-finish-card button:hover{background:#d1fae5}
+
+  /* ---------- Review missed-words callout (post-quiz) ---------- */
+  .review-callout{background:#fff7ed;border:2px solid #ea8b00;border-radius:12px;padding:1.3rem 1.5rem;margin:1.2rem 0;text-align:center}
+  .review-callout h3{color:#9a3412;margin:.2rem 0 .4rem}
+  .review-callout p{margin:.2rem 0 .8rem;color:#9a3412}
+  .review-callout button{background:#ea8b00;color:#fff;border:none;padding:.7rem 1.4rem;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer}
+  .review-callout button:hover{background:#d97706}
 </style>
 </head>
 <body>
@@ -113,27 +199,33 @@
 <main class="container">
 
   <!-- ============================================
-       INTRO — name + start
+       INTRO — name + Study/Play choice
        ============================================ -->
   <div id="introScreen">
     <div class="arena-hero">
       <h1>🎮 Vocab Arena</h1>
-      <p style="font-size:1.1rem;">Lesson 2 · 13 questions on the bridge anchor terms</p>
+      <p style="font-size:1.1rem;">Lesson 2 · 13 anchor words for the bridge build</p>
       <p style="opacity:.85;font-size:.95rem;">5 bridge types · 4 parts of a bridge · 4 forces</p>
-    </div>
-
-    <div class="arena-info">
-      <div class="ai-card"><div class="lbl">Questions</div><div class="val">13</div></div>
-      <div class="ai-card"><div class="lbl">Time</div><div class="val">~6 min</div></div>
-      <div class="ai-card"><div class="lbl">Pass</div><div class="val">8 / 13</div></div>
-      <div class="ai-card" style="background:#fef3c7;border-color:#d97706;"><div class="lbl" style="color:#9a3412;">Boss Round at</div><div class="val" style="color:#9a3412;">11 / 13</div></div>
     </div>
 
     <div class="name-card">
       <label>Your name (or team name if playing in pairs)</label>
       <input type="text" id="playerName" placeholder="e.g. Amanda &amp; Rudransh — 7TECJ" maxlength="60">
-      <p class="pair-note">In pairs? Take TURNS — one person per question. The score belongs to BOTH of you.</p>
-      <button class="start-btn" id="startBtn" disabled>🎮 Start the game →</button>
+      <p class="pair-note">In pairs? Take TURNS — one person per card / question. The score belongs to BOTH of you.</p>
+    </div>
+
+    <h3 style="color:#1f3a68;margin:1.4rem 0 .4rem;">Choose your starting point:</h3>
+    <div class="mode-choice">
+      <a class="mode-card study" id="modeStudy" href="#">
+        <span class="badge">📚 Step 1 — recommended</span>
+        <h3>Study Hall</h3>
+        <p>Walk through all 13 words ONE AT A TIME. Each card explains the word in plain English, gives you a real example, a way to remember it, and what NOT to confuse it with. Takes about <strong>8–10 min</strong>. After Study Hall you'll head straight into the Arena.</p>
+      </a>
+      <a class="mode-card play" id="modePlay" href="#">
+        <span class="badge">🎮 Step 2 — for the confident</span>
+        <h3>Skip to Arena</h3>
+        <p>13 quick MCQ questions. Pass = <strong>8/13</strong>. Score <strong>11+/13</strong> to unlock the Boss Round. Wrong answers don't penalise — you'll see the right answer + a one-line explanation. Takes about <strong>6 min</strong>.</p>
+      </a>
     </div>
 
     <div id="highScoreCard" class="high-score" style="display:none;">
@@ -142,9 +234,28 @@
     </div>
 
     <div class="diag-callout" style="background:#fff7ed;border-left:4px solid #ea8b00;padding:1rem 1.25rem;border-radius:10px;margin:1.5rem 0;">
-      <h4 style="color:#92400e;margin-top:0;">How it works</h4>
-      <p style="margin:0;">Each question has a photo or icon and 4 options. Click the right one. Wrong answers don't penalise you — they just show the correct answer + a one-line explanation. Score 11+/13 to unlock the <strong>Boss Round</strong> (3 expert justification questions for 7TECJ stretch).</p>
+      <h4 style="color:#92400e;margin-top:0;">How Study Hall works</h4>
+      <p style="margin:0;">Each card shows you ONE word and breaks it down into 4 parts: <strong>📝 What it means</strong> (plain English) · <strong>🖼️ Picture this</strong> (real-world example) · <strong>💡 Remember it</strong> (memory trick) · <strong>⚠️ Watch out for</strong> (don't get tricked). Force cards include a <strong>🤚 gesture</strong> to do with your body. Click <strong>"💭 Tell me more"</strong> on any card for a deeper explanation.</p>
     </div>
+  </div>
+
+  <!-- ============================================
+       STUDY MODE — 13 detailed flash cards
+       ============================================ -->
+  <div id="studyScreen" style="display:none;">
+    <div class="study-bucket-progress" id="studyDots"></div>
+    <div id="studyCardHost"><!-- a single card is rendered here --></div>
+  </div>
+
+  <!-- Bridge between Study Hall and Arena -->
+  <div id="studyFinishScreen" style="display:none;">
+    <div class="study-finish-card">
+      <h2>🎓 Study Hall complete!</h2>
+      <p>You've walked through all 13 anchor words. Now lock them in by playing the Arena — 13 MCQ questions, ~6 min, immediate feedback.</p>
+      <button id="goArenaBtn" type="button">🎮 Enter the Arena →</button>
+      <p style="margin-top:.8rem;font-size:.85rem;opacity:.9;">You can come back to Study Hall any time after the quiz.</p>
+    </div>
+    <p style="text-align:center;"><a href="#" id="reviewAgainBtn" style="color:#1f3a68;text-decoration:underline;font-size:.95rem;">↩︎ Or review the cards again first</a></p>
   </div>
 
   <!-- ============================================
@@ -316,6 +427,240 @@ const QUESTIONS = [
   }
 ];
 
+/* ============================================================
+   STUDY MODE — 13 detailed term cards
+   Each term has: bucket, word, phonetic, visual, meaning,
+   picture-this example, memory hook, watch-out, optional gesture,
+   and a "tell me more" deeper explanation (Option C — self-paced
+   depth for gifted-class autonomy).
+   ============================================================ */
+const TERMS = [
+  // ---- Bucket: Bridge Type (5) ----
+  {
+    bucket: "type", word: "Beam", say: "BEEM",
+    visual: {kind: "img", src: "../assets/diag/A2.jpg"},
+    meaning: "A flat horizontal deck sitting on top of two or more supports — like a plank across a creek. The simplest bridge type.",
+    picture: "Most highway overpasses you drive UNDER are beam bridges. So is a wooden plank stretched across a small stream.",
+    remember: "BEAM = a long straight piece. Just like a 'beam of light' or a wooden 'beam' in a roof — straight and flat.",
+    watchout: "Don't confuse 'beam bridge' with the deck. The DECK is the part you walk on; the BEAM bridge is the whole simple bridge.",
+    deeper: "Beam bridges work fine for SHORT spans (under about 50 m). For longer gaps you'd use trusses, arches or suspension. The longer the beam, the more it sags in the middle — that's why beam bridges have piers in the middle for long crossings."
+  },
+  {
+    bucket: "type", word: "Arch", say: "ARCH",
+    visual: {kind: "img", src: "../assets/diag/A3.jpg"},
+    meaning: "A bridge with a CURVED shape underneath. The arch pushes the load OUTWARDS to the ends (called abutments) instead of straight down.",
+    picture: "Old Roman aqueducts (Pont du Gard, France — left photo above). Sydney Harbour Bridge is a giant steel arch.",
+    remember: "ARCH = the arch of your foot — a curve that holds your body weight without collapsing.",
+    watchout: "An arch bridge is one of the OLDEST types — Romans built them 2,000 years ago in stone. Stone is strong in compression, which is what arches use.",
+    deeper: "Why does the arch shape work? Because the curve turns a downward push into a sideways push that gets absorbed by the abutments at each end. Every stone in the arch is squeezed (compressed) — and stone is brilliant at handling compression. That's why arch bridges last so long."
+  },
+  {
+    bucket: "type", word: "Truss", say: "TRUSS (rhymes with 'bus')",
+    visual: {kind: "img", src: "../assets/diag/A1.jpg"},
+    meaning: "A bridge made of TRIANGLES. The triangles share the load between many small members (rods or beams), making the whole thing light and strong.",
+    picture: "Old steel railway bridges. Also: the steel framework you see INSIDE the arch of the Sydney Harbour Bridge — that's truss bracing.",
+    remember: "TRUSS = TRIANGLES. Both start with TR. Triangles can't be squashed flat without breaking a side, so they hold their shape under load.",
+    watchout: "TRUSS has two meanings: (1) the bridge type, AND (2) the triangle frame inside any bridge. So you can have a 'truss bridge' OR a 'truss inside an arch'.",
+    deeper: "There are different truss patterns named after the engineers who invented them: Pratt, Howe, Warren, K-truss. The Pratt is the most common — the one you saw in the diagnostic. Engineers pick a pattern based on what loads the bridge will see (cars vs trains vs wind)."
+  },
+  {
+    bucket: "type", word: "Suspension", say: "sus-PEN-shun",
+    visual: {kind: "img", src: "../assets/diag/A3.jpg"},
+    meaning: "A bridge where the deck HANGS from huge cables that drape between tall towers. Like a hammock — the deck is suspended from above.",
+    picture: "Golden Gate Bridge (right photo above). Akashi-Kaikyō in Japan has a span of nearly 2 KM.",
+    remember: "SUSPENSION = hanging in suspense. Same root as 'suspended in the air'. The deck is hanging.",
+    watchout: "Look at the cables. SUSPENSION cables DRAPE in a U-shape between the towers. CABLE-STAYED cables run STRAIGHT to the deck. Different bridge.",
+    deeper: "Suspension is the only bridge type that can span really long distances (over 1 km). The main cables are massive — the Golden Gate's main cables are nearly 1 metre thick! The cables are in tension; the towers are in compression."
+  },
+  {
+    bucket: "type", word: "Cable-stayed", say: "KAY-bull stayed",
+    visual: {kind: "img", src: "../assets/diag/cable-stayed.jpg"},
+    meaning: "A bridge where the cables run STRAIGHT from each tall tower DOWN to the deck — no big draped cable like a suspension bridge.",
+    picture: "Millau Viaduct, France (above) — looks like a sailing ship with masts and ropes. Anzac Bridge in Sydney is also cable-stayed.",
+    remember: "STAYED = each cable 'stays' (holds) the deck directly. Like the strings on a kite, all running straight to one point.",
+    watchout: "Suspension vs cable-stayed: this is the easiest mistake. Cable-stayed = straight cables tower-to-deck. Suspension = drapy cables between towers + smaller hangers down to deck.",
+    deeper: "Cable-stayed bridges are CHEAPER to build than suspension bridges for medium-long spans (200 m – 1 km). They became popular in the 1990s. The Millau Viaduct in France is taller than the Eiffel Tower!"
+  },
+  // ---- Bucket: Bridge Part (4) ----
+  {
+    bucket: "part", word: "Deck", say: "DEK",
+    visual: {kind: "svg", svgKey: "deck"},
+    meaning: "The flat surface ON TOP of the bridge — what cars drive on, or people walk on. The 'road part' of the bridge.",
+    picture: "When you walk across a footbridge, your feet are on the deck. When you drive over the Sydney Harbour Bridge, your wheels are on the deck.",
+    remember: "DECK = like the top deck of a boat, or the wooden deck in your backyard. The flat surface you stand on.",
+    watchout: "The deck is HORIZONTAL (flat). Don't confuse with the towers (vertical) or the cables (sloping/draped).",
+    deeper: "On a beam bridge, the deck is most of the bridge. On a suspension bridge, the deck is only one small part — the towers and cables are usually bigger and more impressive!"
+  },
+  {
+    bucket: "part", word: "Pier", say: "PEER (rhymes with 'ear')",
+    visual: {kind: "svg", svgKey: "pier"},
+    meaning: "A vertical column or tower that holds up the bridge in the MIDDLE — like a leg standing up in the water or on the ground.",
+    picture: "The big concrete columns standing in the water under a long bridge over a river or harbour.",
+    remember: "PIER = like a wooden pier in the harbour, standing up out of the water. (Same word, both standing structures.)",
+    watchout: "Pier is in the MIDDLE of the bridge, between the abutments. Don't confuse with 'peer' (to look closely) — different word, just sounds the same.",
+    deeper: "On VERY long bridges you have many piers spaced along the length. On short beam bridges you might have just two — one on each side. Cable-stayed and suspension bridges call their tall towers PYLONS (a bigger, fancier kind of pier)."
+  },
+  {
+    bucket: "part", word: "Abutment", say: "uh-BUT-ment",
+    visual: {kind: "svg", svgKey: "abutment"},
+    meaning: "The support at each END of the bridge, where the bridge meets the GROUND or the riverbank.",
+    picture: "When a bridge ends and meets the bank of a river, the chunky concrete or stone block holding it up there is the abutment.",
+    remember: "ABUT means 'to lean against'. The bridge ABUTS (leans against) the ABUTMENT. A bumpy word — 'abut-ment' — for a bumpy chunk of concrete!",
+    watchout: "Abutments are at the ENDS of the bridge, on the GROUND. Piers are in the MIDDLE. Don't mix them up.",
+    deeper: "Abutments do TWO jobs: (1) hold up the bridge ends, AND (2) hold back the soil of the riverbank so it doesn't slide into the water. They're often the heaviest, chunkiest part of the whole bridge."
+  },
+  {
+    bucket: "part", word: "Span", say: "SPAN",
+    visual: {kind: "svg", svgKey: "span"},
+    meaning: "The horizontal GAP between two supports — how far the bridge 'reaches' WITHOUT a support underneath.",
+    picture: "Stretch your arms out wide — that's your 'arm span'. A bridge's span is the distance from one support to the next without help in between.",
+    remember: "SPAN = the GAP. Big span = harder bridge. Short span = easier bridge.",
+    watchout: "SPAN is the GAP (the air), not the bridge itself! A 'three-span bridge' has THREE gaps in a row (and 4 supports — count them).",
+    deeper: "Engineers care about TWO numbers: the LONGEST span (biggest gap) and the TOTAL length (sum of all spans). Sydney Harbour Bridge has a main span of 503 m. Akashi-Kaikyō has a main span of 1,991 m — that's about 4 SHBs in a row!"
+  },
+  // ---- Bucket: Force (4) ----
+  {
+    bucket: "force", word: "Compression", say: "kum-PRESH-un",
+    visual: {kind: "force", emoji: "⬇️ ⬆️", gesture: "Clap your hands SLOWLY together — that's compression.", svgKey: "compression"},
+    meaning: "A PUSHING or SQUASHING force. It pushes a material INWARDS, making it shorter or fatter.",
+    picture: "A stack of books pushes DOWN on the shelf — the shelf is in compression. Your bones are in compression when you stand up.",
+    remember: "COMPRESS = squeeze. When you compress a spring, you squash it. When you compress a file on your laptop, you squeeze the bytes smaller.",
+    watchout: "Compression is one of the TWO main forces in bridges. The other is tension (pulling). Most bridge parts are in either one or the other.",
+    deeper: "Stone and concrete are AMAZING at handling compression — that's why arch bridges (which are all compression) lasted thousands of years. But stone is TERRIBLE at handling tension — pull it apart and it cracks. That's why suspension bridges use steel cables, not stone ropes!"
+  },
+  {
+    bucket: "force", word: "Tension", say: "TEN-shun",
+    visual: {kind: "force", emoji: "↔️", gesture: "Pull a stretchy band APART with both hands — that's tension.", svgKey: "tension"},
+    meaning: "A PULLING or STRETCHING force. It pulls a material OUTWARDS, making it longer or thinner.",
+    picture: "A rubber band being stretched. A guitar string. A suspension bridge's main cable holding up the deck.",
+    remember: "TENSION = like the tension in a rope when you tug it. Tense = tight. A 'tense' moment is when something feels stretched.",
+    watchout: "Cables are usually in TENSION. Columns and arches are usually in COMPRESSION. The Pratt truss has TENSION in the diagonals + bottom chord, and COMPRESSION in the top chord + verticals.",
+    deeper: "Steel is GREAT at handling tension — that's why all suspension cables are made of steel. Tension is what stretches a material. If you keep increasing the tension, eventually the material BREAKS — that's the failure load. Engineers calculate this very carefully!"
+  },
+  {
+    bucket: "force", word: "Shear", say: "SHEER (rhymes with 'ear')",
+    visual: {kind: "force", emoji: "✂️", gesture: "Slide your two palms PAST each other in opposite directions — that's shear.", svgKey: "shear"},
+    meaning: "A SLIDING force that tries to CUT a material — like a pair of scissors.",
+    picture: "Scissors cutting paper. Or sliding your hands past each other quickly. The pages of a book sliding off when you push the cover sideways.",
+    remember: "SHEAR = SCISSORS. Both start with SH-. Imagine two scissor blades sliding past each other.",
+    watchout: "Don't confuse 'shear' with 'share' or 'sheer' — they all sound similar. SHEAR is the engineering word for a sliding-cut force.",
+    deeper: "Shear is what bolts and rivets resist in a bridge. Imagine a bolt joining two metal plates — if one plate is pushed left and the other pushed right, the bolt has to handle the SHEAR force keeping them together. If the shear is too strong, the bolt snaps in half across the middle — like scissors cutting it."
+  },
+  {
+    bucket: "force", word: "Torsion", say: "TOR-shun (rhymes with 'portion')",
+    visual: {kind: "force", emoji: "🌀", gesture: "Pretend you're wringing out a wet towel — twist your hands in opposite directions. That's torsion.", svgKey: "torsion"},
+    meaning: "A TWISTING force. It tries to spin a material around its long axis — like wringing a towel.",
+    picture: "Wringing out a wet towel. Twisting a screwdriver. Strong wind pushing on one side of a long bridge can put it in torsion.",
+    remember: "TORSION = TWIST. Both start with T. 'Tornado' has the same root — a twisting wind.",
+    watchout: "The Tacoma Narrows Bridge in the USA famously COLLAPSED in 1940 because of torsion from wind. The whole deck twisted itself apart. This is why modern engineers test bridges in wind tunnels!",
+    deeper: "Bridges resist torsion by being WIDE (resists twist better than narrow) and by having decks that are STIFF in two directions, not just one. Modern long-span bridges use box-section decks (hollow rectangles) which are very strong against torsion."
+  }
+];
+
+/* Force-arrow SVGs for the force-card visuals. */
+function forceSVG(key) {
+  const w = "260", h = "100";
+  if (key === "compression") return `<svg viewBox="0 0 260 100" width="${w}" height="${h}"><rect x="80" y="35" width="100" height="30" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><line x1="20" y1="50" x2="75" y2="50" stroke="#dc2626" stroke-width="4" marker-end="url(#cArr)"/><line x1="240" y1="50" x2="185" y2="50" stroke="#dc2626" stroke-width="4" marker-end="url(#cArr)"/><defs><marker id="cArr" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#dc2626"/></marker></defs><text x="130" y="92" font-size="13" text-anchor="middle" fill="#7c2d12" font-weight="700">push INWARDS</text></svg>`;
+  if (key === "tension") return `<svg viewBox="0 0 260 100" width="${w}" height="${h}"><rect x="80" y="35" width="100" height="30" fill="#fef3c7" stroke="#1e63d5" stroke-width="2"/><line x1="80" y1="50" x2="20" y2="50" stroke="#1e63d5" stroke-width="4" marker-end="url(#tArr)"/><line x1="180" y1="50" x2="240" y2="50" stroke="#1e63d5" stroke-width="4" marker-end="url(#tArr)"/><defs><marker id="tArr" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#1e63d5"/></marker></defs><text x="130" y="92" font-size="13" text-anchor="middle" fill="#1e3a8a" font-weight="700">pull OUTWARDS</text></svg>`;
+  if (key === "shear") return `<svg viewBox="0 0 260 100" width="${w}" height="${h}"><rect x="80" y="20" width="100" height="22" fill="#fef3c7" stroke="#7c3aed" stroke-width="2"/><rect x="80" y="58" width="100" height="22" fill="#fef3c7" stroke="#7c3aed" stroke-width="2"/><line x1="20" y1="31" x2="75" y2="31" stroke="#7c3aed" stroke-width="4" marker-end="url(#sArr)"/><line x1="240" y1="69" x2="185" y2="69" stroke="#7c3aed" stroke-width="4" marker-end="url(#sArr)"/><defs><marker id="sArr" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#7c3aed"/></marker></defs><text x="130" y="95" font-size="13" text-anchor="middle" fill="#5b21b6" font-weight="700">slide PAST each other</text></svg>`;
+  if (key === "torsion") return `<svg viewBox="0 0 260 100" width="${w}" height="${h}"><rect x="50" y="40" width="160" height="20" fill="#fef3c7" stroke="#059669" stroke-width="2"/><path d="M 50,50 Q 50,20 80,20" fill="none" stroke="#059669" stroke-width="3" marker-end="url(#tnArr)"/><path d="M 210,50 Q 210,80 180,80" fill="none" stroke="#059669" stroke-width="3" marker-end="url(#tnArr)"/><defs><marker id="tnArr" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#059669"/></marker></defs><text x="130" y="95" font-size="13" text-anchor="middle" fill="#065f46" font-weight="700">twist OPPOSITE ways</text></svg>`;
+  return "";
+}
+
+/* ---------- Study Mode state + rendering ---------- */
+let studyIdx = 0;
+let studyOrder = null;        // optional restricted list (for "review missed words")
+
+function bucketLabel(b) { return b === "type" ? "Bridge Type" : b === "part" ? "Bridge Part" : "Force"; }
+function bucketClass(b) { return b === "type" ? "b-type" : b === "part" ? "b-part" : "b-force"; }
+
+function renderStudyDots() {
+  const host = document.getElementById("studyDots");
+  host.innerHTML = "";
+  const order = studyOrder || TERMS.map((_, i) => i);
+  order.forEach((termIdx, posIdx) => {
+    const t = TERMS[termIdx];
+    const d = document.createElement("div");
+    d.className = "sbp-dot " + bucketClass(t.bucket);
+    if (posIdx < studyIdx) d.classList.add("seen");
+    if (posIdx === studyIdx) d.classList.add("current");
+    d.title = `${posIdx + 1}. ${t.word}`;
+    host.appendChild(d);
+  });
+}
+
+function renderStudyCard() {
+  const order = studyOrder || TERMS.map((_, i) => i);
+  if (studyIdx >= order.length) { showStudyFinish(); return; }
+  const t = TERMS[order[studyIdx]];
+  const host = document.getElementById("studyCardHost");
+
+  let visualHtml = "";
+  if (t.visual.kind === "img") {
+    visualHtml = `<div class="study-visual"><img src="${t.visual.src}" alt="${escapeHtml(t.word)}"></div>`;
+  } else if (t.visual.kind === "svg") {
+    visualHtml = `<div class="study-visual">${bridgeAnatomySVG(t.visual.svgKey)}</div>`;
+  } else if (t.visual.kind === "force") {
+    visualHtml = `<div class="study-visual" style="flex-direction:column;">
+      ${forceSVG(t.visual.svgKey)}
+      <div class="gesture-hint">🤚 ${escapeHtml(t.visual.gesture)}</div>
+    </div>`;
+  }
+
+  const cardHtml = `
+    <div class="study-card ${bucketClass(t.bucket)}">
+      <div class="study-head">
+        <span class="bucket-tag">${bucketLabel(t.bucket)}</span>
+        <h2 class="word">${escapeHtml(t.word)}</h2>
+        <p class="say">Say it: <strong>${escapeHtml(t.say)}</strong></p>
+      </div>
+      ${visualHtml}
+      <div class="study-body">
+        <div class="sb-block meaning"><h4>📝 What it means</h4><p>${escapeHtml(t.meaning)}</p></div>
+        <div class="sb-block picture"><h4>🖼️ Picture this</h4><p>${escapeHtml(t.picture)}</p></div>
+        <div class="sb-block remember"><h4>💡 Remember it</h4><p>${escapeHtml(t.remember)}</p></div>
+        <div class="sb-block watchout"><h4>⚠️ Watch out for</h4><p>${escapeHtml(t.watchout)}</p></div>
+        <details class="study-deeper">
+          <summary>Tell me more — go deeper</summary>
+          <div class="deeper-body">${escapeHtml(t.deeper)}</div>
+        </details>
+      </div>
+      <div class="study-foot">
+        <button class="prev" id="studyPrev" ${studyIdx === 0 ? 'disabled' : ''}>← Previous</button>
+        <span class="progress">Card ${studyIdx + 1} of ${order.length}</span>
+        <button class="next" id="studyNext">${studyIdx === order.length - 1 ? "I've got them all →" : "Got it — next →"}</button>
+      </div>
+    </div>`;
+  host.innerHTML = cardHtml;
+  document.getElementById("studyPrev").addEventListener("click", () => {
+    if (studyIdx > 0) { studyIdx--; renderStudyDots(); renderStudyCard(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+  });
+  document.getElementById("studyNext").addEventListener("click", () => {
+    studyIdx++;
+    renderStudyDots();
+    if (studyIdx >= order.length) { showStudyFinish(); }
+    else { renderStudyCard(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+  });
+}
+
+function startStudy(restrictedOrder) {
+  studyOrder = restrictedOrder || null;
+  studyIdx = 0;
+  document.getElementById("introScreen").style.display = "none";
+  document.getElementById("studyFinishScreen").style.display = "none";
+  document.getElementById("endScreen").classList.remove("shown");
+  document.getElementById("quizScreen").style.display = "none";
+  document.getElementById("studyScreen").style.display = "block";
+  renderStudyDots();
+  renderStudyCard();
+}
+
+function showStudyFinish() {
+  document.getElementById("studyScreen").style.display = "none";
+  document.getElementById("studyFinishScreen").style.display = "block";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
 /* ----------------- BOSS ROUND ----------------- */
 const BOSS = [
   {
@@ -396,7 +741,6 @@ function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;"
 /* ----------------- INTRO ----------------- */
 function initIntro() {
   const nameInp = document.getElementById("playerName");
-  const startBtn = document.getElementById("startBtn");
   // Restore previous name
   if (state.lastName) nameInp.value = state.lastName;
   // Show high score if any
@@ -404,19 +748,37 @@ function initIntro() {
     document.getElementById("highScoreCard").style.display = "block";
     document.getElementById("highScoreVal").textContent = `${state.bestScore} / 13` + (state.bestBoss ? `   (+ ${state.bestBoss} / 3 in Boss Round)` : "");
   }
-  const update = () => { startBtn.disabled = nameInp.value.trim().length < 1; };
-  nameInp.addEventListener("input", update);
-  update();
-  startBtn.addEventListener("click", () => {
+
+  function pickedName() {
     playerName = nameInp.value.trim();
+    if (!playerName) { nameInp.focus(); nameInp.style.borderColor = "#ef4444"; return false; }
+    nameInp.style.borderColor = "";
     state.lastName = playerName;
     saveState(state);
-    document.getElementById("introScreen").style.display = "none";
-    document.getElementById("quizScreen").style.display = "block";
-    qIdx = 0;
-    answers = [];
-    renderQuestion();
+    return true;
+  }
+
+  document.getElementById("modeStudy").addEventListener("click", (e) => {
+    e.preventDefault();
+    if (!pickedName()) return;
+    startStudy();   // no restriction = all 13
   });
+  document.getElementById("modePlay").addEventListener("click", (e) => {
+    e.preventDefault();
+    if (!pickedName()) return;
+    startQuiz();
+  });
+}
+
+function startQuiz() {
+  document.getElementById("introScreen").style.display = "none";
+  document.getElementById("studyScreen").style.display = "none";
+  document.getElementById("studyFinishScreen").style.display = "none";
+  document.getElementById("endScreen").classList.remove("shown");
+  document.getElementById("quizScreen").style.display = "block";
+  qIdx = 0;
+  answers = [];
+  renderQuestion();
 }
 
 /* ----------------- RENDER QUESTION ----------------- */
@@ -526,6 +888,50 @@ function showEnd() {
   if (score >= 11) {
     document.getElementById("bossCta").classList.add("shown");
   }
+
+  // "Review missed words" callout if score < 11 — sends them back to Study Mode
+  // for ONLY the words they got wrong.
+  const missedTermIdx = collectMissedTermIdx();
+  const reviewHost = document.getElementById("reviewMissedHost");
+  if (reviewHost) reviewHost.remove();   // clear any previous
+
+  if (score < 13 && missedTermIdx.length > 0) {
+    const wrap = document.createElement("div");
+    wrap.id = "reviewMissedHost";
+    wrap.className = "review-callout";
+    const n = missedTermIdx.length;
+    wrap.innerHTML = `
+      <h3>📚 Want to lock in the words you missed?</h3>
+      <p>You missed <strong>${n}</strong> of them. Replay just those cards in Study Hall — takes about ${Math.max(1, Math.round(n * 0.7))} min — then come back and try the Arena again.</p>
+      <button id="reviewMissedBtn" type="button">📚 Review the ${n} missed word${n === 1 ? "" : "s"} →</button>
+    `;
+    document.querySelector("#endScreen .end-actions").parentNode.insertBefore(wrap, document.querySelector("#endScreen .end-actions"));
+    document.getElementById("reviewMissedBtn").addEventListener("click", () => {
+      startStudy(missedTermIdx);
+    });
+  }
+}
+
+/* Map quiz answers back to TERMS indices for which terms were got wrong. */
+function collectMissedTermIdx() {
+  // Each quiz question maps to a term by inspecting the correct answer text.
+  // We loop quiz answers; for each WRONG one, find which TERM it tested.
+  const missed = new Set();
+  for (let i = 0; i < QUESTIONS.length; i++) {
+    if (answers[i] && answers[i].correct) continue;
+    const q = QUESTIONS[i];
+    const correctLc = (q.correct || "").toLowerCase();
+    // Find a matching TERM by name — case-insensitive, strip "bridge" suffix
+    for (let t = 0; t < TERMS.length; t++) {
+      const tname = TERMS[t].word.toLowerCase();
+      if (correctLc === tname) { missed.add(t); break; }
+      // Bridge type names match without 'bridge' suffix
+      if (correctLc.replace(/\s*bridge$/, "") === tname) { missed.add(t); break; }
+      // Span-question alternative phrasing
+      if (q.correct === "the gap between two supports" && tname === "span") { missed.add(t); break; }
+    }
+  }
+  return Array.from(missed);
 }
 
 /* ----------------- BOSS ROUND ----------------- */
@@ -615,6 +1021,18 @@ function wireButtons() {
   document.getElementById("replayBtn").addEventListener("click", () => location.reload());
   document.getElementById("goWorkbookBtn").addEventListener("click", () => { location.href = "workbook.html#glossary"; });
   document.getElementById("goLessonBtn").addEventListener("click", () => { location.href = "../lessons/l02.html"; });
+
+  // Study Hall → Arena bridge
+  document.getElementById("goArenaBtn").addEventListener("click", startQuiz);
+  document.getElementById("reviewAgainBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    studyIdx = 0;
+    document.getElementById("studyFinishScreen").style.display = "none";
+    document.getElementById("studyScreen").style.display = "block";
+    renderStudyDots();
+    renderStudyCard();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
