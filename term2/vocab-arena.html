@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎮 Vocab Arena · Y7 Tech · Bridge It</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ---------- Game-specific styles ---------- */
+  .arena-hero{background:linear-gradient(135deg,#5b21b6,#8b5cf6);color:#fff;border-radius:14px;padding:1.6rem 1.8rem;margin:1.5rem 0;text-align:center;box-shadow:0 4px 18px rgba(91,33,182,.25)}
+  .arena-hero h1{margin:.3rem 0;font-size:2.2rem;color:#fff}
+  .arena-hero p{margin:.3rem 0;opacity:.95}
+
+  .arena-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.8rem;margin:1.2rem 0}
+  .ai-card{background:#fff;border:1.5px solid #e4e7ec;border-radius:10px;padding:.85rem 1rem;text-align:center}
+  .ai-card .lbl{font-size:.78rem;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .ai-card .val{font-size:1.7rem;font-weight:800;color:#1f3a68;margin-top:.15rem}
+
+  .stage{background:#fff;border:1.5px solid #e4e7ec;border-radius:14px;padding:1.6rem 1.8rem;margin:1.2rem 0;box-shadow:0 2px 10px rgba(0,0,0,.04);min-height:340px}
+  .stage h2{color:#1f3a68;margin:0 0 .5rem;font-size:1.45rem}
+  .stage .qmeta{color:#64748b;font-size:.92rem;font-style:italic;margin-bottom:.8rem}
+
+  .qprompt{font-size:1.1rem;line-height:1.5;color:#1a202c;margin:.2rem 0 .9rem;font-weight:600}
+
+  .qmedia{margin:.6rem 0;text-align:center}
+  .qmedia img{max-width:100%;max-height:300px;border:1.5px solid #e4e7ec;border-radius:10px}
+  .qmedia .force-icon{display:inline-block;font-size:5rem;line-height:1;padding:1.2rem 1.8rem;border-radius:50%;background:#fef3c7;border:2px dashed #ea8b00}
+  .qmedia.svg svg{max-height:240px}
+
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.55rem;margin:.7rem 0 .3rem}
+  .opts.few{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+  .opt-btn{padding:.85rem 1rem;border:1.5px solid #cbd5e1;background:#fff;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;text-align:left;color:#334155;transition:all .12s}
+  .opt-btn:hover:not(:disabled){border-color:#8b5cf6;background:#faf5ff;transform:translateY(-1px)}
+  .opt-btn:disabled{cursor:not-allowed;opacity:.65}
+  .opt-btn.correct{border-color:#10b981;background:#d1fae5;color:#065f46}
+  .opt-btn.wrong{border-color:#ef4444;background:#fee2e2;color:#991b1b}
+
+  .feedback{margin-top:1rem;padding:1rem 1.1rem;border-radius:10px;line-height:1.5;font-size:.97rem}
+  .feedback.right{background:#d1fae5;border-left:4px solid #10b981;color:#065f46}
+  .feedback.wrong{background:#fee2e2;border-left:4px solid #ef4444;color:#991b1b}
+  .feedback strong{display:block;margin-bottom:.2rem;font-size:1.05rem}
+
+  .next-btn{margin-top:1rem;background:#1f3a68;color:#fff;border:none;padding:.75rem 1.4rem;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer}
+  .next-btn:hover{background:#2e5b9e}
+
+  .progress-dots{display:flex;gap:.35rem;justify-content:center;margin:1rem 0 .2rem;flex-wrap:wrap}
+  .pdot{width:18px;height:18px;border-radius:50%;background:#e4e7ec;border:2px solid transparent}
+  .pdot.current{border-color:#8b5cf6;background:#fff}
+  .pdot.right{background:#10b981}
+  .pdot.wrong{background:#ef4444}
+  .pdot.boss{background:#ea8b00;width:22px;height:22px}
+
+  /* ---------- End-of-quiz hero ---------- */
+  #endScreen{display:none}
+  #endScreen.shown{display:block}
+  .end-hero{background:linear-gradient(135deg,#1f3a68,#2e5b9e);color:#fff;border-radius:14px;padding:2rem 2rem;text-align:center}
+  .end-hero h2{margin:.2rem 0;color:#fff;font-size:1.7rem}
+  .end-score{font-size:4rem;font-weight:800;margin:.4rem 0;letter-spacing:-.04em}
+  .end-score .denom{font-size:2rem;opacity:.7;font-weight:500}
+  .end-band{display:inline-block;padding:.5rem 1.4rem;border-radius:999px;font-weight:700;font-size:1.05rem;margin-top:.4rem;background:rgba(255,255,255,.2)}
+  .end-band.gold{background:#fbbf24;color:#78350f}
+  .end-band.green{background:#10b981}
+  .end-band.amber{background:#f59e0b;color:#fff}
+
+  .boss-cta{background:linear-gradient(135deg,#fbbf24,#d97706);color:#fff;border-radius:12px;padding:1.4rem 1.6rem;margin:1.4rem 0;text-align:center;display:none}
+  .boss-cta.shown{display:block}
+  .boss-cta h3{color:#fff;margin:.2rem 0 .4rem;font-size:1.35rem}
+  .boss-cta button{background:#fff;color:#b45309;border:none;padding:.7rem 1.4rem;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;margin-top:.6rem}
+  .boss-cta button:hover{background:#fffbeb}
+
+  /* ---------- Boss Round styles ---------- */
+  .boss-stage{background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #d97706;border-radius:14px;padding:1.6rem 1.8rem;margin:1.2rem 0}
+  .boss-stage h2{color:#92400e;margin:0 0 .5rem}
+  .boss-stage textarea{width:100%;padding:.7rem;border:1.5px solid #d97706;border-radius:8px;font-family:inherit;font-size:1rem;min-height:90px;box-sizing:border-box;resize:vertical}
+  .boss-stage textarea:focus{outline:none;box-shadow:0 0 0 3px rgba(217,119,6,.3)}
+
+  /* ---------- Replay / actions ---------- */
+  .end-actions{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1.4rem}
+  .end-actions button{padding:.7rem 1.3rem;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem;border:none}
+  .btn-primary{background:#1f3a68;color:#fff}
+  .btn-primary:hover{background:#2e5b9e}
+  .btn-secondary{background:#fff;color:#1f3a68;border:1.5px solid #1f3a68 !important}
+  .btn-secondary:hover{background:#eff6ff}
+
+  .high-score{background:#fff7ed;border:1.5px solid #ea8b00;border-radius:10px;padding:.9rem 1.1rem;margin:1rem 0;text-align:center}
+  .high-score .v{font-size:1.4rem;font-weight:800;color:#9a3412}
+
+  /* ---------- Player name input ---------- */
+  .name-card{background:#eff6ff;border:1.5px solid #2e5b9e;border-radius:12px;padding:1.4rem 1.6rem;margin:1.2rem 0}
+  .name-card label{display:block;font-weight:700;color:#1f3a68;margin-bottom:.4rem}
+  .name-card input{width:100%;padding:.6rem;border:1.5px solid #cbd5e1;border-radius:6px;font-size:1rem;box-sizing:border-box}
+  .name-card .pair-note{font-size:.85rem;color:#64748b;font-style:italic;margin-top:.5rem}
+  .start-btn{margin-top:.8rem;background:#5b21b6;color:#fff;border:none;padding:.85rem 1.6rem;border-radius:8px;font-weight:700;font-size:1.05rem;cursor:pointer;width:100%}
+  .start-btn:hover{background:#4c1d95}
+  .start-btn:disabled{background:#cbd5e1;cursor:not-allowed}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+      <a href="diagnostic.html">📝 Diagnostic</a>
+      <a href="vocab-arena.html">🎮 Vocab Arena</a>
+      <a href="workbook.html">📘 Workbook</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ============================================
+       INTRO — name + start
+       ============================================ -->
+  <div id="introScreen">
+    <div class="arena-hero">
+      <h1>🎮 Vocab Arena</h1>
+      <p style="font-size:1.1rem;">Lesson 2 · 13 questions on the bridge anchor terms</p>
+      <p style="opacity:.85;font-size:.95rem;">5 bridge types · 4 parts of a bridge · 4 forces</p>
+    </div>
+
+    <div class="arena-info">
+      <div class="ai-card"><div class="lbl">Questions</div><div class="val">13</div></div>
+      <div class="ai-card"><div class="lbl">Time</div><div class="val">~6 min</div></div>
+      <div class="ai-card"><div class="lbl">Pass</div><div class="val">8 / 13</div></div>
+      <div class="ai-card" style="background:#fef3c7;border-color:#d97706;"><div class="lbl" style="color:#9a3412;">Boss Round at</div><div class="val" style="color:#9a3412;">11 / 13</div></div>
+    </div>
+
+    <div class="name-card">
+      <label>Your name (or team name if playing in pairs)</label>
+      <input type="text" id="playerName" placeholder="e.g. Amanda &amp; Rudransh — 7TECJ" maxlength="60">
+      <p class="pair-note">In pairs? Take TURNS — one person per question. The score belongs to BOTH of you.</p>
+      <button class="start-btn" id="startBtn" disabled>🎮 Start the game →</button>
+    </div>
+
+    <div id="highScoreCard" class="high-score" style="display:none;">
+      <div class="lbl">Your best score so far</div>
+      <div class="v" id="highScoreVal">—</div>
+    </div>
+
+    <div class="diag-callout" style="background:#fff7ed;border-left:4px solid #ea8b00;padding:1rem 1.25rem;border-radius:10px;margin:1.5rem 0;">
+      <h4 style="color:#92400e;margin-top:0;">How it works</h4>
+      <p style="margin:0;">Each question has a photo or icon and 4 options. Click the right one. Wrong answers don't penalise you — they just show the correct answer + a one-line explanation. Score 11+/13 to unlock the <strong>Boss Round</strong> (3 expert justification questions for 7TECJ stretch).</p>
+    </div>
+  </div>
+
+  <!-- ============================================
+       QUIZ — one question at a time
+       ============================================ -->
+  <div id="quizScreen" style="display:none;">
+    <div class="arena-info">
+      <div class="ai-card"><div class="lbl">Question</div><div class="val" id="qNum">0/13</div></div>
+      <div class="ai-card" style="background:#d1fae5;border-color:#10b981;"><div class="lbl" style="color:#065f46;">Score</div><div class="val" style="color:#065f46;" id="scoreVal">0</div></div>
+    </div>
+
+    <div class="progress-dots" id="progressDots"></div>
+
+    <div class="stage" id="stage">
+      <!-- question content injected here -->
+    </div>
+  </div>
+
+  <!-- ============================================
+       END SCREEN — score + boss round
+       ============================================ -->
+  <div id="endScreen">
+    <div class="end-hero">
+      <h2>🏆 Round complete!</h2>
+      <p style="margin:.2rem 0;opacity:.9;" id="endName">—</p>
+      <div class="end-score"><span id="endScoreVal">0</span><span class="denom"> / 13</span></div>
+      <div class="end-band" id="endBand">—</div>
+      <p id="endMsg" style="margin:.7rem 0 0;opacity:.95;font-size:1.05rem;"></p>
+    </div>
+
+    <div class="boss-cta" id="bossCta">
+      <h3>🚀 Boss Round unlocked!</h3>
+      <p>You scored 11 or higher — you've earned 3 expert justification questions. These are PROPER engineering thinking — there's no single right word, you have to argue using technical vocabulary.</p>
+      <button id="bossStartBtn" type="button">⚔️ Take the Boss Round</button>
+    </div>
+
+    <div class="end-actions">
+      <button class="btn-primary" id="replayBtn" type="button">🔄 Play again</button>
+      <button class="btn-secondary" id="goWorkbookBtn" type="button">📘 Open Workbook Folio</button>
+      <button class="btn-secondary" id="goLessonBtn" type="button">← Back to L02</button>
+    </div>
+  </div>
+
+  <!-- ============================================
+       BOSS ROUND — 3 justification questions
+       ============================================ -->
+  <div id="bossScreen" style="display:none;">
+    <div class="boss-stage">
+      <h2>⚔️ Boss Round — Question <span id="bossNum">1</span> of 3</h2>
+      <p style="color:#92400e;font-size:.95rem;font-style:italic;">Write a 1-sentence answer. Use at least ONE technical term from today.</p>
+      <p class="qprompt" id="bossPrompt">—</p>
+      <textarea id="bossAnswer" placeholder="Type your answer here…"></textarea>
+      <div style="margin-top:.8rem;display:flex;gap:.6rem;">
+        <button class="next-btn" id="bossSubmit" type="button">Submit answer →</button>
+      </div>
+      <div class="feedback" id="bossFeedback" style="display:none;"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Technology · Term 2 · Bridge It · Vocab Arena</strong> · Arthur Phillip High School</p>
+</footer>
+
+<!-- ====================================================
+     Question bank + game logic
+     ==================================================== -->
+<script>
+"use strict";
+
+/* ----------------- QUESTION BANK ----------------- */
+const QUESTIONS = [
+  // ----- Round 1: Bridge Types (5) -----
+  {
+    media: {type: "img", src: "../assets/diag/A1.jpg"},
+    prompt: "What type of bridge is this?",
+    options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+    correct: "truss",
+    why: "It's a Pratt truss — the diagonal + vertical web between two horizontal chords gives it away."
+  },
+  {
+    media: {type: "img", src: "../assets/diag/A2.jpg"},
+    prompt: "What type of bridge is this?",
+    options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+    correct: "beam",
+    why: "Simplest type — a flat horizontal deck sitting on vertical supports. Most highway overpasses are beam bridges."
+  },
+  {
+    media: {type: "img", src: "../assets/diag/A3.jpg"},
+    prompt: "Two bridges side by side. The LEFT one is which type?",
+    options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+    correct: "arch",
+    why: "The Pont du Gard (France) — arches push the load OUTWARDS to the abutments."
+  },
+  {
+    media: {type: "img", src: "../assets/diag/A3.jpg"},
+    prompt: "And the RIGHT one (Golden Gate Bridge) is which type?",
+    options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+    correct: "suspension",
+    why: "Suspension — the deck HANGS from main cables that drape between tall towers."
+  },
+  {
+    media: {type: "img", src: "../assets/diag/cable-stayed.jpg"},
+    prompt: "This is the Millau Viaduct in France. What type of bridge is it?",
+    options: ["beam", "arch", "truss", "suspension", "cable-stayed"],
+    correct: "cable-stayed",
+    why: "Cable-stayed — cables run STRAIGHT from each tall tower to the deck. No draped main cable like a suspension."
+  },
+
+  // ----- Round 2: Parts of a bridge (4) -----
+  {
+    media: {type: "svg", svg: bridgeAnatomySVG("deck")},
+    prompt: "What is the part highlighted in red?",
+    options: ["deck", "pier", "abutment", "span"],
+    correct: "deck",
+    why: "The DECK is the road or walkway surface — what cars and people travel on."
+  },
+  {
+    media: {type: "svg", svg: bridgeAnatomySVG("pier")},
+    prompt: "What is the part highlighted in red?",
+    options: ["deck", "pier", "abutment", "span"],
+    correct: "pier",
+    why: "A PIER is a vertical support standing up from the ground in the middle of a span."
+  },
+  {
+    media: {type: "svg", svg: bridgeAnatomySVG("abutment")},
+    prompt: "What is the part highlighted in red?",
+    options: ["deck", "pier", "abutment", "span"],
+    correct: "abutment",
+    why: "ABUTMENTS are the supports where the bridge meets the GROUND at each end."
+  },
+  {
+    media: {type: "svg", svg: bridgeAnatomySVG("span")},
+    prompt: "The arrow shows the SPAN. What does that mean?",
+    options: ["the part you stand on", "the gap between two supports", "the side rail", "the cables"],
+    correct: "the gap between two supports",
+    why: "SPAN = the horizontal distance between two supports. Bigger span = harder to build."
+  },
+
+  // ----- Round 3: Forces (4) -----
+  {
+    media: {type: "force", icon: "⬇️ ⬆️", label: "two arrows pushing TOWARD each other"},
+    prompt: "Two equal forces pushing INTO an object from opposite sides — what is this called?",
+    options: ["compression", "tension", "shear", "torsion"],
+    correct: "compression",
+    why: "COMPRESSION = squashing / pushing inward. A book on a shelf compresses the shelf."
+  },
+  {
+    media: {type: "force", icon: "↔️", label: "two arrows pulling APART"},
+    prompt: "Two forces pulling an object APART from opposite ends — what is this called?",
+    options: ["compression", "tension", "shear", "torsion"],
+    correct: "tension",
+    why: "TENSION = stretching / pulling apart. A suspension cable holding a deck is in tension."
+  },
+  {
+    media: {type: "force", icon: "✂️", label: "two parallel forces sliding past each other"},
+    prompt: "Two forces sliding past each other in opposite directions (like a pair of scissors) — what is this called?",
+    options: ["compression", "tension", "shear", "torsion"],
+    correct: "shear",
+    why: "SHEAR = sliding / cutting. Bolts in a bridge joint feel shear when one side pushes one way and the other pushes the opposite."
+  },
+  {
+    media: {type: "force", icon: "🌀", label: "twisting force"},
+    prompt: "When you wring out a wet towel, you're applying which force?",
+    options: ["compression", "tension", "shear", "torsion"],
+    correct: "torsion",
+    why: "TORSION = twisting. The Tacoma Narrows Bridge famously failed in 1940 because of torsion from the wind."
+  }
+];
+
+/* ----------------- BOSS ROUND ----------------- */
+const BOSS = [
+  {
+    prompt: "A 1.5 km wide bay with deep water and very strong winds. Which bridge type would you choose, and why? (1 sentence — use at least one technical word.)",
+    accept: ["suspension", "cable-stayed", "cable stayed"],
+    keywords: ["span", "tension", "tower", "cable", "wind", "deep"],
+    model: "I'd choose a SUSPENSION bridge because the long main cables in TENSION can carry a deck across very long spans (1+ km) without piers in deep water. (Cable-stayed also accepted — they're cheaper for medium spans up to ~1 km.)"
+  },
+  {
+    prompt: "Why do truss bridges use TRIANGLES instead of squares or rectangles? (1 sentence with one technical word.)",
+    accept: ["triangulation", "rigid", "deform", "shape"],
+    keywords: ["triangle", "rigid", "deform", "shape", "lock"],
+    model: "Triangles use TRIANGULATION — they cannot be deformed without breaking a side, so the structure stays RIGID under load. Squares can collapse into parallelograms; triangles can't."
+  },
+  {
+    prompt: "You need to build the CHEAPEST possible bridge over a 30 m gap with no special engineering. Which type would you pick, and why?",
+    accept: ["beam"],
+    keywords: ["simple", "cheap", "short", "span", "support"],
+    model: "BEAM bridge — it's the simplest type, just a flat deck on supports. For short spans (under ~50 m) with strong materials, beam is cheapest because it needs no cables, towers or curved arches."
+  }
+];
+
+/* ----------------- INLINE SVG BRIDGE ANATOMY ----------------- */
+function bridgeAnatomySVG(highlight) {
+  // A simple side-elevation truss-on-piers diagram, with the named part in red.
+  // Parts: deck (top horizontal block), pier (one vertical), abutment (the two ground supports),
+  //        span (a labelled arrow at the bottom showing the gap).
+  const c = (key) => highlight === key ? "#dc2626" : "#475569";
+  const w = (key) => highlight === key ? 4 : 2;
+  return `
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" style="background:#f8fafc;border-radius:8px;">
+  <!-- Ground line -->
+  <line x1="0" y1="200" x2="600" y2="200" stroke="#94a3b8" stroke-width="2"/>
+  ${[...Array(20)].map((_,i)=>`<line x1="${30*i}" y1="200" x2="${30*i-15}" y2="220" stroke="#94a3b8" stroke-width="1"/>`).join('')}
+  <!-- Left abutment -->
+  <rect x="40" y="135" width="55" height="65" fill="${highlight==='abutment'?'#fee2e2':'#d3cbb8'}" stroke="${c('abutment')}" stroke-width="${w('abutment')}"/>
+  <!-- Right abutment -->
+  <rect x="505" y="135" width="55" height="65" fill="${highlight==='abutment'?'#fee2e2':'#d3cbb8'}" stroke="${c('abutment')}" stroke-width="${w('abutment')}"/>
+  <!-- Middle pier -->
+  <rect x="280" y="135" width="40" height="65" fill="${highlight==='pier'?'#fee2e2':'#d3cbb8'}" stroke="${c('pier')}" stroke-width="${w('pier')}"/>
+  <!-- Deck -->
+  <rect x="40" y="115" width="520" height="22" fill="${highlight==='deck'?'#fee2e2':'#a9b7c6'}" stroke="${c('deck')}" stroke-width="${w('deck')}"/>
+  <!-- Span dimension line -->
+  <line x1="95" y1="225" x2="280" y2="225" stroke="${c('span')}" stroke-width="${w('span')}" marker-start="url(#arrL)" marker-end="url(#arrR)"/>
+  <line x1="320" y1="225" x2="505" y2="225" stroke="${c('span')}" stroke-width="${w('span')}" marker-start="url(#arrL)" marker-end="url(#arrR)"/>
+  <text x="190" y="240" fill="${c('span')}" font-size="14" font-weight="700" text-anchor="middle">${highlight==='span'?'SPAN':'span'}</text>
+  <text x="412" y="240" fill="${c('span')}" font-size="14" font-weight="700" text-anchor="middle">${highlight==='span'?'SPAN':'span'}</text>
+  <defs>
+    <marker id="arrL" markerWidth="10" markerHeight="10" refX="2" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="${c('span')}" transform="rotate(180 3 3)"/></marker>
+    <marker id="arrR" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="${c('span')}"/></marker>
+  </defs>
+  <!-- Highlighted part label arrow -->
+  ${highlight==='deck' ? `<text x="300" y="105" fill="#dc2626" font-size="15" font-weight="700" text-anchor="middle">↑ deck</text>` : ''}
+  ${highlight==='pier' ? `<text x="300" y="130" fill="#dc2626" font-size="15" font-weight="700" text-anchor="middle">↓ pier</text>` : ''}
+  ${highlight==='abutment' ? `<text x="68" y="130" fill="#dc2626" font-size="13" font-weight="700" text-anchor="middle">↓ abutment</text><text x="532" y="130" fill="#dc2626" font-size="13" font-weight="700" text-anchor="middle">↓ abutment</text>` : ''}
+</svg>`;
+}
+
+/* ----------------- STATE ----------------- */
+const STORAGE_KEY = "y7-bridgeit-vocab-arena-v1";
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) { return {}; }
+}
+function saveState(s) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {}
+}
+let state = loadState();
+let qIdx = 0;
+let answers = [];   // {ans, correct}
+let bossIdx = 0;
+let bossAnswers = [];
+let playerName = "";
+
+/* ----------------- UTIL ----------------- */
+function shuffle(a) { for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+
+/* ----------------- INTRO ----------------- */
+function initIntro() {
+  const nameInp = document.getElementById("playerName");
+  const startBtn = document.getElementById("startBtn");
+  // Restore previous name
+  if (state.lastName) nameInp.value = state.lastName;
+  // Show high score if any
+  if (typeof state.bestScore === "number") {
+    document.getElementById("highScoreCard").style.display = "block";
+    document.getElementById("highScoreVal").textContent = `${state.bestScore} / 13` + (state.bestBoss ? `   (+ ${state.bestBoss} / 3 in Boss Round)` : "");
+  }
+  const update = () => { startBtn.disabled = nameInp.value.trim().length < 1; };
+  nameInp.addEventListener("input", update);
+  update();
+  startBtn.addEventListener("click", () => {
+    playerName = nameInp.value.trim();
+    state.lastName = playerName;
+    saveState(state);
+    document.getElementById("introScreen").style.display = "none";
+    document.getElementById("quizScreen").style.display = "block";
+    qIdx = 0;
+    answers = [];
+    renderQuestion();
+  });
+}
+
+/* ----------------- RENDER QUESTION ----------------- */
+function renderQuestion() {
+  const q = QUESTIONS[qIdx];
+  document.getElementById("qNum").textContent = `${qIdx + 1}/13`;
+  document.getElementById("scoreVal").textContent = answers.filter(a => a.correct).length;
+  renderDots();
+
+  // Shuffle options each render so the answer position is unpredictable
+  const opts = shuffle([...q.options]);
+
+  let mediaHtml = "";
+  if (q.media.type === "img") {
+    mediaHtml = `<div class="qmedia"><img src="${q.media.src}" alt="bridge"></div>`;
+  } else if (q.media.type === "svg") {
+    mediaHtml = `<div class="qmedia svg">${q.media.svg}</div>`;
+  } else if (q.media.type === "force") {
+    mediaHtml = `<div class="qmedia"><span class="force-icon" aria-label="${q.media.label}">${q.media.icon}</span></div>`;
+  }
+
+  let optsHtml = `<div class="opts${opts.length<=4?' few':''}">`;
+  for (const o of opts) {
+    optsHtml += `<button class="opt-btn" data-opt="${escapeHtml(o)}">${escapeHtml(o)}</button>`;
+  }
+  optsHtml += `</div>`;
+
+  document.getElementById("stage").innerHTML = `
+    <div class="qmeta">Question ${qIdx + 1} of 13</div>
+    ${mediaHtml}
+    <p class="qprompt">${escapeHtml(q.prompt)}</p>
+    ${optsHtml}
+    <div id="qFeedback"></div>
+  `;
+  document.querySelectorAll(".opt-btn").forEach(btn => {
+    btn.addEventListener("click", () => onAnswer(btn));
+  });
+}
+
+function renderDots() {
+  const host = document.getElementById("progressDots");
+  host.innerHTML = "";
+  for (let i = 0; i < QUESTIONS.length; i++) {
+    const d = document.createElement("div");
+    d.className = "pdot";
+    if (i < answers.length) d.classList.add(answers[i].correct ? "right" : "wrong");
+    else if (i === qIdx) d.classList.add("current");
+    host.appendChild(d);
+  }
+}
+
+function onAnswer(btn) {
+  const q = QUESTIONS[qIdx];
+  const chosen = btn.getAttribute("data-opt");
+  const correct = chosen === q.correct;
+  answers.push({ans: chosen, correct});
+
+  // Visual feedback on buttons
+  document.querySelectorAll(".opt-btn").forEach(b => {
+    b.disabled = true;
+    if (b.getAttribute("data-opt") === q.correct) b.classList.add("correct");
+    else if (b === btn) b.classList.add("wrong");
+  });
+
+  const fb = document.getElementById("qFeedback");
+  fb.className = correct ? "feedback right" : "feedback wrong";
+  fb.innerHTML = `<strong>${correct ? "✓ Correct!" : "✗ Not quite — the answer is " + q.correct.toUpperCase()}</strong>${escapeHtml(q.why)}<br><br>
+    <button class="next-btn" id="nextBtn" type="button">${qIdx === QUESTIONS.length - 1 ? "See my score →" : "Next question →"}</button>`;
+  document.getElementById("scoreVal").textContent = answers.filter(a => a.correct).length;
+  document.getElementById("nextBtn").addEventListener("click", nextQuestion);
+  renderDots();
+}
+
+function nextQuestion() {
+  qIdx++;
+  if (qIdx >= QUESTIONS.length) {
+    showEnd();
+  } else {
+    renderQuestion();
+  }
+}
+
+/* ----------------- END SCREEN ----------------- */
+function showEnd() {
+  document.getElementById("quizScreen").style.display = "none";
+  document.getElementById("endScreen").classList.add("shown");
+  const score = answers.filter(a => a.correct).length;
+  document.getElementById("endScoreVal").textContent = score;
+  document.getElementById("endName").textContent = playerName;
+
+  let band, msg, cls;
+  if (score === 13) { band = "Perfect score!"; cls = "gold"; msg = "Every term locked in. You're ready for the bridge build."; }
+  else if (score >= 11) { band = "Boss Round unlocked"; cls = "gold"; msg = "Outstanding — pick up the Boss Round below for the gifted-class stretch."; }
+  else if (score >= 8) { band = "Passed!"; cls = "green"; msg = "Solid work — you've anchored the core terms. Replay to push toward 11+."; }
+  else { band = "Keep going!"; cls = "amber"; msg = "Replay the game to lock in the terms you missed. Each replay is faster than the last — that's how memory works."; }
+
+  const bandEl = document.getElementById("endBand");
+  bandEl.textContent = band;
+  bandEl.className = "end-band " + cls;
+  document.getElementById("endMsg").textContent = msg;
+
+  // Save high score
+  if (typeof state.bestScore !== "number" || score > state.bestScore) state.bestScore = score;
+  saveState(state);
+
+  // Boss round CTA only if 11+/13
+  if (score >= 11) {
+    document.getElementById("bossCta").classList.add("shown");
+  }
+}
+
+/* ----------------- BOSS ROUND ----------------- */
+function startBoss() {
+  document.getElementById("endScreen").classList.remove("shown");
+  document.getElementById("bossScreen").style.display = "block";
+  bossIdx = 0;
+  bossAnswers = [];
+  renderBoss();
+}
+
+function renderBoss() {
+  const b = BOSS[bossIdx];
+  document.getElementById("bossNum").textContent = bossIdx + 1;
+  document.getElementById("bossPrompt").textContent = b.prompt;
+  document.getElementById("bossAnswer").value = "";
+  document.getElementById("bossFeedback").style.display = "none";
+  document.getElementById("bossSubmit").style.display = "inline-block";
+  document.getElementById("bossSubmit").textContent = "Submit answer →";
+}
+
+function submitBoss() {
+  const b = BOSS[bossIdx];
+  const ans = document.getElementById("bossAnswer").value.trim();
+  if (!ans) return;
+  const lc = ans.toLowerCase();
+  // Auto-mark: must contain at least one accept term AND one keyword (loose check)
+  const hasAccept = b.accept.some(t => lc.includes(t.toLowerCase()));
+  const kwHits = b.keywords.filter(k => lc.includes(k.toLowerCase())).length;
+  let mark;
+  if (hasAccept && kwHits >= 1) mark = 1;
+  else if (hasAccept || kwHits >= 1) mark = 0.5;
+  else mark = 0;
+  bossAnswers.push({ans, mark});
+
+  const fb = document.getElementById("bossFeedback");
+  fb.style.display = "block";
+  if (mark === 1) {
+    fb.className = "feedback right";
+    fb.innerHTML = `<strong>✓ Strong answer!</strong>You used the right type and at least one technical word.<br><br><strong>Model answer:</strong><br>${escapeHtml(b.model)}`;
+  } else if (mark === 0.5) {
+    fb.className = "feedback wrong";
+    fb.style.background = "#fef3c7";
+    fb.style.borderLeftColor = "#d97706";
+    fb.style.color = "#92400e";
+    fb.innerHTML = `<strong>~ Half marks — close but missing something</strong>You needed BOTH the right bridge type AND a technical word from today's lesson.<br><br><strong>Model answer:</strong><br>${escapeHtml(b.model)}`;
+  } else {
+    fb.className = "feedback wrong";
+    fb.innerHTML = `<strong>✗ Not quite</strong>Compare with the model — what technical vocabulary could you have used?<br><br><strong>Model answer:</strong><br>${escapeHtml(b.model)}`;
+  }
+  document.getElementById("bossSubmit").textContent = bossIdx === BOSS.length - 1 ? "See final result →" : "Next →";
+  document.getElementById("bossSubmit").onclick = nextBoss;
+}
+
+function nextBoss() {
+  bossIdx++;
+  if (bossIdx >= BOSS.length) {
+    finishBoss();
+  } else {
+    renderBoss();
+    document.getElementById("bossSubmit").onclick = submitBoss;
+  }
+}
+
+function finishBoss() {
+  // Save best boss score
+  const total = bossAnswers.reduce((s, b) => s + b.mark, 0);
+  state.bestBoss = (typeof state.bestBoss === "number") ? Math.max(state.bestBoss, total) : total;
+  saveState(state);
+
+  document.getElementById("bossScreen").style.display = "none";
+  document.getElementById("endScreen").classList.add("shown");
+
+  // Update end screen with boss score appended
+  const b = document.getElementById("endMsg");
+  b.innerHTML = `Boss Round score: <strong>${total} / 3</strong> — ` +
+    (total === 3 ? "perfect justification!" : total >= 2 ? "good thinking — review the model answers." : "review the model answers and try again to embed the vocabulary.");
+
+  // Hide the boss CTA now (already done)
+  document.getElementById("bossCta").classList.remove("shown");
+}
+
+/* ----------------- BUTTONS ----------------- */
+function wireButtons() {
+  document.getElementById("bossStartBtn").addEventListener("click", startBoss);
+  document.getElementById("bossSubmit").addEventListener("click", submitBoss);
+  document.getElementById("replayBtn").addEventListener("click", () => location.reload());
+  document.getElementById("goWorkbookBtn").addEventListener("click", () => { location.href = "workbook.html#glossary"; });
+  document.getElementById("goLessonBtn").addEventListener("click", () => { location.href = "../lessons/l02.html"; });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initIntro();
+  wireButtons();
+});
+</script>
+</body>
+</html>
