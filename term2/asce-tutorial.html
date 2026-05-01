@@ -26,6 +26,7 @@
   .teacher-quickstart {
     background:#fef3c7; border:2px solid #d97706; border-radius:14px;
     padding:1.4rem 1.6rem; margin:1.5rem 0;
+    display:none;  /* Hidden by default — only visible with ?teacher=1 URL parameter */
   }
   .teacher-quickstart h2 { color:#9a3412; margin:0 0 .6rem; font-size:1.4rem; }
   .teacher-quickstart .label {
@@ -1297,6 +1298,17 @@ window.resetAllProgress = function () {
 };
 
 renderAll();
+
+// Show the Teacher Quickstart only when ?teacher=1 is in the URL.
+// Public student-shared link does NOT show it. Yunshu's bookmark with
+// ?teacher=1 does show it.
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("teacher") === "1") {
+    const tq = document.getElementById("teacherQuickstart");
+    if (tq) tq.style.display = "block";
+  }
+})();
 </script>
 
 </body>
