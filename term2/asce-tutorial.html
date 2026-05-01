@@ -22,7 +22,7 @@
   }
   .at-hero .open-tool:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.18); }
 
-  /* Teacher quickstart — only visible at top, prominent */
+  /* Teacher quickstart */
   .teacher-quickstart {
     background:#fef3c7; border:2px solid #d97706; border-radius:14px;
     padding:1.4rem 1.6rem; margin:1.5rem 0;
@@ -40,8 +40,7 @@
   /* Week navigation */
   .week-nav {
     display:flex; gap:.4rem; margin:1.6rem 0 .5rem;
-    overflow-x:auto; padding-bottom:.3rem;
-    scrollbar-width: thin;
+    overflow-x:auto; padding-bottom:.3rem; scrollbar-width:thin;
   }
   .week-nav button {
     background:#fff; border:1.5px solid #e4e7ec; padding:.6rem 1rem;
@@ -76,20 +75,11 @@
   .week-header .badge {
     background:linear-gradient(135deg,#1f3a68,#2e5b9e);
     color:#fff; padding:.5rem 1.1rem; border-radius:10px;
-    font-weight:800; font-size:.85rem; letter-spacing:.05em;
-    flex-shrink:0;
+    font-weight:800; font-size:.85rem; letter-spacing:.05em; flex-shrink:0;
   }
   .week-header .titles { flex:1; min-width:200px; }
   .week-header h2 { color:#1f3a68; margin:0; font-size:1.55rem; line-height:1.2; }
-  .week-header .subtitle {
-    color:#0e7490; font-style:italic; margin:.2rem 0 0; font-size:1rem;
-  }
-  .week-header .lesson-link {
-    background:#eff6ff; color:#1e3a8a; padding:.4rem .9rem; border-radius:999px;
-    font-size:.85rem; font-weight:700; text-decoration:none; flex-shrink:0;
-    border:1.5px solid #2e5b9e;
-  }
-  .week-header .lesson-link:hover { background:#1e3a8a; color:#fff; }
+  .week-header .subtitle { color:#0e7490; font-style:italic; margin:.2rem 0 0; font-size:1rem; }
 
   .concept {
     background:#f0fdfa; border-left:4px solid #14b8a6;
@@ -98,31 +88,90 @@
   .concept h3 { margin:0 0 .4rem; color:#0f766e; font-size:1.05rem; }
   .concept p { margin:.3rem 0; line-height:1.55; color:#134e4a; }
 
-  .tasks { margin:1rem 0; }
-  .tasks h3 {
-    color:#1f3a68; font-size:1.1rem; margin:.5rem 0 .6rem;
+  /* Lesson card */
+  .lesson-card {
+    background:#fafbfc; border:2px solid #cbd5e1; border-radius:12px;
+    padding:1.2rem 1.4rem; margin:1.2rem 0;
+  }
+  .lesson-card.lesson-a { border-left:6px solid #2e5b9e; }
+  .lesson-card.lesson-b { border-left:6px solid #ea8b00; }
+  .lesson-card .lesson-head {
+    display:flex; align-items:flex-start; gap:.7rem; margin-bottom:.6rem; flex-wrap:wrap;
+  }
+  .lesson-card .lesson-letter {
+    background:#1f3a68; color:#fff; padding:.4rem .85rem;
+    border-radius:8px; font-weight:800; font-size:.95rem;
+    flex-shrink:0;
+  }
+  .lesson-card.lesson-b .lesson-letter { background:#ea8b00; }
+  .lesson-card .lesson-titles { flex:1; min-width:200px; }
+  .lesson-card .lesson-titles h3 {
+    color:#1f3a68; margin:0; font-size:1.2rem; line-height:1.3;
+  }
+  .lesson-card.lesson-b .lesson-titles h3 { color:#9a3412; }
+  .lesson-card .lesson-titles .duration {
+    color:#64748b; font-size:.85rem; font-weight:600; margin-top:.2rem;
+  }
+  .lesson-card .goal {
+    background:#fff; border:1px dashed #cbd5e1; border-radius:8px;
+    padding:.7rem .9rem; margin:.6rem 0 .9rem;
+    font-size:.95rem; color:#334155; line-height:1.5;
+  }
+  .lesson-card .goal strong { color:#0f766e; }
+
+  /* Tasks */
+  .tasks h4 {
+    color:#1f3a68; font-size:1rem; margin:.5rem 0 .5rem;
     display:flex; align-items:center; gap:.5rem;
   }
   .task {
-    background:#fafbfc; border:1.5px solid #e4e7ec;
+    background:#fff; border:1.5px solid #e4e7ec;
     padding:.85rem 1rem; border-radius:8px; margin:.5rem 0;
     display:grid; grid-template-columns: auto 1fr; gap:.7rem;
     align-items:flex-start;
   }
   .task input[type=checkbox] {
-    width:22px; height:22px; cursor:pointer; margin-top:.15rem;
+    width:24px; height:24px; cursor:pointer; margin-top:.1rem;
     accent-color:#10b981;
   }
   .task .body label {
     display:block; font-weight:600; color:#1a202c; cursor:pointer;
-    line-height:1.45; font-size:.97rem;
+    line-height:1.5; font-size:.97rem;
   }
-  .task .body p {
-    margin:.25rem 0 0; color:#475569; font-size:.9rem; line-height:1.5;
+  .task .body .step-num {
+    display:inline-block; background:#1f3a68; color:#fff;
+    width:22px; height:22px; border-radius:50%;
+    text-align:center; line-height:22px;
+    font-size:.78rem; font-weight:800; margin-right:.4rem;
   }
+  .task .body .expect {
+    margin:.35rem 0 0; color:#065f46; font-size:.88rem; line-height:1.5;
+    background:#d1fae5; padding:.4rem .7rem; border-radius:6px;
+    border-left:3px solid #10b981;
+  }
+  .task .body .expect::before { content:"✓ You should now see: "; font-weight:700; }
+  .task .body .tip {
+    margin:.3rem 0 0; color:#475569; font-size:.85rem; line-height:1.45;
+    font-style:italic;
+  }
+  .task .body .tip::before { content:"💡 "; font-style:normal; }
+  .task .body .ifstuck {
+    margin:.3rem 0 0; color:#9a3412; font-size:.85rem; line-height:1.45;
+    background:#fff7ed; padding:.4rem .7rem; border-radius:6px;
+    border-left:3px solid #ea8b00;
+  }
+  .task .body .ifstuck::before { content:"🆘 If stuck: "; font-weight:700; font-style:normal; }
   .task.done { background:#f0fdf4; border-color:#10b981; }
   .task.done .body label { color:#065f46; text-decoration:line-through; opacity:.7; }
 
+  .quickcheck {
+    background:#ede9fe; border-left:4px solid #5b21b6;
+    padding:.8rem 1rem; border-radius:0 8px 8px 0; margin:.8rem 0 0;
+    font-size:.92rem; color:#3730a3;
+  }
+  .quickcheck strong { color:#4c1d95; }
+
+  /* Screenshot slots */
   .screenshot-slot {
     background:#fef3c7; border:2px dashed #d97706; border-radius:10px;
     padding:.8rem 1rem; margin:.6rem 0;
@@ -133,6 +182,7 @@
     max-width:100%; border-radius:8px; margin-top:.5rem; border:1.5px solid #d97706;
   }
 
+  /* Week-level reflection */
   .reflect {
     background:#ede9fe; border-left:4px solid #5b21b6;
     padding:1rem 1.2rem; border-radius:0 10px 10px 0; margin:1.2rem 0;
@@ -172,13 +222,6 @@
   }
   .week-progress button.secondary:hover { background:#eff6ff; }
 
-  .glossary-bar {
-    background:#1f3a68; color:#fff; border-radius:10px;
-    padding:.8rem 1.2rem; margin:.8rem 0;
-    display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.9rem;
-  }
-  .glossary-bar strong { color:#fef3c7; }
-
   .open-tool-bar {
     position:sticky; top:60px; z-index:10;
     background:#fff; border:1.5px solid #14b8a6; border-radius:10px;
@@ -200,7 +243,15 @@
   }
   .open-tool-bar a:hover { color:#155e75; }
 
-  /* Print styles — clean printable worksheet view */
+  /* Real ASCE keyboard styling */
+  kbd {
+    display:inline-block; padding:.1rem .45rem;
+    background:#1f3a68; color:#fff; border-radius:4px;
+    font-family:ui-monospace,monospace; font-size:.85em;
+    font-weight:700; box-shadow: 0 1px 0 rgba(0,0,0,.2);
+  }
+
+  /* Print */
   @media print {
     .week-nav, .open-tool-bar, .at-hero .open-tool, .week-progress, .teacher-quickstart { display:none !important; }
     .week { display:block !important; page-break-after:always; box-shadow:none; }
@@ -232,43 +283,36 @@
 
   <div class="at-hero">
     <h1>🌉 ASCE Bridge Designer — 8-Week Tutorial</h1>
-    <p>Your term-long companion for designing, testing, and refining bridges in software <strong>before</strong> you commit them to glue. Each week unlocks one engineering concept and builds on the last. By Week 9, you'll be predicting where bridges fail like a real engineer.</p>
+    <p>Your week-by-week guide to designing, testing, and refining bridges in software. Each week has <strong>2 lessons</strong> (Lesson A + Lesson B). Each task is one click. By the end, you'll predict where bridges fail like a real engineer.</p>
     <a class="open-tool" href="https://app.asce.org/bridge-designer/app/" target="_blank" rel="noopener">🚀 Open ASCE Bridge Designer →</a>
   </div>
 
-  <!-- Sticky open-tool reminder -->
   <div class="open-tool-bar">
     <span class="pulse"></span>
-    <strong>Have the tool open in another tab while you work through this page:</strong>
-    <a href="https://app.asce.org/bridge-designer/app/" target="_blank" rel="noopener">Open ASCE Bridge Designer ↗</a>
+    <strong>Keep ASCE open in another tab while you follow this tutorial:</strong>
+    <a href="https://app.asce.org/bridge-designer/app/" target="_blank" rel="noopener">Open the tool ↗</a>
   </div>
 
   <!-- ─── TEACHER QUICKSTART ─── -->
   <div class="teacher-quickstart" id="teacherQuickstart">
-    <span class="label">👩‍🏫 Teacher only — 30-min self-paced walkthrough</span>
-    <h2>Your prep before assigning Week 2 to students</h2>
-    <p>Hi Ms Gao. Before students touch this tool, spend 30 minutes working through these 5 mini-tasks yourself. Take a screenshot at each step — you can drop those into the placeholder slots throughout this page (look for the orange dashed boxes).</p>
+    <span class="label">👩‍🏫 Teacher only — your 30-min self-paced walkthrough</span>
+    <h2>Before you assign Week 2 to students</h2>
+    <p>Hi Ms Gao. The good news: I've now seen the actual ASCE Bridge Designer Cloud Edition, so the tutorial below uses real menu names, real buttons, real hot keys. Spend 30 minutes working through Week 2 yourself — by the end of it, you'll be ready to teach the full 8-week sequence.</p>
     <ol>
-      <li><strong>Open the tool</strong> in a fresh browser tab. Note the layout — toolbox on one side, big blank workspace in the middle, "Run / Test" button somewhere prominent. Take Screenshot #1: the empty workspace.</li>
-      <li><strong>Place 4 nodes</strong> in a square shape (click → click → click → click). Connect them with 4 members to form a square. Take Screenshot #2: the square bridge.</li>
-      <li><strong>Run the load test.</strong> The square should FAIL — members will deform, change colour, or break. Take Screenshot #3: the failed square (this is the "WHY triangles?" lesson in one image).</li>
-      <li><strong>Add a diagonal</strong> across the square (one member connecting opposite corners). It now has 2 triangles. Run the test again. Should PASS. Take Screenshot #4: the passing triangulated bridge with red/blue colours visible.</li>
-      <li><strong>Find the SAVE feature.</strong> Does it save online? Save to file? Require login? Note this — students will need to know how to keep their designs across the 8 weeks.</li>
+      <li><strong>Open the tool</strong> in a fresh browser tab. The "Design tip of the day" window appears — click <strong>Close</strong>.</li>
+      <li>Click <strong>File → Load Standard Truss Template</strong>. Pick any template. A working starter bridge appears.</li>
+      <li>Press <kbd>Alt-T</kbd> to run the load test. A truck drives across. Watch the colours: <span style="color:#dc2626;font-weight:700;">RED = compression</span>, <span style="color:#1e63d5;font-weight:700;">BLUE = tension</span>.</li>
+      <li>Press <kbd>Alt-D</kbd> to return to the drawing board. Click <strong>Report → Cost calculations</strong> to see the 4-part cost breakdown.</li>
+      <li>Click <strong>Report → Member analysis report</strong> — this is the engineering-grade data report. Scan it. Close it.</li>
+      <li>Try <strong>File → Save</strong> — files save as <code>.bdc</code> on your computer. Handy for students to share designs with you.</li>
     </ol>
-    <p style="margin-top:.7rem;"><strong>Once you've done these 5 tasks, you understand the tool well enough to teach Week 2.</strong> Each subsequent week's prep takes ~10 minutes.</p>
-    <p style="font-size:.88rem; color:#7c2d12; font-style:italic; margin-top:.4rem;">Tip: drop your screenshots into the orange placeholder slots in each week's section. The placeholders show the exact prompt text — click the slot, paste the image, and it'll display.</p>
+    <p style="margin-top:.7rem;"><strong>Done? You now know the tool well enough to teach all 8 weeks.</strong> Each subsequent week's prep is ~10 min.</p>
     <button onclick="document.getElementById('teacherQuickstart').style.display='none';" style="background:#9a3412;color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:700;cursor:pointer;margin-top:.5rem;">✓ Done — hide this section</button>
   </div>
 
-  <!-- ─── WEEK NAVIGATION ─── -->
-  <nav class="week-nav" id="weekNav">
-    <!-- buttons injected by JS -->
-  </nav>
-
-  <!-- ─── WEEK SECTIONS ─── -->
+  <nav class="week-nav" id="weekNav"></nav>
   <div id="weekContainer"></div>
 
-  <!-- ─── EXPORT BAR ─── -->
   <div style="background:#f8fafc; border:1.5px solid #e4e7ec; border-radius:10px; padding:1rem 1.3rem; margin:1.5rem 0; display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;">
     <strong style="color:#1f3a68;">Reset progress?</strong>
     <span style="color:#475569; font-size:.92rem;">Your task ticks + reflections save to this laptop only.</span>
@@ -285,228 +329,690 @@
 "use strict";
 
 /* ============================================================
-   8-WEEK TUTORIAL DATA
+   8-WEEK TUTORIAL — TWO LESSONS PER WEEK (16 lesson blocks)
+   Real ASCE Cloud Edition terminology and menu paths.
+   Joints (not Nodes), Members (not Lines).
+   Hot keys: Alt-T=test, Alt-D=drawing board, Ctrl-Z=undo, Ctrl-Y=redo
+   Force colours: tension=BLUE, compression=RED
    ============================================================ */
 const WEEKS = [
+  /* ═══════════════ WEEK 2 ═══════════════ */
   {
     n: 2, label: "W2", emoji: "🌱",
     title: "Hello, Bridge Designer",
-    subtitle: "Click around. Get familiar. No bridges have to work yet.",
-    lessonLink: "L02 — 5 Bridge Types + Mini-Build",
+    subtitle: "Week 2 of term · two 75-min lessons. Open the tool. Load a template. Run your first test.",
     concept: {
-      h: "What's a bridge designer?",
-      p: "It's a digital sandbox where you build bridges out of straight lines (called <strong>members</strong>) connected at points (called <strong>nodes</strong> or joints). The software then puts a heavy weight on top and tells you whether your bridge holds — without you wasting any glue. Real civil engineers use exactly the same kind of software (just much more expensive)."
+      h: "What is the ASCE Bridge Designer?",
+      p: "A free, no-login web tool from the American Society of Civil Engineers. You build bridges out of <strong>members</strong> (straight beams) connected at <strong>joints</strong> (the points where members meet). Then a virtual truck drives across and tells you whether your bridge holds. Real engineers use software just like this — yours is the Year 7 version."
     },
-    tasks: [
-      { id: "w2t1", t: "Open the ASCE Bridge Designer in a new browser tab using the link at the top of this page.", n: "If anything asks for a login, see if you can use it without an account first. Most browsers let you click 'Skip' or 'Continue as guest'." },
-      { id: "w2t2", t: "Identify the 3 main parts of the screen: <strong>(1)</strong> the workspace where bridges are built, <strong>(2)</strong> the toolbox (where you pick member type, run tests, etc.), and <strong>(3)</strong> the load-test or 'play' button.", n: "Just look. Don't click anything yet." },
-      { id: "w2t3", t: "Click anywhere in the workspace to place your <strong>first node</strong>. It should be a small dot or circle.", n: "If nothing appears, you might need to select the 'Place Node' tool first." },
-      { id: "w2t4", t: "Place 3 more nodes so they form a triangle. Connect them with members (lines). You now have your first bridge.", n: "" },
-      { id: "w2t5", t: "Find the 'Run', 'Test', or 'Simulate' button and click it. Watch what happens to your bridge.", n: "If a load is applied (e.g. a moving truck), members might change colour, vibrate, or stay still. This is your first force visualisation." },
+    lessons: [
+      {
+        letter: "A",
+        title: "Open the tool. Run your first test.",
+        duration: "75 minutes",
+        goal: "By the end of Lesson A, you'll have loaded a working starter bridge AND watched a truck drive across it.",
+        tasks: [
+          { id:"w2at1",
+            t:"Open the ASCE Bridge Designer using the 🚀 link at the top of this page.",
+            expect:"A grey screen with a 'Design tip of the day' pop-up window in the middle.",
+            tip:"No login is needed. The tool collects ZERO information about you. It's safe and private." },
+          { id:"w2at2",
+            t:"Read 1 or 2 tips by clicking <strong>Next &gt;&gt;</strong>. Then click <strong>Close</strong> to dismiss the pop-up.",
+            expect:"The big grey area (the drawing board) is now visible, with menus along the top.",
+            ifstuck:"If the pop-up won't close, click the small ✕ in its top-right corner." },
+          { id:"w2at3",
+            t:"At the very top of the screen, find these <strong>7 menu words</strong>: File · Edit · View · Tools · Test · Report · Help.",
+            expect:"You can see all 7 menus listed in a row.",
+            tip:"You don't need to click anything yet. Just notice they're there." },
+          { id:"w2at4",
+            t:"Click on the word <strong>File</strong> at the top-left. A dropdown menu opens. Click <strong>Load Standard Truss Template</strong>.",
+            expect:"A small window opens showing several starter bridge templates.",
+            ifstuck:"If you don't see 'Load Standard Truss Template', scroll down inside the File menu — it might be lower in the list." },
+          { id:"w2at5",
+            t:"Click any one of the templates (your choice — pick the one that looks coolest). Click <strong>OK</strong> or double-click the template.",
+            expect:"A starter bridge with joints (small dots) and members (lines between dots) appears on the drawing board. <strong>This bridge already works!</strong>" },
+          { id:"w2at6",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> together on your keyboard.",
+            expect:"The screen changes — a truck appears and starts driving across your bridge. The members glow red and blue.",
+            tip:"Alt-T = TEST. It's the fastest way to run a load test. (Or click Test → Run Load Test if hot keys feel weird.)" },
+          { id:"w2at7",
+            t:"Watch the truck make 2 passes across the bridge. Then press <kbd>Alt</kbd> + <kbd>D</kbd> to go back to the drawing board.",
+            expect:"You're back at the drawing board with your bridge visible.",
+            tip:"Alt-D = back to DRAWING board. Two simple shortcuts: T for test, D for drawing." },
+        ],
+        quickcheck: "Can you say what colour MEANS compression and what colour MEANS tension? (RED = compression. BLUE = tension. Bright = working hard.)"
+      },
+      {
+        letter: "B",
+        title: "Build your own bridge from scratch.",
+        duration: "75 minutes",
+        goal: "By the end of Lesson B, you'll have built a 4-joint bridge by yourself — no template — and run a load test on it.",
+        tasks: [
+          { id:"w2bt1",
+            t:"In ASCE, click <strong>File → New</strong> to start a fresh blank drawing board.",
+            expect:"The drawing board is empty. A new window asks for your name and project ID.",
+            tip:"Type your name (e.g. 'Amanda Guo') and project ID (e.g. '7TECJ-Amanda'). Click OK." },
+          { id:"w2bt2",
+            t:"In the toolbar, find the icon for placing a <strong>joint</strong>. Hover your mouse over each toolbar icon to see its name. The joint tool usually looks like a small dot.",
+            expect:"When you find it, the icon is highlighted/selected.",
+            ifstuck:"If you can't find the joint tool, try Tools menu → Joint." },
+          { id:"w2bt3",
+            t:"Click 4 different spots on the drawing board to place <strong>4 joints</strong> in a square shape (top-left, top-right, bottom-left, bottom-right).",
+            expect:"4 small dots appear on the drawing board, forming a rough square.",
+            ifstuck:"If you click and nothing appears, you may have the wrong tool selected. Re-click the joint tool first." },
+          { id:"w2bt4",
+            t:"Now switch to the <strong>member tool</strong> (the line-drawing tool). Click one joint, then click another to draw a member between them. Repeat to draw all 4 sides of the square.",
+            expect:"Your 4 joints are now connected by 4 members in a square shape.",
+            tip:"This is your bridge. Yes, it's just a square. We'll see what happens." },
+          { id:"w2bt5",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> to test it.",
+            expect:"The truck drives onto your square — and it COLLAPSES (members deform, change colour, or break)." },
+          { id:"w2bt6",
+            t:"Press <kbd>Alt</kbd> + <kbd>D</kbd> to go back to the drawing board. Now <strong>add ONE more member</strong>: draw a diagonal across the square (corner to opposite corner).",
+            expect:"Your bridge now has 5 members and looks like a square split into 2 triangles." },
+          { id:"w2bt7",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> to test the new design.",
+            expect:"This time the bridge HOLDS! The truck crosses without breaking it. Members glow red/blue but stay intact.",
+            tip:"That's the magic of triangulation. One diagonal turned a failure into a success." },
+        ],
+        quickcheck: "WHY does the square fail and the triangulated version pass? (Squares can change shape under load — they squash into a parallelogram. Triangles cannot change shape without breaking a side. So triangles HOLD.)"
+      }
     ],
     screenshots: [
-      "📷 The empty workspace when you first open the tool",
-      "📷 Your first triangle bridge with 3 nodes + 3 members",
+      "📷 The 'Tip of the day' pop-up when you first open the tool",
+      "📷 Your loaded Standard Truss Template (Lesson A end)",
+      "📷 Your hand-built triangulated bridge after the load test (Lesson B end)",
     ],
     reflect: [
       "What surprised you about the tool's interface?",
-      "Did your triangle hold the load? If yes — why? If no — what do you think went wrong?",
+      "Did your hand-built triangle bridge hold the load? Why or why not?",
     ],
-    confusion: "<strong>Common confusion:</strong> students click everywhere and think they've broken the tool. They haven't. Most browser-based engineering tools are very robust — there's almost always an UNDO button (try Ctrl+Z or Cmd+Z)."
+    confusion: "<strong>Common confusion:</strong> students click the wrong tool and think they've broken something. They haven't. Just click the correct tool icon and try again. The UNDO button (or <kbd>Ctrl</kbd>+<kbd>Z</kbd>) works for any mistake."
   },
+
+  /* ═══════════════ WEEK 3 ═══════════════ */
   {
     n: 3, label: "W3", emoji: "🔴🔵",
     title: "Forces are colours",
-    subtitle: "Compression makes members RED. Tension makes them BLUE. See it for yourself.",
-    lessonLink: "L03 — Forces Lab",
+    subtitle: "Compression = RED. Tension = BLUE. Bright = working hard. See it for real.",
     concept: {
-      h: "Why do members glow red or blue?",
-      p: "When weight pushes DOWN on a bridge, the structure transmits that force through every member. Some members get SQUEEZED (compression — usually shown red); others get STRETCHED (tension — usually shown blue). The same bridge has BOTH forces happening at the same time, in different places. Today you'll see this directly."
+      h: "Why do members turn red or blue?",
+      p: "When the truck drives across, every member feels a force. Some get <strong>squeezed</strong> (compression — turn <span style=\"color:#dc2626;font-weight:700;\">RED</span>). Others get <strong>stretched</strong> (tension — turn <span style=\"color:#1e63d5;font-weight:700;\">BLUE</span>). The brighter the colour, the harder that member is working. ASCE help says: <em>'Bright colours mean the bridge is working hard!'</em>"
     },
-    tasks: [
-      { id: "w3t1", t: "Build the simplest bridge that fails: <strong>a SQUARE</strong> made of 4 nodes + 4 members.", n: "Don't add a diagonal yet." },
-      { id: "w3t2", t: "Run the load test. The square should DEFORM — collapse into a parallelogram or break.", n: "This is what 'no triangulation' looks like." },
-      { id: "w3t3", t: "Now add ONE diagonal member across the square. It now contains 2 triangles. Run the test again.", n: "It should pass." },
-      { id: "w3t4", t: "Look at the colours. <strong>Which members are red?</strong> Which are blue? Write your answer in the reflection at the bottom of this section.", n: "Hint: the top of the bridge usually goes red (compression). The bottom usually goes blue (tension)." },
-      { id: "w3t5", t: "Try removing different members and re-testing. <strong>Which member is most important?</strong> When you remove it, does the bridge fail?", n: "" },
+    lessons: [
+      {
+        letter: "A",
+        title: "Spot RED and BLUE on a working bridge.",
+        duration: "75 minutes",
+        goal: "By the end, you can point at any member and say 'that one is in compression' or 'that one is in tension'.",
+        tasks: [
+          { id:"w3at1",
+            t:"Open ASCE. Click <strong>File → Load Standard Truss Template</strong> and pick the same template you used in Week 2 Lesson A.",
+            expect:"The same starter bridge from last week appears." },
+          { id:"w3at2",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> to run the load test.",
+            expect:"The truck starts driving across. Members glow red and blue." },
+          { id:"w3at3",
+            t:"Watch slowly. Look at the <strong>top horizontal beam</strong> (the long line at the very top of the bridge). What colour is it — red or blue?",
+            expect:"It's RED — that means the top is in COMPRESSION (being squeezed).",
+            tip:"On almost any bridge with a load on top, the top members are being squeezed. Makes sense — the weight pushes down on them." },
+          { id:"w3at4",
+            t:"Now look at the <strong>bottom horizontal beam</strong> (the long line at the very bottom). What colour?",
+            expect:"It's BLUE — the bottom is in TENSION (being stretched).",
+            tip:"The bottom is being pulled apart as the bridge tries to bend under the load. Like the underneath of a diving board when you stand on it." },
+          { id:"w3at5",
+            t:"Look at the diagonals (slanted members between top and bottom). Some should be RED, some BLUE.",
+            expect:"Diagonals share the load. Some carry compression, some carry tension.",
+            tip:"This is why diagonals matter — they make sure forces have a path through the bridge to the supports." },
+          { id:"w3at6",
+            t:"Find the BRIGHTEST member on the bridge (the most intense colour). This is the 'hardest-working' member.",
+            expect:"You've identified the most loaded member. Note where it is.",
+            tip:"In Week 7 you'll use this idea — the brightest members are where you need the strongest joints in your physical bridge." },
+        ],
+        quickcheck: "Say it out loud: 'The top is RED so it's in [compression]. The bottom is BLUE so it's in [tension].' Got it?"
+      },
+      {
+        letter: "B",
+        title: "Delete a member to find out what it does.",
+        duration: "75 minutes",
+        goal: "By the end, you can predict what happens when you remove a specific member. Some are critical, some aren't.",
+        tasks: [
+          { id:"w3bt1",
+            t:"Open the same bridge from Lesson A.",
+            expect:"Your starter bridge is on the drawing board." },
+          { id:"w3bt2",
+            t:"Click ONCE on a <strong>diagonal member</strong> to select it. The selected member should change colour or be highlighted.",
+            expect:"The clicked member is highlighted (often turns yellow or has a box around it).",
+            ifstuck:"If clicking doesn't select, you might be in the wrong tool. Click the 'arrow' or 'select' tool first, then click the member." },
+          { id:"w3bt3",
+            t:"Press the <kbd>Delete</kbd> key on your keyboard. The member disappears.",
+            expect:"Your bridge now has one fewer member. The drawing shows a gap where it used to be." },
+          { id:"w3bt4",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> to test. Did the bridge still pass?",
+            expect:"It might pass (the member wasn't critical). It might fail (the member was important).",
+            tip:"Either way, you've learned something." },
+          { id:"w3bt5",
+            t:"Press <kbd>Ctrl</kbd> + <kbd>Z</kbd> to UNDO the deletion. The member reappears.",
+            expect:"Your bridge is back to original.",
+            tip:"Ctrl-Z is your safety net. Use it any time you mess up." },
+          { id:"w3bt6",
+            t:"Try deleting a different member — pick one that was VERY BRIGHT during the test (highly loaded). Test again.",
+            expect:"This one almost certainly causes failure — bright members are usually critical.",
+            ifstuck:"If you can't tell which member was bright, press Alt-T first to test, watch the colours, then press Alt-D and click the brightest one." },
+          { id:"w3bt7",
+            t:"Press <kbd>Ctrl</kbd> + <kbd>Z</kbd> to undo. Repeat: try deleting a member that was DIM/GREY in the test. What happens?",
+            expect:"Dim members usually aren't critical — the bridge still passes after their deletion.",
+            tip:"Engineering insight: dim members might be unnecessary! In Week 6 you'll remove them to save money." },
+        ],
+        quickcheck: "Which kind of member is more critical to keep — bright or dim? (BRIGHT — those are doing real work. Dim members can sometimes be removed.)"
+      }
     ],
     screenshots: [
-      "📷 The square bridge BEFORE the load test",
-      "📷 The square bridge AFTER deformation/failure",
-      "📷 The triangulated bridge with red/blue colours visible",
+      "📷 The bridge mid-test with truck visible and members glowing red/blue",
+      "📷 Close-up of a clearly RED (compression) member",
+      "📷 Close-up of a clearly BLUE (tension) member",
     ],
     reflect: [
-      "In your bridge, where did you see RED (compression)?",
-      "Where did you see BLUE (tension)?",
-      "What's the engineering reason squares fail and triangles don't?",
+      "Where in your bridge did you see the BRIGHTEST RED member?",
+      "Where did you see the BRIGHTEST BLUE member?",
+      "Did deleting a bright member always cause failure?",
     ],
-    confusion: "<strong>Common confusion:</strong> some students see members that are GREY or have no colour, and think the tool is broken. Grey usually means that member is carrying very little force — it's neither in significant compression nor tension. That's information too."
+    confusion: "<strong>Common confusion:</strong> students see members that are GREY (no colour) and think the tool is broken. Grey means very low force. Those members might be unnecessary."
   },
+
+  /* ═══════════════ WEEK 4 ═══════════════ */
   {
     n: 4, label: "W4", emoji: "🔺",
     title: "Triangulation is everything",
-    subtitle: "Build 3 different truss patterns side by side. See which is strongest and lightest.",
-    lessonLink: "L04 — Truss Geometry (Pratt, Howe, Warren)",
+    subtitle: "Build Pratt, Howe, and Warren trusses. Compare them.",
     concept: {
-      h: "Why are there so many truss types?",
-      p: "Engineers have invented dozens of truss patterns. The main 3 you should know are: <strong>Pratt</strong> (diagonals slope down toward the centre — common in railway bridges), <strong>Howe</strong> (diagonals slope up toward the centre — opposite of Pratt), and <strong>Warren</strong> (just zigzags, no verticals — light + simple). Each has different strengths."
+      h: "Why are there different truss patterns?",
+      p: "Engineers have invented many truss patterns — each handles forces a bit differently. The 3 main ones for Year 7: <strong>Pratt</strong> (diagonals slope DOWN toward centre), <strong>Howe</strong> (diagonals slope UP toward centre — Pratt's mirror), <strong>Warren</strong> (zigzags only, no verticals — light and simple)."
     },
-    tasks: [
-      { id: "w4t1", t: "Build a <strong>Pratt truss</strong>: top chord, bottom chord, vertical members at regular intervals, diagonals that slope DOWN toward the centre of the bridge.", n: "Like the diagonals point inward toward the middle." },
-      { id: "w4t2", t: "Run the load test. Note which members are red, which are blue, and which (if any) failed.", n: "" },
-      { id: "w4t3", t: "Now <strong>delete the bridge</strong> and build a <strong>Howe truss</strong>: same as Pratt but diagonals slope UP toward the centre.", n: "The diagonals point outward away from the middle." },
-      { id: "w4t4", t: "Test it. Compare to the Pratt. Which is stronger? Which uses fewer members?", n: "The colour pattern should be reversed — top chord vs bottom chord force types swap." },
-      { id: "w4t5", t: "Finally, build a <strong>Warren truss</strong>: zigzag diagonals only, NO vertical members. It looks like a row of triangles.", n: "" },
-      { id: "w4t6", t: "Test all 3. Which would YOU choose for the paddle-pop bridge brief? Why?", n: "Note: the APHS template is closest to a Pratt or Warren. Look at it again with fresh eyes after this exercise." },
+    lessons: [
+      {
+        letter: "A",
+        title: "Build a Pratt truss using a Standard Truss Template.",
+        duration: "75 minutes",
+        goal: "By the end, you have a Pratt truss bridge that passes the load test, with View → Symmetry Guides ON.",
+        tasks: [
+          { id:"w4at1",
+            t:"Open ASCE. Click <strong>File → New</strong> for a fresh start. Add your name + project ID.",
+            expect:"Empty drawing board." },
+          { id:"w4at2",
+            t:"Click <strong>View → Symmetry Guides</strong>. A vertical centre line appears on the drawing board.",
+            expect:"A faint line down the middle of the drawing board. Use it to check if your bridge is symmetric.",
+            tip:"A symmetric bridge handles forces evenly. Asymmetric bridges fail unevenly." },
+          { id:"w4at3",
+            t:"Click <strong>View → Member numbers</strong>. Now every member you draw will be labelled with a number.",
+            expect:"From now on, members have numbers — useful for the Member Analysis report later." },
+          { id:"w4at4",
+            t:"Click <strong>File → Load Standard Truss Template</strong>. Pick a template that looks like a <strong>Pratt truss</strong> — diagonals slope inward (down toward the middle).",
+            expect:"A Pratt-style bridge appears with numbered members.",
+            ifstuck:"If you're not sure which template is Pratt, just pick one with diagonals — you can experiment." },
+          { id:"w4at5",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> to test it. Note: which members went RED, which BLUE?",
+            expect:"The truck crosses successfully. You can see the colour pattern." },
+          { id:"w4at6",
+            t:"Press <kbd>Alt</kbd> + <kbd>D</kbd>. Look at the cost shown at the top (e.g. <strong>$285,432</strong>). <strong>Write this number down</strong> — it's your Pratt baseline.",
+            expect:"You've recorded your starting cost.",
+            tip:"You'll compare this to other truss types in Lesson B." },
+        ],
+        quickcheck: "What did the symmetry guides help you check? (Whether your bridge is symmetric — same on left and right.)"
+      },
+      {
+        letter: "B",
+        title: "Compare Howe and Warren trusses.",
+        duration: "75 minutes",
+        goal: "By the end, you've built and tested 3 different truss types and chosen one based on data.",
+        tasks: [
+          { id:"w4bt1",
+            t:"Open ASCE with your Pratt truss from Lesson A still visible (or reload the template).",
+            expect:"Your Pratt truss is on the drawing board." },
+          { id:"w4bt2",
+            t:"<strong>Convert it to a Howe truss</strong>: select each diagonal one at a time and delete it (<kbd>Delete</kbd>). Then re-draw the diagonals so they slope OUTWARD (up toward the middle, opposite of Pratt).",
+            expect:"Your bridge now has diagonals going the OPPOSITE way to before.",
+            ifstuck:"If editing is tricky, use <kbd>Ctrl</kbd>+<kbd>Z</kbd> to undo and start again. Or load a different Standard Truss Template that looks Howe-shaped." },
+          { id:"w4bt3",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd>. Note the cost — write it down. Did it go up or down vs Pratt?",
+            expect:"Howe usually costs about the same as Pratt, but the colour pattern is FLIPPED (different members are red/blue).",
+            tip:"Same shape, different forces inside — that's the engineering difference." },
+          { id:"w4bt4",
+            t:"<strong>Now make a Warren truss</strong>: delete ALL the verticals. Keep only the diagonals (zigzags) + top + bottom chords.",
+            expect:"Your bridge now looks like a row of triangles, no vertical members." },
+          { id:"w4bt5",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd>. Note the cost.",
+            expect:"Warren is usually CHEAPER than Pratt or Howe (fewer members)." },
+          { id:"w4bt6",
+            t:"Compare your 3 numbers. Which truss is cheapest? Which uses the fewest members?",
+            expect:"You have data to choose between truss types based on cost.",
+            tip:"This is exactly how real engineers make decisions — by comparing alternatives, not by gut feeling." },
+        ],
+        quickcheck: "If you wanted the CHEAPEST bridge, which truss type would you pick — Pratt, Howe, or Warren? (Usually Warren.)"
+      }
     ],
     screenshots: [
-      "📷 Pratt truss with members coloured after load test",
-      "📷 Howe truss for comparison",
-      "📷 Warren truss for comparison",
+      "📷 Pratt truss after load test (Lesson A)",
+      "📷 Howe truss for comparison (Lesson B)",
+      "📷 Warren truss for comparison (Lesson B)",
     ],
     reflect: [
-      "Which of the 3 truss types passed the load test most easily?",
-      "Which one used the FEWEST members and still passed?",
-      "If material cost was the main constraint, which would you pick?",
+      "Which truss had the LOWEST cost?",
+      "Which used the fewest members?",
+      "If you were building the paddle-pop bridge, which pattern would you choose?",
     ],
-    confusion: "<strong>Common confusion:</strong> students sometimes confuse Pratt and Howe because they look so similar. The trick is: Pratt's diagonals slope toward the LOAD (downward). Howe's slope away from it (upward). Same shape, opposite force pattern."
+    confusion: "<strong>Common confusion:</strong> 'more members = stronger.' WRONG — more members means more weight and more cost. The art is using the FEWEST members that still pass the test."
   },
+
+  /* ═══════════════ WEEK 5 ═══════════════ */
   {
     n: 5, label: "W5", emoji: "📐",
     title: "Your first real design",
-    subtitle: "Design a bridge that solves the assessment brief: spans 500 mm, free-standing, no middle piers.",
-    lessonLink: "L05 — Assessment Release / L06 — Research",
+    subtitle: "Design the bridge you'll actually build. Save it.",
     concept: {
-      h: "From experimentation to design",
-      p: "For the past 3 weeks you've been playing. Now you're an engineer with a real brief. The walking-track gorge is 500 mm wide. Your bridge must SPAN that gap with no support in the middle. Today you'll design ONE bridge in the simulator that meets that brief and PASSES the load test. This becomes the blueprint for your build."
+      h: "From play to plan",
+      p: "For 3 weeks you've explored. Now you're an engineer with a real brief: <strong>500 mm gorge, free-standing, no piers in the middle</strong>. This week you design ONE bridge that solves the brief, then save it as the blueprint for your physical paddle-pop build."
     },
-    tasks: [
-      { id: "w5t1", t: "Re-read the assessment brief in your booklet (page 1). Note: 500 mm span, free-standing, no piers in the middle.", n: "" },
-      { id: "w5t2", t: "Open ASCE. Set up a workspace that matches the brief: a 500 mm gap with abutments at each end. Use the scale/grid if available.", n: "Some tools have a 'set span' option in settings." },
-      { id: "w5t3", t: "Choose a truss type from Week 4 (Pratt, Howe, or Warren). Build it across the 500 mm span.", n: "Use what you learned: where will compression be? Where tension?" },
-      { id: "w5t4", t: "Run the load test. Iterate: if it fails, ADD members. If it passes with members in light grey, you may have over-designed (too much material).", n: "Aim for a bridge where every member is doing some work (some colour visible)." },
-      { id: "w5t5", t: "Once it passes, <strong>screenshot or save your design.</strong> This is the bridge you'll refine next week.", n: "" },
-      { id: "w5t6", t: "Sketch your design on paper too — quick freehand. The sketch is what you'll bring to the build phase.", n: "" },
+    lessons: [
+      {
+        letter: "A",
+        title: "Design and test your bridge.",
+        duration: "75 minutes",
+        goal: "By end of Lesson A, you have ONE bridge that PASSES the load test and looks like something you can build with paddle pops.",
+        tasks: [
+          { id:"w5at1",
+            t:"Re-read the assessment brief in your booklet (page 1). Note: <strong>500 mm span</strong>, free-standing, no piers in the middle.",
+            expect:"You know the constraints." },
+          { id:"w5at2",
+            t:"Open ASCE. Click <strong>File → New</strong>. Type your name + project ID (e.g. '7TECJ-Amanda').",
+            expect:"Empty drawing board with your name set." },
+          { id:"w5at3",
+            t:"Build a truss. Use what you learned: pick Pratt, Howe, or Warren. Place joints, then connect with members.",
+            expect:"You have a complete truss across the gap.",
+            tip:"If lost, load a Standard Truss Template and modify from there." },
+          { id:"w5at4",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd>. Did it pass?",
+            expect:"Either pass (members glow but hold) or fail (some members break)." },
+          { id:"w5at5",
+            t:"<strong>If it failed</strong>: press <kbd>Alt</kbd> + <kbd>D</kbd>, ADD members to support the broken parts, test again.",
+            expect:"Iteration after iteration, your bridge gets stronger.",
+            tip:"Each test creates a new 'iteration'. The arrow buttons in the toolbar let you go back to a previous iteration." },
+          { id:"w5at6",
+            t:"<strong>Once it passes</strong>: <kbd>Alt</kbd> + <kbd>D</kbd> back to drawing board. Take note of the cost.",
+            expect:"You have a working bridge with a cost number.",
+            tip:"Don't worry about cost yet — Week 6 is for cost optimisation." },
+        ],
+        quickcheck: "How many iterations did it take you to make a passing bridge? (Real answer: most students need 3-5 iterations.)"
+      },
+      {
+        letter: "B",
+        title: "Save your design and sketch it on paper.",
+        duration: "75 minutes",
+        goal: "By end of Lesson B, your design is saved as a file AND drawn on paper as a backup. This is your Week 5 blueprint.",
+        tasks: [
+          { id:"w5bt1",
+            t:"Open your design from Lesson A.",
+            expect:"Your passing bridge is on the drawing board." },
+          { id:"w5bt2",
+            t:"Click <strong>File → Save</strong>. A file save dialog opens. Type a filename: <strong>YourName_Bridge_W5.bdc</strong>.",
+            expect:"A .bdc file is downloaded to your Downloads folder.",
+            tip:".bdc is the ASCE file format. You can re-open this file later by File → Open." },
+          { id:"w5bt3",
+            t:"Click <strong>File → Print</strong> (or use <kbd>Ctrl</kbd> + <kbd>P</kbd>). Choose 'Save as PDF' as your printer.",
+            expect:"A PDF of your design is saved.",
+            tip:"This PDF is the visual record of your design — useful for handing in." },
+          { id:"w5bt4",
+            t:"Get a piece of A4 paper and a ruler. Sketch your bridge from the side. Use straight lines for members, dots for joints. Try to copy what you see on screen.",
+            expect:"You have a hand-drawn sketch of your design.",
+            tip:"Sketching by hand helps you remember the design when you're gluing." },
+          { id:"w5bt5",
+            t:"Below your sketch, write 1-2 sentences: 'My bridge is a [Pratt/Howe/Warren] truss. It has [N] members. Cost: $[number].'",
+            expect:"Your sketch is annotated with key facts." },
+          { id:"w5bt6",
+            t:"Pin or paste your sketch + the printed PDF into your assessment booklet (Idea Generation section).",
+            expect:"Your booklet now has a record of your virtual design.",
+            tip:"This counts toward your booklet grade. It's evidence you went through a design process." },
+        ],
+        quickcheck: "What's the file extension of an ASCE Bridge Designer save file? (.bdc)"
+      }
     ],
     screenshots: [
-      "📷 Your first design that passes the load test",
+      "📷 Your final passing design on screen",
+      "📷 Your hand-drawn sketch alongside the screen",
+      "📷 The save dialog with your filename",
     ],
     reflect: [
-      "How many tries did it take you to make a passing bridge?",
-      "What part of your bridge are you most proud of?",
-      "What part are you nervous about — what might fail in the physical version?",
+      "What's the cost of your bridge?",
+      "How many members does it have?",
+      "Which member do you think is most likely to break under load?",
     ],
-    confusion: "<strong>Common confusion:</strong> students design ENORMOUS bridges with dozens of members 'just to be safe'. More members ≠ stronger. More members = more weight = more force on every joint. Engineers minimise material. Aim for the SMALLEST bridge that still passes."
+    confusion: "<strong>Common confusion:</strong> students design bridges with 30+ members 'just to be safe.' More members = more weight = MORE cost. Engineers minimise material. Aim for the smallest bridge that still passes."
   },
+
+  /* ═══════════════ WEEK 6 ═══════════════ */
   {
     n: 6, label: "W6", emoji: "💰",
     title: "Engineering for cost",
     subtitle: "Strip your bridge down. Find the cheapest version that still passes.",
-    lessonLink: "L07 — Idea Generation (3 sketches)",
     concept: {
-      h: "Real engineering is about constraints",
-      p: "A bridge that holds a million tonnes is impressive — but a bridge that holds 100 tonnes for half the cost is BETTER engineering. Today's mission: take your Week 5 design and make it as CHEAP as possible while still passing the load test. This means removing every member you don't strictly need."
+      h: "Real engineering = constraints",
+      p: "Cost in ASCE = <strong>materials + connections + product + site costs</strong>. Today: take your Week 5 design, remove every unnecessary member, find the CHEAPEST bridge that still passes. Each test creates an iteration — go back any time."
     },
-    tasks: [
-      { id: "w6t1", t: "Open last week's design (or rebuild it from your sketch).", n: "" },
-      { id: "w6t2", t: "Find where the COST or MATERIAL TOTAL is shown in the tool. Note your current cost.", n: "" },
-      { id: "w6t3", t: "Remove ONE member that looks 'optional' — e.g. an extra diagonal, or a redundant vertical. Run the test.", n: "" },
-      { id: "w6t4", t: "If the bridge still passes: keep it removed. Try removing another. If it fails: put it back. Repeat.", n: "This is REAL ENGINEERING — iterative trial and refinement." },
-      { id: "w6t5", t: "Stop when removing ANY single member makes the bridge fail. This is the <strong>minimum bridge</strong>.", n: "Note your final cost. Compare with classmates." },
-      { id: "w6t6", t: "<strong>Now: would you actually BUILD this minimum design?</strong> Or would you add a small safety margin? Most engineers add 10-20% extra capacity.", n: "Engineering judgement." },
+    lessons: [
+      {
+        letter: "A",
+        title: "Open the cost report. Find the breakdown.",
+        duration: "75 minutes",
+        goal: "By end, you understand what makes your bridge expensive and where the savings can come from.",
+        tasks: [
+          { id:"w6at1",
+            t:"Click <strong>File → Open</strong>. Find your Week 5 .bdc file. Click Open.",
+            expect:"Your Week 5 bridge appears." },
+          { id:"w6at2",
+            t:"Click <strong>Report → Cost calculations</strong>. A new window opens showing the cost breakdown.",
+            expect:"You see 4 numbers: materials cost, connections cost, product cost, site costs. Plus a total.",
+            tip:"Real bridges include site costs (the price of the building location) and connections (welding, bolts). It's not just materials." },
+          { id:"w6at3",
+            t:"Write down the 4 cost numbers + the total in your build journal.",
+            expect:"You have your starting baseline." },
+          { id:"w6at4",
+            t:"Close the cost window. Press <kbd>Alt</kbd> + <kbd>T</kbd> to run the load test again.",
+            expect:"The truck crosses your bridge. Members glow red/blue." },
+          { id:"w6at5",
+            t:"Look for any DIM or GREY members. These are barely doing anything — they might be removable.",
+            expect:"You've identified candidate members to delete.",
+            tip:"Bright = critical. Dim = removable. That's the rule of thumb." },
+          { id:"w6at6",
+            t:"Press <kbd>Alt</kbd> + <kbd>D</kbd>. Click ONE dim member. Press <kbd>Delete</kbd>.",
+            expect:"That member is gone." },
+          { id:"w6at7",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> to test.",
+            expect:"Either passes (great — keep it deleted) or fails (press Ctrl-Z to undo, try a different member)." },
+        ],
+        quickcheck: "What are the 4 parts of cost in ASCE? (Materials, connections, product, site costs.)"
+      },
+      {
+        letter: "B",
+        title: "Strip to minimum. Find your cheapest passing bridge.",
+        duration: "75 minutes",
+        goal: "By end, you have your MINIMUM bridge — every member is essential, removing ANY one causes failure.",
+        tasks: [
+          { id:"w6bt1",
+            t:"Continue from Lesson A. Your bridge already has some members removed.",
+            expect:"Your in-progress bridge is open." },
+          { id:"w6bt2",
+            t:"Click another dim/grey member. Press <kbd>Delete</kbd>. Then <kbd>Alt</kbd> + <kbd>T</kbd> to test.",
+            expect:"Pass = keep deleted. Fail = <kbd>Ctrl</kbd>+<kbd>Z</kbd> to undo, try different member.",
+            tip:"This is iterative engineering. Each delete-test cycle teaches you something." },
+          { id:"w6bt3",
+            t:"Repeat 5 or 6 more times. Each cycle: pick a dim member, delete, test, keep or undo.",
+            expect:"Your bridge has fewer members. Cost is dropping.",
+            ifstuck:"After several deletions, the only members left are critical. Keep going until ANY deletion causes failure." },
+          { id:"w6bt4",
+            t:"Now check <strong>Report → Cost calculations</strong> again. How much have you saved vs your starting baseline?",
+            expect:"Total cost is significantly lower. Often 10-30% saved." },
+          { id:"w6bt5",
+            t:"Save: <strong>File → Save As</strong> → <strong>YourName_Bridge_W6_minimum.bdc</strong>.",
+            expect:"Your minimum design is saved as a separate file from Week 5.",
+            tip:"Now you have BOTH versions on your computer — Week 5 (original) and Week 6 (cost-optimised)." },
+          { id:"w6bt6",
+            t:"Print or save-as-PDF this minimum design. Pin to your booklet next to the Week 5 version.",
+            expect:"Your booklet shows BOTH versions — proof of your design iteration." },
+        ],
+        quickcheck: "How much did your bridge cost go down? (e.g. $285,432 → $205,000 = ~28% cheaper.) Real engineering!"
+      }
     ],
     screenshots: [
-      "📷 Your bridge BEFORE the cost-stripping exercise (with cost visible)",
-      "📷 Your bridge AFTER (minimum design, with cost visible)",
+      "📷 Cost calculations report showing the 4-part breakdown",
+      "📷 Bridge BEFORE stripping (with cost visible)",
+      "📷 Bridge AFTER stripping (with new lower cost visible)",
     ],
     reflect: [
+      "What was your starting cost vs ending cost?",
       "How many members did you remove?",
-      "What was your starting cost vs ending cost? (% saved)",
-      "Would you build the minimum design, or add a safety margin? Why?",
+      "Would you actually BUILD this minimum design, or add a small safety margin? Why?",
     ],
-    confusion: "<strong>Common confusion:</strong> some students get carried away and remove SO many members that the bridge passes by a hair, but with very high force on the remaining members. That's risky — small variations in glue strength would make it fail in the physical version. A bit of safety margin is wise."
+    confusion: "<strong>Common confusion:</strong> some students remove SO many members that the bridge passes by a hair. That's risky — small variations in glue strength would cause failure in real life. Real engineers add a 'safety factor.'"
   },
+
+  /* ═══════════════ WEEK 7 ═══════════════ */
   {
     n: 7, label: "W7", emoji: "🗺️",
     title: "Virtual blueprint = physical plan",
-    subtitle: "Lock in your final design. Sketch it. Identify the 8 high-stress joints for holed sticks.",
-    lessonLink: "L08 — Scaled Drawing 1:5 / L09 — Isometric Drawing",
+    subtitle: "Use the Member Analysis Report to find the high-stress joints. Map them to the APHS template.",
     concept: {
       h: "From simulator to glue",
-      p: "Your virtual bridge is now your blueprint. This week you transfer that design from the screen onto paper, identify the most heavily-loaded joints (where the holed paddle-pop sticks should go), and prepare for next week's build. Without this transfer step, your virtual learning gets disconnected from the physical bridge."
+      p: "Your virtual bridge is now your blueprint. This week you analyse it engineering-style (Member Analysis Report shows force on every member), then map the high-stress joints onto the APHS paddle-pop template — those are where the holed sticks should go."
     },
-    tasks: [
-      { id: "w7t1", t: "Open your final cost-optimised design from Week 6. Take a clean screenshot of it (no menus, just the bridge).", n: "" },
-      { id: "w7t2", t: "<strong>Run the load test with members visible in colour.</strong> Look carefully: where are the BRIGHTEST RED members (highest compression)? Where are the BRIGHTEST BLUE members (highest tension)?", n: "Brighter colour = higher force." },
-      { id: "w7t3", t: "Sketch your bridge from the side on paper, using a ruler. Use red pencil to mark the 4-6 brightest red members. Use blue pencil to mark the 4-6 brightest blue members.", n: "" },
-      { id: "w7t4", t: "Look at your APHS laminated template. The template has 8 holed-stick positions per truss. <strong>Mark on your sketch which 8 joints are highest-stress</strong> — these will get the holed sticks during the build.", n: "Compression-heavy joints are usually best for holed sticks because the holes resist crushing." },
-      { id: "w7t5", t: "Final check: does your virtual design match the APHS template's overall shape? If not, decide now: adjust your design to match, OR adapt the template.", n: "Most students will need to adapt their virtual design slightly to fit the APHS materials list (135 sticks, no more). Consult Ms Gao if unsure." },
+    lessons: [
+      {
+        letter: "A",
+        title: "Read the Member Analysis Report.",
+        duration: "75 minutes",
+        goal: "By end, you can name the 4 highest-stress members in your bridge.",
+        tasks: [
+          { id:"w7at1",
+            t:"Open your Week 6 minimum design (File → Open → YourName_Bridge_W6_minimum.bdc).",
+            expect:"Your cost-optimised bridge is on screen." },
+          { id:"w7at2",
+            t:"Click <strong>Report → Member analysis report</strong>. A table opens.",
+            expect:"You see a list of every member with columns: number, type, length, force, strength, etc.",
+            tip:"This is what real civil engineers analyse. You're using a real engineering report." },
+          { id:"w7at3",
+            t:"Look for the column labelled <strong>'Force'</strong> or 'Compressive force' / 'Tensile force'. Click the column header to sort highest first.",
+            expect:"The members are now sorted from highest force to lowest." },
+          { id:"w7at4",
+            t:"Write down the <strong>top 4 members</strong> in compression (the most-pushed) and the <strong>top 4 in tension</strong> (the most-pulled). Use the member numbers.",
+            expect:"You have a list of 8 critical members.",
+            ifstuck:"If View → Member numbers is OFF, turn it ON so you can see the numbers on the drawing board too." },
+          { id:"w7at5",
+            t:"Close the report window. Look at the drawing board with member numbers visible. Find each of your 8 critical members on the bridge.",
+            expect:"You can point to each member on the drawing." },
+        ],
+        quickcheck: "What are member numbers? (Labels (1, 2, 3, …) ASCE puts on each member to identify them.)"
+      },
+      {
+        letter: "B",
+        title: "Map to APHS template + sketch final blueprint.",
+        duration: "75 minutes",
+        goal: "By end, your APHS laminated template is marked with WHERE the 8 holed sticks will go.",
+        tasks: [
+          { id:"w7bt1",
+            t:"Get your APHS laminated A3 paddle-pop template from Ms Gao. Lay it flat next to your laptop.",
+            expect:"Two views — virtual on screen, physical on the desk." },
+          { id:"w7bt2",
+            t:"Get a piece of A4 paper, a ruler, a RED pencil and a BLUE pencil. Sketch your bridge from the side.",
+            expect:"A clean hand drawing of your bridge layout." },
+          { id:"w7bt3",
+            t:"Mark the 4 highest-COMPRESSION members on your sketch with the RED pencil (use the member numbers from Lesson A).",
+            expect:"4 members now have RED marks." },
+          { id:"w7bt4",
+            t:"Mark the 4 highest-TENSION members with BLUE.",
+            expect:"4 more members have BLUE marks." },
+          { id:"w7bt5",
+            t:"Look at the APHS template. It has 8 holed-stick positions per truss. <strong>Mark on the template (with whiteboard pen) which 8 joints are highest-stress</strong> — these will get the holed sticks during the build.",
+            expect:"Your APHS template has 8 marked positions per side.",
+            tip:"Compression joints are best for holed sticks — the holes resist crushing forces." },
+          { id:"w7bt6",
+            t:"Save your final design: <strong>File → Save As</strong> → <strong>YourName_Bridge_FINAL.bdc</strong>.",
+            expect:"Your blueprint is saved." },
+        ],
+        quickcheck: "Why mark compression members for holed sticks? (The holes in the sticks help resist crushing — exactly what compression members need.)"
+      }
     ],
     screenshots: [
-      "📷 Your final virtual design (clean screenshot, no menus)",
+      "📷 Member Analysis Report sorted by force",
       "📷 Your hand-drawn sketch with red/blue marker lines",
       "📷 The APHS template with your 8 holed-stick positions marked",
     ],
     reflect: [
-      "Which member in your bridge has the HIGHEST force? Where is it?",
-      "Did your virtual design match the APHS template shape — or did you have to compromise?",
+      "Which member has the HIGHEST force in your bridge?",
+      "Did your virtual design fit the APHS template perfectly?",
       "How confident are you that your physical bridge will pass the load test? (1-10)",
     ],
-    confusion: "<strong>Common confusion:</strong> students assume the virtual bridge will translate perfectly to the physical one. It won't. Real paddle pops have variable strength, glue joints aren't perfect, and the load on the physical bridge isn't moving like the virtual truck. Use the virtual design as a GUIDE, not a guarantee."
+    confusion: "<strong>Common confusion:</strong> students assume the virtual bridge translates PERFECTLY to the physical one. It won't — paddle pops have variable strength, glue isn't perfect, real bridges aren't loaded by a moving truck. Use virtual as a GUIDE, not a guarantee."
   },
+
+  /* ═══════════════ WEEK 8 ═══════════════ */
   {
     n: 8, label: "W8", emoji: "🔮",
     title: "Predict, then test",
-    subtitle: "During the physical build phase: predict where your bridge will fail. Then build it.",
-    lessonLink: "L11–L16 — Build days",
+    subtitle: "Mid-build: predict where YOUR physical bridge will fail. Use the truck POV mode for fun.",
     concept: {
       h: "The engineering hypothesis",
-      p: "Real engineers PREDICT failure modes before they build. They run thousands of simulated load tests, identify the weakest joint, and design around it. This week, you do the same. You're now mid-build — your physical bridge is taking shape. Look at it. Look at the virtual version in ASCE. Where is the weakest point? Write it down. We'll see if you're right on Load Test Day."
+      p: "Real engineers predict failure modes before they build. This week you're mid-build — your physical bridge is taking shape. Look at it. Look at the virtual version. Where is the weakest point? Write it down. We'll see if you're right at Load Test Day."
     },
-    tasks: [
-      { id: "w8t1", t: "Look at your physical bridge in its current state. Take a photo from the side.", n: "" },
-      { id: "w8t2", t: "Open your virtual design in ASCE. Run the load test. Identify the MEMBER OR JOINT with the highest force (brightest red or blue).", n: "" },
-      { id: "w8t3", t: "Write a <strong>prediction</strong> in your build journal: 'I think my physical bridge will fail at JOINT X / MEMBER Y because the simulation shows the highest force there.'", n: "Be specific. Mark it on your photo." },
-      { id: "w8t4", t: "If you have time, try a <strong>'what if?'</strong> in ASCE. What if you removed your weakest member entirely? Does the whole bridge collapse?", n: "" },
-      { id: "w8t5", t: "Add a small reinforcement to your physical bridge at that exact joint — extra glue, an extra peg clamp during drying, or a paired stick if you have one spare.", n: "This is engineering: predict, then mitigate." },
+    lessons: [
+      {
+        letter: "A",
+        title: "Predict the failure point.",
+        duration: "75 minutes",
+        goal: "By end, you have a written prediction of where your physical bridge will break first.",
+        tasks: [
+          { id:"w8at1",
+            t:"Take a photo of your physical bridge in its current state. Print it or paste in your build journal.",
+            expect:"You have a photo for marking up." },
+          { id:"w8at2",
+            t:"Open your <strong>YourName_Bridge_FINAL.bdc</strong> file in ASCE.",
+            expect:"Your virtual blueprint." },
+          { id:"w8at3",
+            t:"Click <strong>Report → Member analysis report</strong>. Find the column showing 'load test result' or similar (members closest to failure).",
+            expect:"You can identify the most-stressed member." },
+          { id:"w8at4",
+            t:"Sort by that column (highest first). The TOP member is most likely to fail in the simulation.",
+            expect:"You know which member ASCE thinks will fail first." },
+          { id:"w8at5",
+            t:"Close the report. On your drawing board, identify the same member visually (use member numbers).",
+            expect:"You can point to the predicted-fail member on screen." },
+          { id:"w8at6",
+            t:"On your physical-bridge photo, draw a circle around the SAME location. Write next to it: 'Prediction: this is where it will break first.'",
+            expect:"Your physical bridge is marked with a prediction.",
+            tip:"This is the engineering hypothesis. The load test will prove or disprove it." },
+        ],
+        quickcheck: "What ASCE report tells you which member is most likely to fail? (Report → Member analysis report.)"
+      },
+      {
+        letter: "B",
+        title: "Ride in the truck. Reinforce your bridge.",
+        duration: "75 minutes",
+        goal: "By end, you've experienced the bridge from the truck's POV AND reinforced the predicted-fail point on your physical bridge.",
+        tasks: [
+          { id:"w8bt1",
+            t:"Open your final virtual design.",
+            expect:"Your bridge is on screen." },
+          { id:"w8bt2",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd>. The truck starts crossing.",
+            expect:"Load test animation begins." },
+          { id:"w8bt3",
+            t:"<strong>While the truck is crossing</strong>, look for a faded TRUCK ICON in the animation window. Click it.",
+            expect:"The view changes — you're now riding in the truck!",
+            tip:"This is a hidden feature most students never find. Drag your mouse to look around as the truck moves." },
+          { id:"w8bt4",
+            t:"Drag your mouse to look around inside the truck cabin. Look at your bridge from the driver's seat.",
+            expect:"You experience the bridge from inside.",
+            tip:"This is exactly what crossing a real bridge feels like — minus the wind." },
+          { id:"w8bt5",
+            t:"Back to your physical paddle-pop bridge. Find the predicted-fail location from Lesson A.",
+            expect:"You're at your bridge, looking at the marked spot." },
+          { id:"w8bt6",
+            t:"<strong>Reinforce that spot</strong>: add extra glue (let dry overnight), add an extra peg clamp during drying, or add a paired stick if you have one spare. Don't overdo it — just give the weakest spot some help.",
+            expect:"Your physical bridge has extra strength at the predicted-fail location.",
+            tip:"This is engineering: predict, then mitigate." },
+        ],
+        quickcheck: "Where's the truck POV button? (A faded truck icon in the load test animation window — click it to ride along.)"
+      }
     ],
     screenshots: [
-      "📷 Your physical bridge mid-build with the predicted failure point circled",
+      "📷 The truck POV view (you driving across your own bridge)",
+      "📷 Your physical bridge with the predicted-fail location circled",
+      "📷 The reinforcement you added (extra glue, extra peg, paired stick)",
     ],
     reflect: [
-      "Where did you predict your bridge would fail?",
-      "Why did you predict that location specifically?",
+      "Where did you predict your bridge will fail?",
       "What did you do to reinforce it?",
+      "What did the truck POV view feel like?",
     ],
-    confusion: "<strong>Common confusion:</strong> students sometimes predict failure at the visually 'thinnest' or most fragile-looking part. The simulation often disagrees — the highest-force joint can look perfectly fine from the outside. Trust the colours, not your eyes."
+    confusion: "<strong>Common confusion:</strong> students predict failure based on what 'looks' weak. The simulation often disagrees — the highest-force member can look perfectly fine to the eye. Trust the report numbers."
   },
+
+  /* ═══════════════ WEEK 9 ═══════════════ */
   {
     n: 9, label: "W9", emoji: "🔬",
     title: "Compare and learn",
-    subtitle: "After the load test: did your bridge fail where ASCE predicted? Why or why not?",
-    lessonLink: "L20 — Load Test Day / L21 — Evaluation",
+    subtitle: "Post-load-test reflection. Did your bridge fail where ASCE predicted?",
     concept: {
       h: "The engineering retrospective",
-      p: "Your physical bridge has now been load-tested. Either it held, or it failed. Either way, this week is for ONE big question: <strong>did the simulation predict what actually happened?</strong> If yes — your model worked, you understand bridges. If no — what did the model miss? This reflection is what separates engineering from guessing."
+      p: "Your physical bridge has been load-tested. Did your prediction match reality? If yes — your model worked. If no — what did the model miss? This reflection separates engineering from guessing."
     },
-    tasks: [
-      { id: "w9t1", t: "Look at the failure point on your physical bridge (or, if it didn't break, the most stressed-looking joint).", n: "" },
-      { id: "w9t2", t: "Look at your Week 8 prediction. Did your bridge fail where you predicted? <strong>Yes / Partially / No.</strong>", n: "" },
-      { id: "w9t3", t: "If YES: in your evaluation, write 1 paragraph explaining how the simulation matched reality. Quote the colour you saw on that member in ASCE.", n: "This is gold-standard evaluation writing." },
-      { id: "w9t4", t: "If NO: write 1 paragraph on WHY the simulation didn't predict the actual failure. Possible reasons: glue weak in a specific joint? Stick had a knot? Member was crooked? Load applied differently than the virtual truck?", n: "Acknowledging the model's limits is real engineering thinking." },
-      { id: "w9t5", t: "Now — go back to ASCE. Try to <strong>recreate the actual failure</strong> by adjusting your virtual design (removing a member, weakening it, etc.) until the simulation also fails at that point. Write what you learned.", n: "This is reverse-engineering — it's hard but extremely valuable." },
+    lessons: [
+      {
+        letter: "A",
+        title: "Compare prediction to reality.",
+        duration: "75 minutes",
+        goal: "By end, you've answered the central engineering question: did the simulation match the real test?",
+        tasks: [
+          { id:"w9at1",
+            t:"Look at the failure point on your physical bridge (or, if it didn't break, the most stressed-looking joint).",
+            expect:"You're looking at the actual failure location." },
+          { id:"w9at2",
+            t:"Re-open your Week 8 prediction. Where did you predict it would break?",
+            expect:"You have your prediction in front of you." },
+          { id:"w9at3",
+            t:"<strong>Did the bridge break where you predicted?</strong> Circle one: YES / PARTIALLY / NO.",
+            expect:"You have a clear answer." },
+          { id:"w9at4",
+            t:"Open your <strong>YourName_Bridge_FINAL.bdc</strong> in ASCE. Click <strong>Report → Member analysis report</strong>.",
+            expect:"The report opens, showing the member that ASCE predicted would fail." },
+          { id:"w9at5",
+            t:"<strong>If YES</strong>: in your evaluation, write 1 paragraph: 'The simulation predicted failure at member [X]. The actual physical bridge also failed at this location. The match shows that the digital model captured the physics of my design.'",
+            expect:"You've written a strong engineering claim." },
+          { id:"w9at6",
+            t:"<strong>If NO or PARTIALLY</strong>: write 1 paragraph on possible reasons: glue weak in a specific joint? Stick had a knot? Member was crooked? Load applied differently?",
+            expect:"You've identified the model's limits — that's also great engineering thinking.",
+            tip:"Real engineers do this all the time. Models always have limits." },
+        ],
+        quickcheck: "Is acknowledging the model's limits a sign of WEAK or STRONG engineering? (STRONG. Real engineers know what their models can and can't do.)"
+      },
+      {
+        letter: "B",
+        title: "Reverse-engineer the failure.",
+        duration: "75 minutes",
+        goal: "By end, you've modified your virtual model so it fails where the physical bridge failed — proving you understand BOTH systems.",
+        tasks: [
+          { id:"w9bt1",
+            t:"Open your final virtual design. Look at the actual failure location of your physical bridge.",
+            expect:"You're looking at virtual + physical at the same time." },
+          { id:"w9bt2",
+            t:"In ASCE, find the same location on the virtual bridge. Click that member to select it.",
+            expect:"The corresponding member is highlighted." },
+          { id:"w9bt3",
+            t:"Try to make the virtual bridge ALSO fail at that location. Options: delete that member, change its material to a weaker one, or shorten it.",
+            expect:"Your modified virtual bridge has a weaker spot at the same location as your physical failure." },
+          { id:"w9bt4",
+            t:"Press <kbd>Alt</kbd> + <kbd>T</kbd>. Did it fail at the modified location?",
+            expect:"If yes, you've matched the model to reality. If no, try a different modification." },
+          { id:"w9bt5",
+            t:"Save: <strong>File → Save As</strong> → <strong>YourName_Bridge_post_test.bdc</strong>.",
+            expect:"Your post-test analysis is saved." },
+          { id:"w9bt6",
+            t:"In your evaluation, write 1 paragraph explaining what you learned: 'When I weakened member [X] in the simulation, it also failed at the same location as my physical bridge. This taught me that...'",
+            expect:"Your evaluation includes engineering insight from the comparison." },
+        ],
+        quickcheck: "Why is reverse-engineering the failure useful? (It proves you understand both the model AND the physical bridge — and what makes them differ.)"
+      }
     ],
     screenshots: [
       "📷 The failure point on your physical bridge (close-up)",
-      "📷 The same point in your ASCE simulation",
+      "📷 The same point in your ASCE Member Analysis Report",
+      "📷 Your reverse-engineered ASCE model recreating the failure",
     ],
     reflect: [
-      "Did your simulation predict the actual failure point? (yes / partially / no)",
-      "What did the simulation get RIGHT about your bridge?",
-      "What did the simulation get WRONG? What couldn't it predict?",
-      "If you built another bridge tomorrow, what would you change in your virtual design?",
+      "Did the simulation predict the actual failure?",
+      "What did the simulation get RIGHT?",
+      "What did the simulation get WRONG?",
+      "If you built another bridge tomorrow, what would you change?",
     ],
-    confusion: "<strong>Common confusion:</strong> students who 'failed' the physical load test sometimes feel disappointed and skip this reflection. <strong>The reflection IS the assessment.</strong> A bridge that broke at 3 kg with great reflection scores higher than a bridge that held 30 kg with no reflection. Engineering is what you LEARN, not what you build."
+    confusion: "<strong>Common confusion:</strong> students whose bridge BROKE feel disappointed and skip this reflection. <strong>The reflection IS the assessment.</strong> A bridge that broke at 3 kg with great reflection scores higher than one that held 30 kg with no reflection."
   },
 ];
 
@@ -528,45 +1034,74 @@ let state = loadState();
    ============================================================ */
 let currentWeek = parseInt(localStorage.getItem("asce-tutorial-current-week") || "2");
 
+function allWeekTasks(w) {
+  // Flatten Lesson A + Lesson B tasks for counting
+  return (w.lessons || []).flatMap(L => L.tasks || []);
+}
+function countDoneTasks(w) {
+  return allWeekTasks(w).filter(t => state[t.id]?.done).length;
+}
+
 function renderNav() {
   const host = document.getElementById("weekNav");
   host.innerHTML = "";
   WEEKS.forEach(w => {
-    const total = w.tasks.length;
+    const total = allWeekTasks(w).length;
     const done = countDoneTasks(w);
     const isComplete = done === total && total > 0;
     const btn = document.createElement("button");
-    btn.className = "week-nav-btn" + (w.n === currentWeek ? " active" : "") + (isComplete ? " complete" : "");
+    btn.className = (w.n === currentWeek ? "active " : "") + (isComplete ? "complete" : "");
     btn.innerHTML = `${w.emoji} ${w.label}<span class="check">${isComplete ? "" : (done > 0 ? done : "")}</span>`;
     btn.onclick = () => { currentWeek = w.n; localStorage.setItem("asce-tutorial-current-week", String(w.n)); renderAll(); window.scrollTo({top: 200, behavior: "smooth"}); };
     host.appendChild(btn);
   });
 }
 
-function countDoneTasks(w) {
-  return w.tasks.filter(t => state[t.id]?.done).length;
+function renderTask(t) {
+  const isDone = state[t.id]?.done || false;
+  return `
+    <div class="task ${isDone ? 'done' : ''}">
+      <input type="checkbox" id="${t.id}" ${isDone ? 'checked' : ''} onchange="toggleTask('${t.id}')">
+      <div class="body">
+        <label for="${t.id}">${t.t}</label>
+        ${t.expect ? `<p class="expect">${t.expect}</p>` : ''}
+        ${t.tip ? `<p class="tip">${t.tip}</p>` : ''}
+        ${t.ifstuck ? `<p class="ifstuck">${t.ifstuck}</p>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderLesson(w, lesson) {
+  const tasksHtml = lesson.tasks.map(renderTask).join("");
+  return `
+    <div class="lesson-card lesson-${lesson.letter.toLowerCase()}">
+      <div class="lesson-head">
+        <div class="lesson-letter">Lesson ${lesson.letter}</div>
+        <div class="lesson-titles">
+          <h3>${lesson.title}</h3>
+          <div class="duration">⏱ ${lesson.duration}</div>
+        </div>
+      </div>
+      ${lesson.goal ? `<div class="goal"><strong>Goal:</strong> ${lesson.goal}</div>` : ''}
+      <div class="tasks">
+        <h4>🎯 Tasks (do them in order)</h4>
+        ${tasksHtml}
+      </div>
+      ${lesson.quickcheck ? `<div class="quickcheck"><strong>📝 Quick check:</strong> ${lesson.quickcheck}</div>` : ''}
+    </div>
+  `;
 }
 
 function renderWeek() {
   const w = WEEKS.find(x => x.n === currentWeek);
   if (!w) return;
-  const total = w.tasks.length;
+  const total = allWeekTasks(w).length;
   const done = countDoneTasks(w);
 
-  const tasksHtml = w.tasks.map(t => {
-    const isDone = state[t.id]?.done || false;
-    return `
-      <div class="task ${isDone ? 'done' : ''}">
-        <input type="checkbox" id="${t.id}" ${isDone ? 'checked' : ''} onchange="toggleTask('${t.id}')">
-        <div class="body">
-          <label for="${t.id}">${t.t}</label>
-          ${t.n ? `<p>${t.n}</p>` : ''}
-        </div>
-      </div>
-    `;
-  }).join("");
+  const lessonsHtml = (w.lessons || []).map(L => renderLesson(w, L)).join("");
 
-  const screensHtml = w.screenshots.map((s, i) => {
+  const screensHtml = (w.screenshots || []).map((s, i) => {
     const id = `w${w.n}_screenshot_${i}`;
     const stored = state[id]?.image;
     return `
@@ -580,7 +1115,7 @@ function renderWeek() {
 
   const reflectId = `w${w.n}_reflect`;
   const reflectStored = state[reflectId]?.text || "";
-  const reflectQs = w.reflect.map((q, i) => `<li>${q}</li>`).join("");
+  const reflectQs = w.reflect.map(q => `<li>${q}</li>`).join("");
 
   const html = `
     <div class="week-header">
@@ -589,7 +1124,6 @@ function renderWeek() {
         <h2>${w.title}</h2>
         <p class="subtitle">${w.subtitle}</p>
       </div>
-      <a class="lesson-link" href="../lessons/l${String(w.n*2-2).padStart(2,'0')}.html" target="_blank">📚 ${w.lessonLink}</a>
     </div>
 
     <div class="concept">
@@ -597,15 +1131,12 @@ function renderWeek() {
       <p>${w.concept.p}</p>
     </div>
 
-    <div class="tasks">
-      <h3>🎯 Your tasks this week (${done} of ${total} done)</h3>
-      ${tasksHtml}
-    </div>
+    ${lessonsHtml}
 
-    ${screensHtml ? `<div style="margin:1rem 0;">${screensHtml}</div>` : ""}
+    ${screensHtml ? `<div style="margin:1rem 0;"><h3 style="color:#1f3a68;font-size:1.05rem;margin:.3rem 0 .5rem;">📷 Screenshots from this week</h3>${screensHtml}</div>` : ""}
 
     <div class="reflect">
-      <h3>📝 Reflect on this week</h3>
+      <h3>📝 End-of-week reflection</h3>
       <ol>${reflectQs}</ol>
       <textarea placeholder="Type your reflection here — even 2-3 sentences is plenty. Saves automatically." onchange="saveReflect('${reflectId}', this.value)" oninput="saveReflect('${reflectId}', this.value)">${reflectStored}</textarea>
     </div>
@@ -621,8 +1152,7 @@ function renderWeek() {
     </div>
   `;
 
-  const container = document.getElementById("weekContainer");
-  container.innerHTML = `<section class="week active" id="week${w.n}">${html}</section>`;
+  document.getElementById("weekContainer").innerHTML = `<section class="week active" id="week${w.n}">${html}</section>`;
 }
 
 function renderAll() {
