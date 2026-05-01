@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌉 ASCE Bridge Designer — 8-Week Tutorial · Y7 Tech · Bridge It</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ─── Page-specific styles ─── */
+  .at-hero {
+    background: linear-gradient(135deg, #0e7490 0%, #14b8a6 50%, #5b21b6 100%);
+    color:#fff; border-radius:16px; padding:2rem 2.2rem; margin:1.5rem 0;
+    box-shadow: 0 6px 22px rgba(14,116,144,.25);
+  }
+  .at-hero h1 { color:#fff; margin:.2rem 0 .5rem; font-size:2rem; letter-spacing:-.02em; }
+  .at-hero p  { margin:.4rem 0; opacity:.95; font-size:1.05rem; line-height:1.55; }
+  .at-hero .open-tool {
+    display:inline-block; background:#fff; color:#0e7490;
+    padding:.85rem 1.6rem; border-radius:10px; text-decoration:none;
+    font-weight:800; font-size:1.05rem; margin-top:.7rem;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .at-hero .open-tool:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,.18); }
+
+  /* Teacher quickstart — only visible at top, prominent */
+  .teacher-quickstart {
+    background:#fef3c7; border:2px solid #d97706; border-radius:14px;
+    padding:1.4rem 1.6rem; margin:1.5rem 0;
+  }
+  .teacher-quickstart h2 { color:#9a3412; margin:0 0 .6rem; font-size:1.4rem; }
+  .teacher-quickstart .label {
+    display:inline-block; background:#9a3412; color:#fff;
+    padding:.2rem .7rem; border-radius:999px; font-size:.78rem;
+    font-weight:800; letter-spacing:.05em; text-transform:uppercase;
+    margin-bottom:.5rem;
+  }
+  .teacher-quickstart ol { margin:.4rem 0 .2rem; padding-left:1.4rem; line-height:1.6; }
+  .teacher-quickstart ol li { margin:.5rem 0; }
+
+  /* Week navigation */
+  .week-nav {
+    display:flex; gap:.4rem; margin:1.6rem 0 .5rem;
+    overflow-x:auto; padding-bottom:.3rem;
+    scrollbar-width: thin;
+  }
+  .week-nav button {
+    background:#fff; border:1.5px solid #e4e7ec; padding:.6rem 1rem;
+    border-radius:999px; cursor:pointer; font-weight:700; font-size:.92rem;
+    color:#475569; white-space:nowrap; transition:all .12s;
+    display:inline-flex; align-items:center; gap:.4rem; flex-shrink:0;
+  }
+  .week-nav button:hover { background:#f1f5f9; border-color:#cbd5e1; }
+  .week-nav button.active { background:#1f3a68; color:#fff; border-color:#1f3a68; }
+  .week-nav button .check {
+    display:inline-block; width:18px; height:18px; border-radius:50%;
+    background:#e4e7ec; font-size:.65rem;
+    color:#94a3b8; line-height:18px; text-align:center; font-weight:800;
+  }
+  .week-nav button.active .check { background:rgba(255,255,255,.25); color:#fff; }
+  .week-nav button.complete .check { background:#10b981; color:#fff; }
+  .week-nav button.complete .check::before { content:"✓"; }
+
+  /* Week section */
+  .week {
+    background:#fff; border:1.5px solid #e4e7ec; border-radius:14px;
+    padding:1.6rem 1.8rem; margin:1.4rem 0; box-shadow: 0 2px 10px rgba(0,0,0,.04);
+    display:none;
+  }
+  .week.active { display:block; animation: fadeIn .25s ease-out; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+  .week-header {
+    display:flex; align-items:flex-start; gap:1rem; flex-wrap:wrap;
+    padding-bottom:1rem; border-bottom:2px solid #f1f5f9;
+  }
+  .week-header .badge {
+    background:linear-gradient(135deg,#1f3a68,#2e5b9e);
+    color:#fff; padding:.5rem 1.1rem; border-radius:10px;
+    font-weight:800; font-size:.85rem; letter-spacing:.05em;
+    flex-shrink:0;
+  }
+  .week-header .titles { flex:1; min-width:200px; }
+  .week-header h2 { color:#1f3a68; margin:0; font-size:1.55rem; line-height:1.2; }
+  .week-header .subtitle {
+    color:#0e7490; font-style:italic; margin:.2rem 0 0; font-size:1rem;
+  }
+  .week-header .lesson-link {
+    background:#eff6ff; color:#1e3a8a; padding:.4rem .9rem; border-radius:999px;
+    font-size:.85rem; font-weight:700; text-decoration:none; flex-shrink:0;
+    border:1.5px solid #2e5b9e;
+  }
+  .week-header .lesson-link:hover { background:#1e3a8a; color:#fff; }
+
+  .concept {
+    background:#f0fdfa; border-left:4px solid #14b8a6;
+    padding:1rem 1.2rem; border-radius:0 10px 10px 0; margin:1rem 0;
+  }
+  .concept h3 { margin:0 0 .4rem; color:#0f766e; font-size:1.05rem; }
+  .concept p { margin:.3rem 0; line-height:1.55; color:#134e4a; }
+
+  .tasks { margin:1rem 0; }
+  .tasks h3 {
+    color:#1f3a68; font-size:1.1rem; margin:.5rem 0 .6rem;
+    display:flex; align-items:center; gap:.5rem;
+  }
+  .task {
+    background:#fafbfc; border:1.5px solid #e4e7ec;
+    padding:.85rem 1rem; border-radius:8px; margin:.5rem 0;
+    display:grid; grid-template-columns: auto 1fr; gap:.7rem;
+    align-items:flex-start;
+  }
+  .task input[type=checkbox] {
+    width:22px; height:22px; cursor:pointer; margin-top:.15rem;
+    accent-color:#10b981;
+  }
+  .task .body label {
+    display:block; font-weight:600; color:#1a202c; cursor:pointer;
+    line-height:1.45; font-size:.97rem;
+  }
+  .task .body p {
+    margin:.25rem 0 0; color:#475569; font-size:.9rem; line-height:1.5;
+  }
+  .task.done { background:#f0fdf4; border-color:#10b981; }
+  .task.done .body label { color:#065f46; text-decoration:line-through; opacity:.7; }
+
+  .screenshot-slot {
+    background:#fef3c7; border:2px dashed #d97706; border-radius:10px;
+    padding:.8rem 1rem; margin:.6rem 0;
+    color:#9a3412; font-size:.88rem; font-style:italic;
+  }
+  .screenshot-slot strong { font-style:normal; color:#7c2d12; }
+  .screenshot-slot img {
+    max-width:100%; border-radius:8px; margin-top:.5rem; border:1.5px solid #d97706;
+  }
+
+  .reflect {
+    background:#ede9fe; border-left:4px solid #5b21b6;
+    padding:1rem 1.2rem; border-radius:0 10px 10px 0; margin:1.2rem 0;
+  }
+  .reflect h3 { margin:0 0 .5rem; color:#4c1d95; font-size:1.05rem; }
+  .reflect ol { margin:.3rem 0 .2rem; padding-left:1.4rem; }
+  .reflect li { margin:.4rem 0; line-height:1.5; color:#3730a3; }
+  .reflect textarea {
+    width:100%; min-height:60px; padding:.5rem .7rem;
+    border:1.5px solid #c4b5fd; border-radius:6px;
+    font-family:inherit; font-size:.92rem; box-sizing:border-box;
+    background:#fff; resize:vertical; margin-top:.4rem;
+  }
+  .reflect textarea:focus { outline:none; border-color:#5b21b6; box-shadow: 0 0 0 3px rgba(91,33,182,.2); }
+
+  .common-confusion {
+    background:#fee2e2; border-left:4px solid #ef4444;
+    padding:.85rem 1.1rem; border-radius:0 10px 10px 0; margin:1rem 0;
+    font-size:.92rem; color:#991b1b; line-height:1.55;
+  }
+  .common-confusion strong { color:#7f1d1d; }
+
+  .week-progress {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top:1.4rem; padding-top:1.2rem; border-top:2px solid #f1f5f9;
+    flex-wrap:wrap; gap:.6rem;
+  }
+  .week-progress .progress-text { font-weight:700; color:#1f3a68; }
+  .week-progress button {
+    background:#1f3a68; color:#fff; border:none;
+    padding:.65rem 1.3rem; border-radius:8px; font-weight:700;
+    cursor:pointer; font-size:.95rem;
+  }
+  .week-progress button:hover { background:#2e5b9e; }
+  .week-progress button.secondary {
+    background:#fff; color:#1f3a68; border:1.5px solid #1f3a68;
+  }
+  .week-progress button.secondary:hover { background:#eff6ff; }
+
+  .glossary-bar {
+    background:#1f3a68; color:#fff; border-radius:10px;
+    padding:.8rem 1.2rem; margin:.8rem 0;
+    display:flex; gap:1.5rem; flex-wrap:wrap; font-size:.9rem;
+  }
+  .glossary-bar strong { color:#fef3c7; }
+
+  .open-tool-bar {
+    position:sticky; top:60px; z-index:10;
+    background:#fff; border:1.5px solid #14b8a6; border-radius:10px;
+    padding:.7rem 1.1rem; margin:.5rem 0 1.2rem;
+    display:flex; align-items:center; gap:.8rem; flex-wrap:wrap;
+    box-shadow:0 2px 8px rgba(20,184,166,.12);
+  }
+  .open-tool-bar .pulse {
+    width:10px; height:10px; background:#10b981; border-radius:50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:.5; transform:scale(1.4); }
+  }
+  .open-tool-bar a {
+    color:#0e7490; text-decoration:none; font-weight:700; font-size:.95rem;
+    display:inline-flex; align-items:center; gap:.3rem;
+  }
+  .open-tool-bar a:hover { color:#155e75; }
+
+  /* Print styles — clean printable worksheet view */
+  @media print {
+    .week-nav, .open-tool-bar, .at-hero .open-tool, .week-progress, .teacher-quickstart { display:none !important; }
+    .week { display:block !important; page-break-after:always; box-shadow:none; }
+    .at-hero { background:#fff !important; color:#1f3a68 !important; padding:0; box-shadow:none; }
+    .at-hero h1 { color:#1f3a68 !important; }
+    .at-hero p { color:#475569; }
+    body { background:#fff; }
+    .reflect textarea { min-height:120px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+      <a href="diagnostic.html">📝 Diagnostic</a>
+      <a href="vocab-arena.html">🎮 Vocab Arena</a>
+      <a href="asce-tutorial.html">🌉 ASCE Tutorial</a>
+      <a href="workbook.html">📘 Workbook</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="at-hero">
+    <h1>🌉 ASCE Bridge Designer — 8-Week Tutorial</h1>
+    <p>Your term-long companion for designing, testing, and refining bridges in software <strong>before</strong> you commit them to glue. Each week unlocks one engineering concept and builds on the last. By Week 9, you'll be predicting where bridges fail like a real engineer.</p>
+    <a class="open-tool" href="https://app.asce.org/bridge-designer/app/" target="_blank" rel="noopener">🚀 Open ASCE Bridge Designer →</a>
+  </div>
+
+  <!-- Sticky open-tool reminder -->
+  <div class="open-tool-bar">
+    <span class="pulse"></span>
+    <strong>Have the tool open in another tab while you work through this page:</strong>
+    <a href="https://app.asce.org/bridge-designer/app/" target="_blank" rel="noopener">Open ASCE Bridge Designer ↗</a>
+  </div>
+
+  <!-- ─── TEACHER QUICKSTART ─── -->
+  <div class="teacher-quickstart" id="teacherQuickstart">
+    <span class="label">👩‍🏫 Teacher only — 30-min self-paced walkthrough</span>
+    <h2>Your prep before assigning Week 2 to students</h2>
+    <p>Hi Ms Gao. Before students touch this tool, spend 30 minutes working through these 5 mini-tasks yourself. Take a screenshot at each step — you can drop those into the placeholder slots throughout this page (look for the orange dashed boxes).</p>
+    <ol>
+      <li><strong>Open the tool</strong> in a fresh browser tab. Note the layout — toolbox on one side, big blank workspace in the middle, "Run / Test" button somewhere prominent. Take Screenshot #1: the empty workspace.</li>
+      <li><strong>Place 4 nodes</strong> in a square shape (click → click → click → click). Connect them with 4 members to form a square. Take Screenshot #2: the square bridge.</li>
+      <li><strong>Run the load test.</strong> The square should FAIL — members will deform, change colour, or break. Take Screenshot #3: the failed square (this is the "WHY triangles?" lesson in one image).</li>
+      <li><strong>Add a diagonal</strong> across the square (one member connecting opposite corners). It now has 2 triangles. Run the test again. Should PASS. Take Screenshot #4: the passing triangulated bridge with red/blue colours visible.</li>
+      <li><strong>Find the SAVE feature.</strong> Does it save online? Save to file? Require login? Note this — students will need to know how to keep their designs across the 8 weeks.</li>
+    </ol>
+    <p style="margin-top:.7rem;"><strong>Once you've done these 5 tasks, you understand the tool well enough to teach Week 2.</strong> Each subsequent week's prep takes ~10 minutes.</p>
+    <p style="font-size:.88rem; color:#7c2d12; font-style:italic; margin-top:.4rem;">Tip: drop your screenshots into the orange placeholder slots in each week's section. The placeholders show the exact prompt text — click the slot, paste the image, and it'll display.</p>
+    <button onclick="document.getElementById('teacherQuickstart').style.display='none';" style="background:#9a3412;color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:700;cursor:pointer;margin-top:.5rem;">✓ Done — hide this section</button>
+  </div>
+
+  <!-- ─── WEEK NAVIGATION ─── -->
+  <nav class="week-nav" id="weekNav">
+    <!-- buttons injected by JS -->
+  </nav>
+
+  <!-- ─── WEEK SECTIONS ─── -->
+  <div id="weekContainer"></div>
+
+  <!-- ─── EXPORT BAR ─── -->
+  <div style="background:#f8fafc; border:1.5px solid #e4e7ec; border-radius:10px; padding:1rem 1.3rem; margin:1.5rem 0; display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;">
+    <strong style="color:#1f3a68;">Reset progress?</strong>
+    <span style="color:#475569; font-size:.92rem;">Your task ticks + reflections save to this laptop only.</span>
+    <button onclick="resetAllProgress()" style="background:#fff; color:#dc2626; border:1.5px solid #dc2626; padding:.4rem 1rem; border-radius:6px; font-weight:700; cursor:pointer; font-size:.85rem; margin-left:auto;">🗑 Reset all</button>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Technology · Term 2 · Bridge It · ASCE Tutorial</strong> · Arthur Phillip High School</p>
+</footer>
+
+<script>
+"use strict";
+
+/* ============================================================
+   8-WEEK TUTORIAL DATA
+   ============================================================ */
+const WEEKS = [
+  {
+    n: 2, label: "W2", emoji: "🌱",
+    title: "Hello, Bridge Designer",
+    subtitle: "Click around. Get familiar. No bridges have to work yet.",
+    lessonLink: "L02 — 5 Bridge Types + Mini-Build",
+    concept: {
+      h: "What's a bridge designer?",
+      p: "It's a digital sandbox where you build bridges out of straight lines (called <strong>members</strong>) connected at points (called <strong>nodes</strong> or joints). The software then puts a heavy weight on top and tells you whether your bridge holds — without you wasting any glue. Real civil engineers use exactly the same kind of software (just much more expensive)."
+    },
+    tasks: [
+      { id: "w2t1", t: "Open the ASCE Bridge Designer in a new browser tab using the link at the top of this page.", n: "If anything asks for a login, see if you can use it without an account first. Most browsers let you click 'Skip' or 'Continue as guest'." },
+      { id: "w2t2", t: "Identify the 3 main parts of the screen: <strong>(1)</strong> the workspace where bridges are built, <strong>(2)</strong> the toolbox (where you pick member type, run tests, etc.), and <strong>(3)</strong> the load-test or 'play' button.", n: "Just look. Don't click anything yet." },
+      { id: "w2t3", t: "Click anywhere in the workspace to place your <strong>first node</strong>. It should be a small dot or circle.", n: "If nothing appears, you might need to select the 'Place Node' tool first." },
+      { id: "w2t4", t: "Place 3 more nodes so they form a triangle. Connect them with members (lines). You now have your first bridge.", n: "" },
+      { id: "w2t5", t: "Find the 'Run', 'Test', or 'Simulate' button and click it. Watch what happens to your bridge.", n: "If a load is applied (e.g. a moving truck), members might change colour, vibrate, or stay still. This is your first force visualisation." },
+    ],
+    screenshots: [
+      "📷 The empty workspace when you first open the tool",
+      "📷 Your first triangle bridge with 3 nodes + 3 members",
+    ],
+    reflect: [
+      "What surprised you about the tool's interface?",
+      "Did your triangle hold the load? If yes — why? If no — what do you think went wrong?",
+    ],
+    confusion: "<strong>Common confusion:</strong> students click everywhere and think they've broken the tool. They haven't. Most browser-based engineering tools are very robust — there's almost always an UNDO button (try Ctrl+Z or Cmd+Z)."
+  },
+  {
+    n: 3, label: "W3", emoji: "🔴🔵",
+    title: "Forces are colours",
+    subtitle: "Compression makes members RED. Tension makes them BLUE. See it for yourself.",
+    lessonLink: "L03 — Forces Lab",
+    concept: {
+      h: "Why do members glow red or blue?",
+      p: "When weight pushes DOWN on a bridge, the structure transmits that force through every member. Some members get SQUEEZED (compression — usually shown red); others get STRETCHED (tension — usually shown blue). The same bridge has BOTH forces happening at the same time, in different places. Today you'll see this directly."
+    },
+    tasks: [
+      { id: "w3t1", t: "Build the simplest bridge that fails: <strong>a SQUARE</strong> made of 4 nodes + 4 members.", n: "Don't add a diagonal yet." },
+      { id: "w3t2", t: "Run the load test. The square should DEFORM — collapse into a parallelogram or break.", n: "This is what 'no triangulation' looks like." },
+      { id: "w3t3", t: "Now add ONE diagonal member across the square. It now contains 2 triangles. Run the test again.", n: "It should pass." },
+      { id: "w3t4", t: "Look at the colours. <strong>Which members are red?</strong> Which are blue? Write your answer in the reflection at the bottom of this section.", n: "Hint: the top of the bridge usually goes red (compression). The bottom usually goes blue (tension)." },
+      { id: "w3t5", t: "Try removing different members and re-testing. <strong>Which member is most important?</strong> When you remove it, does the bridge fail?", n: "" },
+    ],
+    screenshots: [
+      "📷 The square bridge BEFORE the load test",
+      "📷 The square bridge AFTER deformation/failure",
+      "📷 The triangulated bridge with red/blue colours visible",
+    ],
+    reflect: [
+      "In your bridge, where did you see RED (compression)?",
+      "Where did you see BLUE (tension)?",
+      "What's the engineering reason squares fail and triangles don't?",
+    ],
+    confusion: "<strong>Common confusion:</strong> some students see members that are GREY or have no colour, and think the tool is broken. Grey usually means that member is carrying very little force — it's neither in significant compression nor tension. That's information too."
+  },
+  {
+    n: 4, label: "W4", emoji: "🔺",
+    title: "Triangulation is everything",
+    subtitle: "Build 3 different truss patterns side by side. See which is strongest and lightest.",
+    lessonLink: "L04 — Truss Geometry (Pratt, Howe, Warren)",
+    concept: {
+      h: "Why are there so many truss types?",
+      p: "Engineers have invented dozens of truss patterns. The main 3 you should know are: <strong>Pratt</strong> (diagonals slope down toward the centre — common in railway bridges), <strong>Howe</strong> (diagonals slope up toward the centre — opposite of Pratt), and <strong>Warren</strong> (just zigzags, no verticals — light + simple). Each has different strengths."
+    },
+    tasks: [
+      { id: "w4t1", t: "Build a <strong>Pratt truss</strong>: top chord, bottom chord, vertical members at regular intervals, diagonals that slope DOWN toward the centre of the bridge.", n: "Like the diagonals point inward toward the middle." },
+      { id: "w4t2", t: "Run the load test. Note which members are red, which are blue, and which (if any) failed.", n: "" },
+      { id: "w4t3", t: "Now <strong>delete the bridge</strong> and build a <strong>Howe truss</strong>: same as Pratt but diagonals slope UP toward the centre.", n: "The diagonals point outward away from the middle." },
+      { id: "w4t4", t: "Test it. Compare to the Pratt. Which is stronger? Which uses fewer members?", n: "The colour pattern should be reversed — top chord vs bottom chord force types swap." },
+      { id: "w4t5", t: "Finally, build a <strong>Warren truss</strong>: zigzag diagonals only, NO vertical members. It looks like a row of triangles.", n: "" },
+      { id: "w4t6", t: "Test all 3. Which would YOU choose for the paddle-pop bridge brief? Why?", n: "Note: the APHS template is closest to a Pratt or Warren. Look at it again with fresh eyes after this exercise." },
+    ],
+    screenshots: [
+      "📷 Pratt truss with members coloured after load test",
+      "📷 Howe truss for comparison",
+      "📷 Warren truss for comparison",
+    ],
+    reflect: [
+      "Which of the 3 truss types passed the load test most easily?",
+      "Which one used the FEWEST members and still passed?",
+      "If material cost was the main constraint, which would you pick?",
+    ],
+    confusion: "<strong>Common confusion:</strong> students sometimes confuse Pratt and Howe because they look so similar. The trick is: Pratt's diagonals slope toward the LOAD (downward). Howe's slope away from it (upward). Same shape, opposite force pattern."
+  },
+  {
+    n: 5, label: "W5", emoji: "📐",
+    title: "Your first real design",
+    subtitle: "Design a bridge that solves the assessment brief: spans 500 mm, free-standing, no middle piers.",
+    lessonLink: "L05 — Assessment Release / L06 — Research",
+    concept: {
+      h: "From experimentation to design",
+      p: "For the past 3 weeks you've been playing. Now you're an engineer with a real brief. The walking-track gorge is 500 mm wide. Your bridge must SPAN that gap with no support in the middle. Today you'll design ONE bridge in the simulator that meets that brief and PASSES the load test. This becomes the blueprint for your build."
+    },
+    tasks: [
+      { id: "w5t1", t: "Re-read the assessment brief in your booklet (page 1). Note: 500 mm span, free-standing, no piers in the middle.", n: "" },
+      { id: "w5t2", t: "Open ASCE. Set up a workspace that matches the brief: a 500 mm gap with abutments at each end. Use the scale/grid if available.", n: "Some tools have a 'set span' option in settings." },
+      { id: "w5t3", t: "Choose a truss type from Week 4 (Pratt, Howe, or Warren). Build it across the 500 mm span.", n: "Use what you learned: where will compression be? Where tension?" },
+      { id: "w5t4", t: "Run the load test. Iterate: if it fails, ADD members. If it passes with members in light grey, you may have over-designed (too much material).", n: "Aim for a bridge where every member is doing some work (some colour visible)." },
+      { id: "w5t5", t: "Once it passes, <strong>screenshot or save your design.</strong> This is the bridge you'll refine next week.", n: "" },
+      { id: "w5t6", t: "Sketch your design on paper too — quick freehand. The sketch is what you'll bring to the build phase.", n: "" },
+    ],
+    screenshots: [
+      "📷 Your first design that passes the load test",
+    ],
+    reflect: [
+      "How many tries did it take you to make a passing bridge?",
+      "What part of your bridge are you most proud of?",
+      "What part are you nervous about — what might fail in the physical version?",
+    ],
+    confusion: "<strong>Common confusion:</strong> students design ENORMOUS bridges with dozens of members 'just to be safe'. More members ≠ stronger. More members = more weight = more force on every joint. Engineers minimise material. Aim for the SMALLEST bridge that still passes."
+  },
+  {
+    n: 6, label: "W6", emoji: "💰",
+    title: "Engineering for cost",
+    subtitle: "Strip your bridge down. Find the cheapest version that still passes.",
+    lessonLink: "L07 — Idea Generation (3 sketches)",
+    concept: {
+      h: "Real engineering is about constraints",
+      p: "A bridge that holds a million tonnes is impressive — but a bridge that holds 100 tonnes for half the cost is BETTER engineering. Today's mission: take your Week 5 design and make it as CHEAP as possible while still passing the load test. This means removing every member you don't strictly need."
+    },
+    tasks: [
+      { id: "w6t1", t: "Open last week's design (or rebuild it from your sketch).", n: "" },
+      { id: "w6t2", t: "Find where the COST or MATERIAL TOTAL is shown in the tool. Note your current cost.", n: "" },
+      { id: "w6t3", t: "Remove ONE member that looks 'optional' — e.g. an extra diagonal, or a redundant vertical. Run the test.", n: "" },
+      { id: "w6t4", t: "If the bridge still passes: keep it removed. Try removing another. If it fails: put it back. Repeat.", n: "This is REAL ENGINEERING — iterative trial and refinement." },
+      { id: "w6t5", t: "Stop when removing ANY single member makes the bridge fail. This is the <strong>minimum bridge</strong>.", n: "Note your final cost. Compare with classmates." },
+      { id: "w6t6", t: "<strong>Now: would you actually BUILD this minimum design?</strong> Or would you add a small safety margin? Most engineers add 10-20% extra capacity.", n: "Engineering judgement." },
+    ],
+    screenshots: [
+      "📷 Your bridge BEFORE the cost-stripping exercise (with cost visible)",
+      "📷 Your bridge AFTER (minimum design, with cost visible)",
+    ],
+    reflect: [
+      "How many members did you remove?",
+      "What was your starting cost vs ending cost? (% saved)",
+      "Would you build the minimum design, or add a safety margin? Why?",
+    ],
+    confusion: "<strong>Common confusion:</strong> some students get carried away and remove SO many members that the bridge passes by a hair, but with very high force on the remaining members. That's risky — small variations in glue strength would make it fail in the physical version. A bit of safety margin is wise."
+  },
+  {
+    n: 7, label: "W7", emoji: "🗺️",
+    title: "Virtual blueprint = physical plan",
+    subtitle: "Lock in your final design. Sketch it. Identify the 8 high-stress joints for holed sticks.",
+    lessonLink: "L08 — Scaled Drawing 1:5 / L09 — Isometric Drawing",
+    concept: {
+      h: "From simulator to glue",
+      p: "Your virtual bridge is now your blueprint. This week you transfer that design from the screen onto paper, identify the most heavily-loaded joints (where the holed paddle-pop sticks should go), and prepare for next week's build. Without this transfer step, your virtual learning gets disconnected from the physical bridge."
+    },
+    tasks: [
+      { id: "w7t1", t: "Open your final cost-optimised design from Week 6. Take a clean screenshot of it (no menus, just the bridge).", n: "" },
+      { id: "w7t2", t: "<strong>Run the load test with members visible in colour.</strong> Look carefully: where are the BRIGHTEST RED members (highest compression)? Where are the BRIGHTEST BLUE members (highest tension)?", n: "Brighter colour = higher force." },
+      { id: "w7t3", t: "Sketch your bridge from the side on paper, using a ruler. Use red pencil to mark the 4-6 brightest red members. Use blue pencil to mark the 4-6 brightest blue members.", n: "" },
+      { id: "w7t4", t: "Look at your APHS laminated template. The template has 8 holed-stick positions per truss. <strong>Mark on your sketch which 8 joints are highest-stress</strong> — these will get the holed sticks during the build.", n: "Compression-heavy joints are usually best for holed sticks because the holes resist crushing." },
+      { id: "w7t5", t: "Final check: does your virtual design match the APHS template's overall shape? If not, decide now: adjust your design to match, OR adapt the template.", n: "Most students will need to adapt their virtual design slightly to fit the APHS materials list (135 sticks, no more). Consult Ms Gao if unsure." },
+    ],
+    screenshots: [
+      "📷 Your final virtual design (clean screenshot, no menus)",
+      "📷 Your hand-drawn sketch with red/blue marker lines",
+      "📷 The APHS template with your 8 holed-stick positions marked",
+    ],
+    reflect: [
+      "Which member in your bridge has the HIGHEST force? Where is it?",
+      "Did your virtual design match the APHS template shape — or did you have to compromise?",
+      "How confident are you that your physical bridge will pass the load test? (1-10)",
+    ],
+    confusion: "<strong>Common confusion:</strong> students assume the virtual bridge will translate perfectly to the physical one. It won't. Real paddle pops have variable strength, glue joints aren't perfect, and the load on the physical bridge isn't moving like the virtual truck. Use the virtual design as a GUIDE, not a guarantee."
+  },
+  {
+    n: 8, label: "W8", emoji: "🔮",
+    title: "Predict, then test",
+    subtitle: "During the physical build phase: predict where your bridge will fail. Then build it.",
+    lessonLink: "L11–L16 — Build days",
+    concept: {
+      h: "The engineering hypothesis",
+      p: "Real engineers PREDICT failure modes before they build. They run thousands of simulated load tests, identify the weakest joint, and design around it. This week, you do the same. You're now mid-build — your physical bridge is taking shape. Look at it. Look at the virtual version in ASCE. Where is the weakest point? Write it down. We'll see if you're right on Load Test Day."
+    },
+    tasks: [
+      { id: "w8t1", t: "Look at your physical bridge in its current state. Take a photo from the side.", n: "" },
+      { id: "w8t2", t: "Open your virtual design in ASCE. Run the load test. Identify the MEMBER OR JOINT with the highest force (brightest red or blue).", n: "" },
+      { id: "w8t3", t: "Write a <strong>prediction</strong> in your build journal: 'I think my physical bridge will fail at JOINT X / MEMBER Y because the simulation shows the highest force there.'", n: "Be specific. Mark it on your photo." },
+      { id: "w8t4", t: "If you have time, try a <strong>'what if?'</strong> in ASCE. What if you removed your weakest member entirely? Does the whole bridge collapse?", n: "" },
+      { id: "w8t5", t: "Add a small reinforcement to your physical bridge at that exact joint — extra glue, an extra peg clamp during drying, or a paired stick if you have one spare.", n: "This is engineering: predict, then mitigate." },
+    ],
+    screenshots: [
+      "📷 Your physical bridge mid-build with the predicted failure point circled",
+    ],
+    reflect: [
+      "Where did you predict your bridge would fail?",
+      "Why did you predict that location specifically?",
+      "What did you do to reinforce it?",
+    ],
+    confusion: "<strong>Common confusion:</strong> students sometimes predict failure at the visually 'thinnest' or most fragile-looking part. The simulation often disagrees — the highest-force joint can look perfectly fine from the outside. Trust the colours, not your eyes."
+  },
+  {
+    n: 9, label: "W9", emoji: "🔬",
+    title: "Compare and learn",
+    subtitle: "After the load test: did your bridge fail where ASCE predicted? Why or why not?",
+    lessonLink: "L20 — Load Test Day / L21 — Evaluation",
+    concept: {
+      h: "The engineering retrospective",
+      p: "Your physical bridge has now been load-tested. Either it held, or it failed. Either way, this week is for ONE big question: <strong>did the simulation predict what actually happened?</strong> If yes — your model worked, you understand bridges. If no — what did the model miss? This reflection is what separates engineering from guessing."
+    },
+    tasks: [
+      { id: "w9t1", t: "Look at the failure point on your physical bridge (or, if it didn't break, the most stressed-looking joint).", n: "" },
+      { id: "w9t2", t: "Look at your Week 8 prediction. Did your bridge fail where you predicted? <strong>Yes / Partially / No.</strong>", n: "" },
+      { id: "w9t3", t: "If YES: in your evaluation, write 1 paragraph explaining how the simulation matched reality. Quote the colour you saw on that member in ASCE.", n: "This is gold-standard evaluation writing." },
+      { id: "w9t4", t: "If NO: write 1 paragraph on WHY the simulation didn't predict the actual failure. Possible reasons: glue weak in a specific joint? Stick had a knot? Member was crooked? Load applied differently than the virtual truck?", n: "Acknowledging the model's limits is real engineering thinking." },
+      { id: "w9t5", t: "Now — go back to ASCE. Try to <strong>recreate the actual failure</strong> by adjusting your virtual design (removing a member, weakening it, etc.) until the simulation also fails at that point. Write what you learned.", n: "This is reverse-engineering — it's hard but extremely valuable." },
+    ],
+    screenshots: [
+      "📷 The failure point on your physical bridge (close-up)",
+      "📷 The same point in your ASCE simulation",
+    ],
+    reflect: [
+      "Did your simulation predict the actual failure point? (yes / partially / no)",
+      "What did the simulation get RIGHT about your bridge?",
+      "What did the simulation get WRONG? What couldn't it predict?",
+      "If you built another bridge tomorrow, what would you change in your virtual design?",
+    ],
+    confusion: "<strong>Common confusion:</strong> students who 'failed' the physical load test sometimes feel disappointed and skip this reflection. <strong>The reflection IS the assessment.</strong> A bridge that broke at 3 kg with great reflection scores higher than a bridge that held 30 kg with no reflection. Engineering is what you LEARN, not what you build."
+  },
+];
+
+/* ============================================================
+   STATE — localStorage
+   ============================================================ */
+const STORAGE_KEY = "asce-tutorial-progress-v1";
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) { return {}; }
+}
+function saveState(s) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {}
+}
+let state = loadState();
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let currentWeek = parseInt(localStorage.getItem("asce-tutorial-current-week") || "2");
+
+function renderNav() {
+  const host = document.getElementById("weekNav");
+  host.innerHTML = "";
+  WEEKS.forEach(w => {
+    const total = w.tasks.length;
+    const done = countDoneTasks(w);
+    const isComplete = done === total && total > 0;
+    const btn = document.createElement("button");
+    btn.className = "week-nav-btn" + (w.n === currentWeek ? " active" : "") + (isComplete ? " complete" : "");
+    btn.innerHTML = `${w.emoji} ${w.label}<span class="check">${isComplete ? "" : (done > 0 ? done : "")}</span>`;
+    btn.onclick = () => { currentWeek = w.n; localStorage.setItem("asce-tutorial-current-week", String(w.n)); renderAll(); window.scrollTo({top: 200, behavior: "smooth"}); };
+    host.appendChild(btn);
+  });
+}
+
+function countDoneTasks(w) {
+  return w.tasks.filter(t => state[t.id]?.done).length;
+}
+
+function renderWeek() {
+  const w = WEEKS.find(x => x.n === currentWeek);
+  if (!w) return;
+  const total = w.tasks.length;
+  const done = countDoneTasks(w);
+
+  const tasksHtml = w.tasks.map(t => {
+    const isDone = state[t.id]?.done || false;
+    return `
+      <div class="task ${isDone ? 'done' : ''}">
+        <input type="checkbox" id="${t.id}" ${isDone ? 'checked' : ''} onchange="toggleTask('${t.id}')">
+        <div class="body">
+          <label for="${t.id}">${t.t}</label>
+          ${t.n ? `<p>${t.n}</p>` : ''}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  const screensHtml = w.screenshots.map((s, i) => {
+    const id = `w${w.n}_screenshot_${i}`;
+    const stored = state[id]?.image;
+    return `
+      <div class="screenshot-slot">
+        <strong>📷 Screenshot slot ${i+1}:</strong> ${s}
+        ${stored ? `<img src="${stored}" alt="screenshot">` : `<div style="margin-top:.4rem;"><input type="file" accept="image/*" onchange="uploadShot('${id}', this)" style="font-size:.85rem;"></div>`}
+        ${stored ? `<button onclick="clearShot('${id}')" style="margin-top:.3rem; background:#fff; border:1px solid #d97706; color:#9a3412; padding:.2rem .6rem; border-radius:4px; font-size:.8rem; cursor:pointer;">Remove</button>` : ''}
+      </div>
+    `;
+  }).join("");
+
+  const reflectId = `w${w.n}_reflect`;
+  const reflectStored = state[reflectId]?.text || "";
+  const reflectQs = w.reflect.map((q, i) => `<li>${q}</li>`).join("");
+
+  const html = `
+    <div class="week-header">
+      <div class="badge">${w.emoji} Week ${w.n}</div>
+      <div class="titles">
+        <h2>${w.title}</h2>
+        <p class="subtitle">${w.subtitle}</p>
+      </div>
+      <a class="lesson-link" href="../lessons/l${String(w.n*2-2).padStart(2,'0')}.html" target="_blank">📚 ${w.lessonLink}</a>
+    </div>
+
+    <div class="concept">
+      <h3>💡 ${w.concept.h}</h3>
+      <p>${w.concept.p}</p>
+    </div>
+
+    <div class="tasks">
+      <h3>🎯 Your tasks this week (${done} of ${total} done)</h3>
+      ${tasksHtml}
+    </div>
+
+    ${screensHtml ? `<div style="margin:1rem 0;">${screensHtml}</div>` : ""}
+
+    <div class="reflect">
+      <h3>📝 Reflect on this week</h3>
+      <ol>${reflectQs}</ol>
+      <textarea placeholder="Type your reflection here — even 2-3 sentences is plenty. Saves automatically." onchange="saveReflect('${reflectId}', this.value)" oninput="saveReflect('${reflectId}', this.value)">${reflectStored}</textarea>
+    </div>
+
+    ${w.confusion ? `<div class="common-confusion">${w.confusion}</div>` : ""}
+
+    <div class="week-progress">
+      <div class="progress-text">Progress: ${done} of ${total} tasks done${done === total && total > 0 ? " 🎉 Complete!" : ""}</div>
+      <div style="display:flex; gap:.5rem;">
+        ${w.n > 2 ? `<button class="secondary" onclick="goToWeek(${w.n-1})">← Week ${w.n-1}</button>` : ''}
+        ${w.n < 9 ? `<button onclick="goToWeek(${w.n+1})">Week ${w.n+1} →</button>` : '<button onclick="window.print()">🖨 Print all weeks</button>'}
+      </div>
+    </div>
+  `;
+
+  const container = document.getElementById("weekContainer");
+  container.innerHTML = `<section class="week active" id="week${w.n}">${html}</section>`;
+}
+
+function renderAll() {
+  renderNav();
+  renderWeek();
+}
+
+window.toggleTask = function (id) {
+  if (!state[id]) state[id] = {};
+  state[id].done = !state[id].done;
+  saveState(state);
+  renderAll();
+};
+
+window.saveReflect = function (id, text) {
+  if (!state[id]) state[id] = {};
+  state[id].text = text;
+  saveState(state);
+};
+
+window.uploadShot = function (id, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      let w = img.width, h = img.height;
+      const max = 1000;
+      if (w > max) { h = h * max / w; w = max; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      if (!state[id]) state[id] = {};
+      state[id].image = canvas.toDataURL("image/jpeg", 0.7);
+      saveState(state);
+      renderWeek();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+
+window.clearShot = function (id) {
+  if (state[id]) delete state[id].image;
+  saveState(state);
+  renderWeek();
+};
+
+window.goToWeek = function (n) {
+  currentWeek = n;
+  localStorage.setItem("asce-tutorial-current-week", String(n));
+  renderAll();
+  window.scrollTo({top: 200, behavior: "smooth"});
+};
+
+window.resetAllProgress = function () {
+  if (!confirm("This will clear ALL your task ticks, reflections, and uploaded screenshots. Are you sure?")) return;
+  state = {};
+  localStorage.removeItem(STORAGE_KEY);
+  renderAll();
+};
+
+renderAll();
+</script>
+
+</body>
+</html>
