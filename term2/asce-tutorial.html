@@ -300,10 +300,10 @@
     <p>Hi Ms Gao. The good news: I've now seen the actual ASCE Bridge Designer Cloud Edition, so the tutorial below uses real menu names, real buttons, real hot keys. Spend 30 minutes working through Week 2 yourself — by the end of it, you'll be ready to teach the full 8-week sequence.</p>
     <ol>
       <li><strong>Open the tool</strong> in a fresh browser tab. The "Design tip of the day" window appears — click <strong>Close</strong>.</li>
-      <li>Click <strong>File → Load Standard Truss Template</strong>. Pick any template. A working starter bridge appears.</li>
+      <li>Click <strong>File → Load template...</strong>. Pick any template. A working starter bridge appears.</li>
       <li>Press <kbd>Alt-T</kbd> to run the load test. A truck drives across. Watch the colours: <span style="color:#dc2626;font-weight:700;">RED = compression</span>, <span style="color:#1e63d5;font-weight:700;">BLUE = tension</span>.</li>
       <li>Press <kbd>Alt-D</kbd> to return to the drawing board. Click <strong>Report → Cost calculations</strong> to see the 4-part cost breakdown.</li>
-      <li>Click <strong>Report → Member analysis report</strong> — this is the engineering-grade data report. Scan it. Close it.</li>
+      <li>Click <strong>Report → Member analysis</strong> — this is the engineering-grade data report. Scan it. Close it.</li>
       <li>Try <strong>File → Save</strong> — files save as <code>.bdc</code> on your computer. Handy for students to share designs with you.</li>
     </ol>
     <p style="margin-top:.7rem;"><strong>Done? You now know the tool well enough to teach all 8 weeks.</strong> Each subsequent week's prep is ~10 min.</p>
@@ -365,17 +365,21 @@ const WEEKS = [
             expect:"You can see all 7 menus listed in a row.",
             tip:"You don't need to click anything yet. Just notice they're there." },
           { id:"w2at4",
-            t:"Click on the word <strong>File</strong> at the top-left. A dropdown menu opens. Click <strong>Load Standard Truss Template</strong>.",
-            expect:"A small window opens showing several starter bridge templates.",
-            ifstuck:"If you don't see 'Load Standard Truss Template', scroll down inside the File menu — it might be lower in the list." },
+            t:"Click on the word <strong>File</strong> at the top-left, then click <strong>New design...</strong>. A 6-step wizard opens.",
+            expect:"A wizard window appears. You see a list of steps: 1) Read the design requirement · 2) Enter local contest information · 3) Select deck elevation and support configuration · 4) Select deck material and truck loading · 5) Select a standard truss template (optional) · 6) Fill in the title block (optional).",
+            tip:"Don't worry about understanding every step now — just walk through them in order. The wizard does most of the work for you." },
           { id:"w2at5",
-            t:"Click any one of the templates (your choice — pick the one that looks coolest). Click <strong>OK</strong> or double-click the template.",
-            expect:"A starter bridge with joints (small dots) and members (lines between dots) appears on the drawing board. <strong>This bridge already works!</strong>" },
+            t:"Click through steps 1–4 by clicking the <strong>Next</strong> button. For now leave the default options as they are (you can change them later).",
+            expect:"You're now on step 5 — 'Select a standard truss template (optional)'." },
           { id:"w2at6",
+            t:"On step 5, pick any one of the Standard Truss Templates (your choice — pick the one that looks coolest). Click <strong>Next</strong> through any remaining steps. Then <strong>Finish</strong>.",
+            expect:"A starter bridge with joints (small dots) and members (lines between dots) appears on the drawing board. <strong>This bridge already works!</strong>",
+            tip:"Alternative quicker path: click <strong>File → Load template...</strong> directly — this skips the wizard and just gives you the templates." },
+          { id:"w2at7",
             t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> together on your keyboard.",
             expect:"The screen changes — a truck appears and starts driving across your bridge. The members glow red and blue.",
-            tip:"Alt-T = TEST. It's the fastest way to run a load test. (Or click Test → Run Load Test if hot keys feel weird.)" },
-          { id:"w2at7",
+            tip:"Alt-T = TEST. It's the fastest way to run a load test. (Or click Test → Load test if hot keys feel weird.)" },
+          { id:"w2at8",
             t:"Watch the truck make 2 passes across the bridge. Then press <kbd>Alt</kbd> + <kbd>D</kbd> to go back to the drawing board.",
             expect:"You're back at the drawing board with your bridge visible.",
             tip:"Alt-D = back to DRAWING board. Two simple shortcuts: T for test, D for drawing." },
@@ -393,15 +397,15 @@ const WEEKS = [
             expect:"The drawing board is empty. A new window asks for your name and project ID.",
             tip:"Type your name (e.g. 'Amanda Guo') and project ID (e.g. '7TECJ-Amanda'). Click OK." },
           { id:"w2bt2",
-            t:"In the toolbar, find the icon for placing a <strong>joint</strong>. Hover your mouse over each toolbar icon to see its name. The joint tool usually looks like a small dot.",
-            expect:"When you find it, the icon is highlighted/selected.",
-            ifstuck:"If you can't find the joint tool, try Tools menu → Joint." },
+            t:"On the left side of the screen, find the <strong>Tools palette</strong> — a small panel with 4 buttons: <strong>Joints · Members · Select · Erase</strong>. Click <strong>Joints</strong>.",
+            expect:"The Joints button is now highlighted/active. Your mouse is now in 'place joint' mode.",
+            ifstuck:"If you can't see the Tools palette, click <strong>View → Tools</strong> in the main menu to turn it on." },
           { id:"w2bt3",
             t:"Click 4 different spots on the drawing board to place <strong>4 joints</strong> in a square shape (top-left, top-right, bottom-left, bottom-right).",
             expect:"4 small dots appear on the drawing board, forming a rough square.",
-            ifstuck:"If you click and nothing appears, you may have the wrong tool selected. Re-click the joint tool first." },
+            ifstuck:"If you click and nothing appears, you may have a different tool selected. Click <strong>Joints</strong> in the Tools palette again." },
           { id:"w2bt4",
-            t:"Now switch to the <strong>member tool</strong> (the line-drawing tool). Click one joint, then click another to draw a member between them. Repeat to draw all 4 sides of the square.",
+            t:"In the Tools palette, click <strong>Members</strong> (the line-drawing tool). Then click one joint, then click another, to draw a member between them. Repeat to draw all 4 sides of the square.",
             expect:"Your 4 joints are now connected by 4 members in a square shape.",
             tip:"This is your bridge. Yes, it's just a square. We'll see what happens." },
           { id:"w2bt5",
@@ -447,7 +451,7 @@ const WEEKS = [
         goal: "By the end, you can point at any member and say 'that one is in compression' or 'that one is in tension'.",
         tasks: [
           { id:"w3at1",
-            t:"Open ASCE. Click <strong>File → Load Standard Truss Template</strong> and pick the same template you used in Week 2 Lesson A.",
+            t:"Open ASCE. Click <strong>File → Load template...</strong> and pick the same template you used in Week 2 Lesson A.",
             expect:"The same starter bridge from last week appears." },
           { id:"w3at2",
             t:"Press <kbd>Alt</kbd> + <kbd>T</kbd> to run the load test.",
@@ -534,20 +538,20 @@ const WEEKS = [
         letter: "A",
         title: "Build a Pratt truss using a Standard Truss Template.",
         duration: "75 minutes",
-        goal: "By the end, you have a Pratt truss bridge that passes the load test, with View → Symmetry Guides ON.",
+        goal: "By the end, you have a Pratt truss bridge that passes the load test, with View → Guides ON.",
         tasks: [
           { id:"w4at1",
             t:"Open ASCE. Click <strong>File → New</strong> for a fresh start. Add your name + project ID.",
             expect:"Empty drawing board." },
           { id:"w4at2",
-            t:"Click <strong>View → Symmetry Guides</strong>. A vertical centre line appears on the drawing board.",
+            t:"Click <strong>View → Guides</strong>. A vertical centre line appears on the drawing board.",
             expect:"A faint line down the middle of the drawing board. Use it to check if your bridge is symmetric.",
             tip:"A symmetric bridge handles forces evenly. Asymmetric bridges fail unevenly." },
           { id:"w4at3",
             t:"Click <strong>View → Member numbers</strong>. Now every member you draw will be labelled with a number.",
             expect:"From now on, members have numbers — useful for the Member Analysis report later." },
           { id:"w4at4",
-            t:"Click <strong>File → Load Standard Truss Template</strong>. Pick a template that looks like a <strong>Pratt truss</strong> — diagonals slope inward (down toward the middle).",
+            t:"Click <strong>File → Load template...</strong>. Pick a template that looks like a <strong>Pratt truss</strong> — diagonals slope inward (down toward the middle).",
             expect:"A Pratt-style bridge appears with numbered members.",
             ifstuck:"If you're not sure which template is Pratt, just pick one with diagonals — you can experiment." },
           { id:"w4at5",
@@ -795,7 +799,7 @@ const WEEKS = [
             t:"Open your Week 6 minimum design (File → Open → YourName_Bridge_W6_minimum.bdc).",
             expect:"Your cost-optimised bridge is on screen." },
           { id:"w7at2",
-            t:"Click <strong>Report → Member analysis report</strong>. A table opens.",
+            t:"Click <strong>Report → Member analysis</strong>. A table opens.",
             expect:"You see a list of every member with columns: number, type, length, force, strength, etc.",
             tip:"This is what real civil engineers analyse. You're using a real engineering report." },
           { id:"w7at3",
@@ -876,7 +880,7 @@ const WEEKS = [
             t:"Open your <strong>YourName_Bridge_FINAL.bdc</strong> file in ASCE.",
             expect:"Your virtual blueprint." },
           { id:"w8at3",
-            t:"Click <strong>Report → Member analysis report</strong>. Find the column showing 'load test result' or similar (members closest to failure).",
+            t:"Click <strong>Report → Member analysis</strong>. Find the column showing 'load test result' or similar (members closest to failure).",
             expect:"You can identify the most-stressed member." },
           { id:"w8at4",
             t:"Sort by that column (highest first). The TOP member is most likely to fail in the simulation.",
@@ -889,7 +893,7 @@ const WEEKS = [
             expect:"Your physical bridge is marked with a prediction.",
             tip:"This is the engineering hypothesis. The load test will prove or disprove it." },
         ],
-        quickcheck: "What ASCE report tells you which member is most likely to fail? (Report → Member analysis report.)"
+        quickcheck: "What ASCE report tells you which member is most likely to fail? (Report → Member analysis.)"
       },
       {
         letter: "B",
@@ -961,7 +965,7 @@ const WEEKS = [
             t:"<strong>Did the bridge break where you predicted?</strong> Circle one: YES / PARTIALLY / NO.",
             expect:"You have a clear answer." },
           { id:"w9at4",
-            t:"Open your <strong>YourName_Bridge_FINAL.bdc</strong> in ASCE. Click <strong>Report → Member analysis report</strong>.",
+            t:"Open your <strong>YourName_Bridge_FINAL.bdc</strong> in ASCE. Click <strong>Report → Member analysis</strong>.",
             expect:"The report opens, showing the member that ASCE predicted would fail." },
           { id:"w9at5",
             t:"<strong>If YES</strong>: in your evaluation, write 1 paragraph: 'The simulation predicted failure at member [X]. The actual physical bridge also failed at this location. The match shows that the digital model captured the physics of my design.'",
