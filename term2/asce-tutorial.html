@@ -251,6 +251,37 @@
     font-weight:700; box-shadow: 0 1px 0 rgba(0,0,0,.2);
   }
 
+  /* ASCE authoritative quote box — direct words from the tool itself */
+  .asce-quote {
+    background:#fff; border:2px solid #0e7490;
+    border-radius:12px; padding:1.1rem 1.3rem;
+    margin:1.1rem 0; position:relative;
+    box-shadow:0 2px 8px rgba(14,116,144,.1);
+  }
+  .asce-quote::before {
+    content: "📖 What ASCE itself says";
+    position:absolute; top:-12px; left:14px;
+    background:linear-gradient(135deg,#0e7490,#14b8a6);
+    color:#fff; padding:.25rem .75rem;
+    border-radius:999px; font-size:.78rem;
+    font-weight:800; letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .asce-quote blockquote {
+    margin:.4rem 0 .3rem; padding:0;
+    color:#134e4a; font-style:italic;
+    line-height:1.55; font-size:1rem;
+    border-left:4px solid #14b8a6;
+    padding-left:.9rem;
+  }
+  .asce-quote blockquote::before { content:"\"“"; font-size:1.2em; color:#14b8a6; font-weight:bold; margin-right:.1em; }
+  .asce-quote blockquote::after  { content:"”"; font-size:1.2em; color:#14b8a6; font-weight:bold; margin-left:.1em; }
+  .asce-quote .source {
+    margin:.3rem 0 0; font-size:.82rem;
+    color:#0e7490; font-weight:600;
+  }
+  .asce-quote .source::before { content:"— "; }
+
   /* Print */
   @media print {
     .week-nav, .open-tool-bar, .at-hero .open-tool, .week-progress, .teacher-quickstart { display:none !important; }
@@ -344,6 +375,10 @@ const WEEKS = [
     concept: {
       h: "What is the ASCE Bridge Designer?",
       p: "A free, no-login web tool from the American Society of Civil Engineers. You build bridges out of <strong>members</strong> (straight beams) connected at <strong>joints</strong> (the points where members meet). Then a virtual truck drives across and tells you whether your bridge holds. Real engineers use software just like this — yours is the Year 7 version."
+    },
+    asceQuote: {
+      text: "When you use the ASCE Bridge Designer, you will experience the engineering design process in simplified form. You will design a steel truss bridge in much the same way a practicing civil engineer designs real highway bridges.",
+      source: "ASCE Bridge Designer · Help → How to design a bridge"
     },
     lessons: [
       {
@@ -441,7 +476,11 @@ const WEEKS = [
     subtitle: "Compression = RED. Tension = BLUE. Bright = working hard. See it for real.",
     concept: {
       h: "Why do members turn red or blue?",
-      p: "When the truck drives across, every member feels a force. Some get <strong>squeezed</strong> (compression — turn <span style=\"color:#dc2626;font-weight:700;\">RED</span>). Others get <strong>stretched</strong> (tension — turn <span style=\"color:#1e63d5;font-weight:700;\">BLUE</span>). The brighter the colour, the harder that member is working. ASCE help says: <em>'Bright colours mean the bridge is working hard!'</em>"
+      p: "When the truck drives across, every member feels a force. Some get <strong>squeezed</strong> (compression — turn <span style=\"color:#dc2626;font-weight:700;\">RED</span>). Others get <strong>stretched</strong> (tension — turn <span style=\"color:#1e63d5;font-weight:700;\">BLUE</span>). The brighter the colour, the harder that member is working."
+    },
+    asceQuote: {
+      text: "In the load test animation, tension members turn blue, and compression members turn red. The intensity of colour is proportional to the intensity of loading. Bright colours mean the bridge is working hard!",
+      source: "ASCE Bridge Designer · Tip of the Day"
     },
     lessons: [
       {
@@ -533,6 +572,10 @@ const WEEKS = [
       h: "Why are there different truss patterns?",
       p: "Engineers have invented many truss patterns — each handles forces a bit differently. The 3 main ones for Year 7: <strong>Pratt</strong> (diagonals slope DOWN toward centre), <strong>Howe</strong> (diagonals slope UP toward centre — Pratt's mirror), <strong>Warren</strong> (zigzags only, no verticals — light and simple)."
     },
+    asceQuote: {
+      text: "A stable truss is one that is composed of interconnected triangles. An unstable truss cannot carry any load.",
+      source: "ASCE Bridge Designer · Design Project Setup Wizard, Step 5"
+    },
     lessons: [
       {
         letter: "A",
@@ -616,6 +659,10 @@ const WEEKS = [
     concept: {
       h: "From play to plan",
       p: "For 3 weeks you've explored. Now you're an engineer with a real brief: <strong>500 mm gorge, free-standing, no piers in the middle</strong>. This week you design ONE bridge that solves the brief, then save it as the blueprint for your physical paddle-pop build."
+    },
+    asceQuote: {
+      text: "Your objective is to create an optimal bridge design. An optimal design is one that satisfies all of the design specifications, passes a simulated load test, and costs as little as possible.",
+      source: "ASCE Bridge Designer · How to design a bridge"
     },
     lessons: [
       {
@@ -701,6 +748,10 @@ const WEEKS = [
     concept: {
       h: "Real engineering = constraints",
       p: "Cost in ASCE = <strong>materials + connections + product + site costs</strong>. Today: take your Week 5 design, remove every unnecessary member, find the CHEAPEST bridge that still passes. Each test creates an iteration — go back any time."
+    },
+    asceQuote: {
+      text: "The total cost of your bridge is the sum of four parts: (1) materials, (2) connections, (3) product, and (4) site costs. Click the Report menu and select Cost calculations to see how the total is computed.",
+      source: "ASCE Bridge Designer · Tip of the Day"
     },
     lessons: [
       {
@@ -788,6 +839,10 @@ const WEEKS = [
       h: "From simulator to glue",
       p: "Your virtual bridge is now your blueprint. This week you analyse it engineering-style (Member Analysis Report shows force on every member), then map the high-stress joints onto the APHS paddle-pop template — those are where the holed sticks should go."
     },
+    asceQuote: {
+      text: "The member analysis report has many details on members, materials, forces, and strength that an engineer would use to design a real bridge.",
+      source: "ASCE Bridge Designer · Tip of the Day"
+    },
     lessons: [
       {
         letter: "A",
@@ -865,6 +920,10 @@ const WEEKS = [
     concept: {
       h: "The engineering hypothesis",
       p: "Real engineers predict failure modes before they build. This week you're mid-build — your physical bridge is taking shape. Look at it. Look at the virtual version. Where is the weakest point? Write it down. We'll see if you're right at Load Test Day."
+    },
+    asceQuote: {
+      text: "In the load test animation, bridge deflections are exaggerated by a factor of 20 to help you better see how a truss carries load. Real bridges don't bend this much!",
+      source: "ASCE Bridge Designer · Tip of the Day"
     },
     lessons: [
       {
@@ -947,6 +1006,10 @@ const WEEKS = [
     concept: {
       h: "The engineering retrospective",
       p: "Your physical bridge has been load-tested. Did your prediction match reality? If yes — your model worked. If no — what did the model miss? This reflection separates engineering from guessing."
+    },
+    asceQuote: {
+      text: "An iteration is recorded every time you test your design. Use the Go back button to return to a previous design iteration.",
+      source: "ASCE Bridge Designer · Tip of the Day"
     },
     lessons: [
       {
@@ -1134,6 +1197,12 @@ function renderWeek() {
       <h3>💡 ${w.concept.h}</h3>
       <p>${w.concept.p}</p>
     </div>
+
+    ${w.asceQuote ? `
+    <div class="asce-quote">
+      <blockquote>${w.asceQuote.text}</blockquote>
+      <p class="source">${w.asceQuote.source}</p>
+    </div>` : ""}
 
     ${lessonsHtml}
 
