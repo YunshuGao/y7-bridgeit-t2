@@ -138,7 +138,7 @@
     <div class="claim-panel">
       <h3>Type your name to claim a word</h3>
       <p style="margin:.2rem 0 .6rem;font-size:.95rem;">Once you've typed your name + class, click <strong>Claim</strong> on any unclaimed row. Your name will appear next to that word for the whole class to see (saved on this laptop only — not sent anywhere).</p>
-      <input type="text" id="claimerName" placeholder="e.g. Amanda Guo · 7TECJ" maxlength="60">
+      <input type="text" id="claimerName" placeholder="e.g. John Doe · 7TECJ" maxlength="60">
       <div class="claim-stats" id="claimStats"></div>
     </div>
 
@@ -458,7 +458,7 @@ function saveClaims(c) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(c)); } catch (e) {}
 }
 
-let claims = loadClaims();    // {n: ["Amanda Guo · 7TECJ", ...]}  (max 2 per word)
+let claims = loadClaims();    // {n: ["John Doe · 7TECJ", ...]}  (max 2 per word)
 let myName = "";
 let activeFilter = "all";
 
