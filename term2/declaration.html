@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📝 Assessment Task 1 Declaration · Y7 Technology · Bridge Design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ───── Page-specific styles ───── */
+  :root {
+    --navy: #1f3a68;
+    --navy-light: #2e5b9e;
+    --teal: #14b8a6;
+    --orange: #ea8b00;
+    --green: #10b981;
+    --red: #dc2626;
+    --bg: #fafbfc;
+    --card: #ffffff;
+    --border: #e4e7ec;
+    --text: #1a202c;
+    --soft: #475569;
+    --light: #eff6ff;
+  }
+
+  body { background: var(--bg); }
+
+  /* Hero */
+  .decl-hero {
+    background: linear-gradient(135deg, #1f3a68 0%, #2e5b9e 100%);
+    color: #fff; border-radius: 16px;
+    padding: 1.8rem 2rem; margin: 1.4rem 0;
+    box-shadow: 0 6px 22px rgba(31, 58, 104, .25);
+  }
+  .decl-hero h1 { color: #fff; margin: .3rem 0 .5rem; font-size: 1.7rem; line-height: 1.25; }
+  .decl-hero p { margin: .4rem 0; opacity: .95; line-height: 1.5; }
+
+  /* Task summary box */
+  .task-summary {
+    background: #fff; border: 2px solid var(--navy);
+    border-radius: 12px; padding: 1rem 1.4rem;
+    margin: 1.2rem 0;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: .8rem;
+  }
+  .task-summary .item .lbl { font-size: .78rem; font-weight: 700; color: var(--soft); text-transform: uppercase; letter-spacing: .04em; }
+  .task-summary .item .val { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-top: .2rem; }
+
+  /* Progress bar */
+  .progress-card {
+    position: sticky; top: 64px; z-index: 25;
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: .8rem 1.1rem; margin: 1rem 0 1.4rem;
+    display: flex; gap: .8rem; align-items: center; flex-wrap: wrap;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+  }
+  .progress-card .label { font-weight: 700; color: var(--navy); }
+  .progress-card .bar { flex: 1; min-width: 150px; height: 12px; background: #f1f5f9; border-radius: 8px; overflow: hidden; }
+  .progress-card .bar .fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--teal), var(--green));
+    border-radius: 8px; transition: width .3s ease;
+  }
+  .progress-card .save-tag {
+    font-size: .82rem; color: var(--soft); min-width: 110px; text-align: right;
+  }
+  .progress-card.complete .label { color: var(--green); }
+
+  /* Step cards */
+  .step {
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 1.3rem 1.5rem; margin: 1.2rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .04);
+  }
+  .step-header {
+    display: flex; align-items: center; gap: .8rem;
+    margin-bottom: .8rem;
+  }
+  .step-num {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    color: #fff; width: 38px; height: 38px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .step.complete .step-num { background: var(--green); }
+  .step.complete .step-num::before { content: "✓"; }
+  .step.complete .step-num span { display: none; }
+  .step h2 { color: var(--navy); margin: 0; font-size: 1.3rem; line-height: 1.3; }
+  .step .step-hint { color: var(--soft); font-size: .9rem; margin: .2rem 0 0; }
+
+  /* Form fields */
+  .field { margin: .8rem 0; }
+  .field label { display: block; font-weight: 700; color: var(--navy); margin-bottom: .3rem; font-size: .98rem; }
+  .field label .req { color: var(--red); margin-left: .15rem; }
+  .field input[type=text], .field input[type=date], .field textarea {
+    width: 100%; padding: .65rem .85rem;
+    border: 1.5px solid #cbd5e1; border-radius: 8px;
+    font-family: inherit; font-size: 1rem; box-sizing: border-box;
+    background: #fff; color: var(--text);
+  }
+  .field input:focus, .field textarea:focus {
+    outline: none; border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, .18);
+  }
+  .field textarea { min-height: 60px; resize: vertical; line-height: 1.45; }
+  .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; }
+
+  /* Comprehension question card */
+  .q-card {
+    background: #f8fafc; border-left: 4px solid var(--teal);
+    padding: .9rem 1.1rem; border-radius: 0 10px 10px 0;
+    margin: .8rem 0;
+  }
+  .q-card .q-num {
+    display: inline-block; background: var(--teal); color: #fff;
+    width: 26px; height: 26px; border-radius: 50%;
+    text-align: center; line-height: 26px; font-weight: 800;
+    font-size: .85rem; margin-right: .5rem;
+  }
+  .q-card .q-text { font-weight: 700; color: var(--navy); display: inline; }
+  .q-card .hint { color: var(--soft); font-size: .85rem; margin: .3rem 0 .5rem 2rem; font-style: italic; }
+  .q-card textarea {
+    margin-top: .4rem; width: 100%; padding: .55rem .8rem;
+    border: 1.5px solid #cbd5e1; border-radius: 8px;
+    font-family: inherit; font-size: .95rem; box-sizing: border-box;
+    background: #fff; min-height: 50px; resize: vertical;
+  }
+  .q-card.done {
+    background: #f0fdf4; border-left-color: var(--green);
+  }
+
+  /* Declaration checkboxes */
+  .declaration-list { margin: .8rem 0; padding: 0; list-style: none; }
+  .declaration-list li {
+    background: #f8fafc; border: 1.5px solid var(--border);
+    padding: .8rem 1rem; border-radius: 10px; margin: .5rem 0;
+    display: flex; align-items: flex-start; gap: .7rem;
+    cursor: pointer; transition: all .12s;
+  }
+  .declaration-list li:hover { background: #f1f5f9; border-color: var(--teal); }
+  .declaration-list li.checked {
+    background: #d1fae5; border-color: var(--green);
+  }
+  .declaration-list input[type=checkbox] {
+    width: 24px; height: 24px; cursor: pointer; flex-shrink: 0;
+    margin-top: 0; accent-color: var(--green);
+  }
+  .declaration-list .text { font-size: 1rem; line-height: 1.45; color: var(--text); font-weight: 600; }
+
+  /* Signature box */
+  .signature-box {
+    background: linear-gradient(180deg, #fffbe5 0%, #fff 100%);
+    border: 2.5px solid var(--orange);
+    border-radius: 12px; padding: 1rem 1.2rem; margin: 1rem 0;
+  }
+  .signature-box label { display: block; font-weight: 700; color: var(--orange); margin-bottom: .4rem; font-size: .92rem; text-transform: uppercase; letter-spacing: .04em; }
+  .signature-box input {
+    width: 100%; padding: .8rem 1rem;
+    border: none; border-bottom: 2.5px solid var(--orange);
+    background: transparent; box-sizing: border-box;
+    font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+    font-size: 1.6rem; color: var(--navy); font-style: italic;
+  }
+  .signature-box input:focus { outline: none; border-bottom-color: var(--navy); }
+  .signature-box .help { font-size: .82rem; color: var(--soft); margin-top: .4rem; font-style: italic; }
+
+  /* Parent section (optional) */
+  .step.parent {
+    background: #fffbeb;
+    border-color: #fbbf24;
+  }
+  .step.parent .badge-optional {
+    display: inline-block; background: #f59e0b; color: #fff;
+    padding: .2rem .6rem; border-radius: 999px;
+    font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; margin-left: .5rem;
+  }
+
+  /* Export step */
+  .step.export {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border-color: var(--green);
+  }
+  .step.export h2 { color: #065f46; }
+  .step.export ol li {
+    margin: .8rem 0; line-height: 1.55;
+  }
+  .step.export ol li strong { color: #065f46; }
+  .step.export kbd {
+    display: inline-block; padding: .15rem .55rem;
+    background: var(--navy); color: #fff;
+    border-radius: 4px; font-family: ui-monospace, monospace;
+    font-size: .85em; font-weight: 700;
+  }
+
+  /* Big PDF button */
+  .pdf-btn {
+    display: block; width: 100%;
+    background: linear-gradient(135deg, var(--green), #047857);
+    color: #fff; border: none;
+    padding: 1.1rem 1.5rem; border-radius: 12px;
+    font-size: 1.15rem; font-weight: 800;
+    cursor: pointer; margin: 1rem 0;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, .35);
+    transition: all .15s;
+  }
+  .pdf-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(16, 185, 129, .5); }
+  .pdf-btn:disabled {
+    background: #cbd5e1; color: #fff;
+    cursor: not-allowed; transform: none; box-shadow: none;
+  }
+  .pdf-btn-status {
+    text-align: center; color: var(--soft);
+    font-size: .9rem; margin-top: .4rem;
+  }
+  .pdf-btn-status.ready { color: var(--green); font-weight: 700; }
+
+  /* Notice box */
+  .notice {
+    background: #fff7ed; border: 1.5px solid #fb923c;
+    border-radius: 10px; padding: .9rem 1.1rem; margin: 1rem 0;
+    color: #9a3412; font-size: .92rem; line-height: 1.5;
+  }
+  .notice.green {
+    background: #d1fae5; border-color: var(--green);
+    color: #065f46;
+  }
+
+  /* ──────── PRINT STYLES ──────── */
+  /* When student clicks "Save as PDF", everything except form data is cleaned up */
+  @media print {
+    @page { size: A4; margin: 1.5cm; }
+    body { background: #fff; }
+    .site-header, .site-footer, .progress-card,
+    .step.export, .pdf-btn, .pdf-btn-status, .notice,
+    .step-num, .declaration-list input[type=checkbox] { display: none !important; }
+    .container { max-width: none; padding: 0; margin: 0; }
+
+    /* Hero compresses to a heading */
+    .decl-hero {
+      background: #fff !important;
+      color: var(--navy) !important;
+      border: 2px solid var(--navy);
+      box-shadow: none;
+      padding: 1rem 1.2rem;
+      margin: 0 0 .5rem;
+    }
+    .decl-hero h1 { color: var(--navy) !important; font-size: 1.4rem; }
+    .decl-hero p { color: var(--soft); font-size: .9rem; }
+
+    .step {
+      background: #fff !important;
+      border: 1px solid #999;
+      box-shadow: none;
+      page-break-inside: avoid;
+      margin: .4rem 0;
+      padding: .7rem 1rem;
+    }
+    .step h2 { font-size: 1.05rem; margin: 0 0 .3rem; }
+    .step .step-hint { display: none; }
+    .step-header { margin-bottom: .3rem; }
+
+    /* Form fields look like printed text */
+    .field input[type=text], .field input[type=date], .field textarea,
+    .q-card textarea {
+      border: none !important;
+      border-bottom: 1px solid #999 !important;
+      border-radius: 0 !important;
+      padding: .1rem .2rem !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      font-family: 'Calibri', sans-serif !important;
+      font-size: .95rem !important;
+      min-height: auto !important;
+    }
+    /* Empty inputs show a line */
+    .field input:placeholder-shown,
+    .q-card textarea:placeholder-shown {
+      border-bottom: 1px solid #ccc !important;
+    }
+
+    /* Declaration list — checkboxes become ✓ / ☐ */
+    .declaration-list li {
+      background: #fff !important;
+      border: none !important;
+      padding: .1rem 0 !important;
+      margin: .15rem 0 !important;
+    }
+    .declaration-list li::before {
+      content: "☐ ";
+      font-size: 1.1rem;
+      margin-right: .3rem;
+    }
+    .declaration-list li.checked::before {
+      content: "✓ ";
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    /* Signature box — show typed name as cursive */
+    .signature-box {
+      background: #fff !important;
+      border: 1px solid #999 !important;
+      padding: .4rem .8rem !important;
+      margin: .3rem 0 !important;
+    }
+    .signature-box input {
+      font-family: 'Brush Script MT', cursive !important;
+      font-size: 1.4rem !important;
+      border: none !important;
+      padding: .2rem 0 !important;
+      color: var(--navy) !important;
+    }
+
+    /* Comprehension Q cards lose colour */
+    .q-card {
+      background: #fff !important;
+      border-left: 2px solid #666 !important;
+      padding: .3rem .5rem !important;
+      margin: .3rem 0 !important;
+    }
+    .q-card .q-num {
+      background: #666 !important;
+      width: 20px; height: 20px;
+      line-height: 20px; font-size: .75rem;
+    }
+    .task-summary {
+      border: 1px solid #999 !important;
+      padding: .5rem .8rem !important;
+      page-break-inside: avoid;
+    }
+
+    .step.parent {
+      background: #fff !important;
+      border: 1px solid #ccc !important;
+    }
+    .step.parent .badge-optional {
+      background: #999 !important;
+      color: #fff !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">Year 7 Technology · 2026</a>
+    <nav class="site-nav">
+      <a href="../index.html">Home</a>
+      <a href="../term2.html">Term 2 · Bridge It</a>
+      <a href="declaration.html">📝 Declaration</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Hero -->
+  <div class="decl-hero">
+    <h1>📝 Assessment Task 1 — Receipt &amp; Declaration</h1>
+    <p>Year 7 Technology · Bridge Design · Term 2, 2026</p>
+    <p style="font-size:.95rem; opacity:.85;">This is your way of saying <em>"yes, I've received the task and yes, I understand it."</em> Fill it in, save as a PDF, then upload it to Google Classroom. Should take about 5 minutes. Your answers save automatically as you type.</p>
+  </div>
+
+  <!-- Task summary -->
+  <div class="task-summary">
+    <div class="item"><div class="lbl">Course</div><div class="val">Y7 Tech · Bridge Design</div></div>
+    <div class="item"><div class="lbl">Weighting</div><div class="val">50% · 50 marks</div></div>
+    <div class="item"><div class="lbl">Issued</div><div class="val">Tue 5 May 2026</div></div>
+    <div class="item"><div class="lbl">Due</div><div class="val">Fri 5 June 2026, 11:59 pm</div></div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-card" id="progressCard">
+    <div class="label" id="progressLabel">0% complete</div>
+    <div class="bar"><div class="fill" id="progressFill"></div></div>
+    <div class="save-tag" id="saveTag">💾 Not saved yet</div>
+  </div>
+
+  <!-- Notice -->
+  <div class="notice">
+    <strong>📌 Heads up:</strong> Your answers stay on this laptop only — they don't get sent anywhere automatically. The final step is YOU saving as a PDF and uploading it to Google Classroom. Read the task notification first if you haven't:
+    <a href="https://github.com/YunshuGao/y7-bridgeit-t2/raw/main/resources/Y7-TECH-T2-DIAGNOSTIC-STUDENT.docx" target="_blank" rel="noopener">📄 Open the original task notification</a>
+  </div>
+
+  <!-- ─── Step 1: Your details ─── -->
+  <section class="step" id="step1">
+    <div class="step-header">
+      <div class="step-num"><span>1</span></div>
+      <div>
+        <h2>Your details</h2>
+        <p class="step-hint">Tell me who you are.</p>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="studentName">Your full name <span class="req">*</span></label>
+        <input type="text" id="studentName" placeholder="e.g. Amanda Guo" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="studentClass">Class <span class="req">*</span></label>
+        <input type="text" id="studentClass" placeholder="e.g. 7TECJ" autocomplete="off">
+      </div>
+    </div>
+    <div class="field">
+      <label for="studentDate">Today's date <span class="req">*</span></label>
+      <input type="date" id="studentDate">
+    </div>
+  </section>
+
+  <!-- ─── Step 2: Comprehension check ─── -->
+  <section class="step" id="step2">
+    <div class="step-header">
+      <div class="step-num"><span>2</span></div>
+      <div>
+        <h2>Quick check — did you read the task?</h2>
+        <p class="step-hint">Five short questions. Write a quick answer for each. This shows you actually read the notification, not just signed it.</p>
+      </div>
+    </div>
+
+    <div class="q-card" data-q="q1">
+      <span class="q-num">1</span>
+      <span class="q-text">How much is this task worth as a percentage of your Term 2 grade?</span>
+      <p class="hint">Hint: look at "Weighting" on the task notification.</p>
+      <textarea data-field="q1" placeholder="e.g. 50%"></textarea>
+    </div>
+
+    <div class="q-card" data-q="q2">
+      <span class="q-num">2</span>
+      <span class="q-text">What is the due date AND time?</span>
+      <p class="hint">Hint: written at the top of the task notification.</p>
+      <textarea data-field="q2" placeholder="e.g. Friday 5 June 2026, 11:59 pm"></textarea>
+    </div>
+
+    <div class="q-card" data-q="q3">
+      <span class="q-num">3</span>
+      <span class="q-text">What 3 materials are you allowed to use to build your bridge?</span>
+      <p class="hint">Hint: see the "Materials/Restraints" section of the notification.</p>
+      <textarea data-field="q3" placeholder="e.g. (1) ___ (2) ___ (3) ___"></textarea>
+    </div>
+
+    <div class="q-card" data-q="q4">
+      <span class="q-num">4</span>
+      <span class="q-text">If you are sick on the due date, what 2 things must your family do?</span>
+      <p class="hint">Hint: see the "Important Note" on the notification.</p>
+      <textarea data-field="q4" placeholder="e.g. (1) ___ (2) ___"></textarea>
+    </div>
+
+    <div class="q-card" data-q="q5">
+      <span class="q-num">5</span>
+      <span class="q-text">Where do you submit your work — on paper, in Google Classroom, or both?</span>
+      <p class="hint">Hint: ask Ms Gao if unsure, but read the notification first.</p>
+      <textarea data-field="q5" placeholder="e.g. Both — paper booklet AND Google Classroom"></textarea>
+    </div>
+  </section>
+
+  <!-- ─── Step 3: Declaration ─── -->
+  <section class="step" id="step3">
+    <div class="step-header">
+      <div class="step-num"><span>3</span></div>
+      <div>
+        <h2>I declare that... (tick all 5)</h2>
+        <p class="step-hint">Read each one carefully. Click each box to tick it.</p>
+      </div>
+    </div>
+    <ul class="declaration-list" id="declList">
+      <li data-id="d1">
+        <input type="checkbox" id="d1">
+        <span class="text">I have <strong>received</strong> the Assessment Task 1 notification.</span>
+      </li>
+      <li data-id="d2">
+        <input type="checkbox" id="d2">
+        <span class="text">I have <strong>read</strong> the notification and I understand what is required of me.</span>
+      </li>
+      <li data-id="d3">
+        <input type="checkbox" id="d3">
+        <span class="text">I understand the <strong>marking rubric</strong> and how my work will be assessed.</span>
+      </li>
+      <li data-id="d4">
+        <input type="checkbox" id="d4">
+        <span class="text">I understand the rules about <strong>absences, extensions, and plagiarism / AI use</strong>.</span>
+      </li>
+      <li data-id="d5">
+        <input type="checkbox" id="d5">
+        <span class="text">I will make a <strong>genuine attempt</strong> at every part of this task.</span>
+      </li>
+    </ul>
+
+    <div class="signature-box">
+      <label for="studentSignature">✍️ Sign here (type your full name)</label>
+      <input type="text" id="studentSignature" placeholder="Type your full name as your signature" autocomplete="off">
+      <p class="help">Typing your name here counts as your digital signature.</p>
+    </div>
+  </section>
+
+  <!-- ─── Step 4: Export & upload ─── -->
+  <section class="step export" id="step4">
+    <div class="step-header">
+      <div class="step-num" style="background:linear-gradient(135deg,var(--green),#047857);"><span>4</span></div>
+      <div>
+        <h2>Save as PDF, then upload to Google Classroom</h2>
+        <p class="step-hint">Final step — when everything above is done, follow these instructions.</p>
+      </div>
+    </div>
+
+    <button class="pdf-btn" id="pdfBtn" disabled>💾 Save as PDF</button>
+    <p class="pdf-btn-status" id="pdfStatus">Fill in everything above to unlock this button.</p>
+
+    <h3 style="color:#065f46; margin-top:1.4rem;">📖 Instructions — read carefully</h3>
+    <ol>
+      <li><strong>Click the green "💾 Save as PDF" button above.</strong> This opens your browser's print dialog.</li>
+      <li>In the print dialog, find the <strong>"Destination"</strong> or <strong>"Printer"</strong> setting at the top. Change it to <strong>"Save as PDF"</strong> (or <strong>"Microsoft Print to PDF"</strong> on Windows).</li>
+      <li>Click the <strong>"Save"</strong> button (or "Print").</li>
+      <li>Choose where to save the PDF on your laptop. Name it: <code style="background:#fff;padding:.15rem .4rem;border-radius:4px;font-size:.95em;">[YourName]-Y7-Declaration.pdf</code> (e.g. <em>AmandaGuo-Y7-Declaration.pdf</em>).</li>
+      <li>Open <strong>Google Classroom</strong> → Y7 Tech 2026 class → find the <strong>"Assessment Task 1 — Declaration"</strong> assignment.</li>
+      <li>Click <strong>"+ Add or create" → "File"</strong> → choose your saved PDF → click <strong>"Upload"</strong>.</li>
+      <li>Click <strong>"Mark as Done"</strong> or <strong>"Hand in"</strong>. Done! ✅</li>
+    </ol>
+
+    <div class="notice green" style="margin-top:1rem;">
+      <strong>🎉 You're done!</strong> Once you've handed it in on Google Classroom, you don't need to do anything else with this page. You can close it.
+    </div>
+
+    <div class="notice" style="margin-top:.6rem;">
+      <strong>If something goes wrong:</strong> the print dialog won't open → try pressing <kbd>Ctrl</kbd>+<kbd>P</kbd> on Windows or <kbd>Cmd</kbd>+<kbd>P</kbd> on Mac. If you can't save as PDF (e.g. on an iPad), tell Ms Gao and she'll help you do it on the class set laptop.
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>Y7 Technology · Term 2, 2026 · Assessment Task 1 — Declaration</strong> · Arthur Phillip High School</p>
+</footer>
+
+<script>
+"use strict";
+
+/* ============================================================
+   STATE — auto-save to localStorage so students don't lose work
+   ============================================================ */
+const STORAGE_KEY = "y7-tech-task1-declaration-v1";
+
+const REQUIRED_FIELDS = [
+  "studentName", "studentClass", "studentDate",
+  "q1", "q2", "q3", "q4", "q5",
+  "studentSignature"
+];
+const REQUIRED_CHECKBOXES = ["d1", "d2", "d3", "d4", "d5"];
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) { return {}; }
+}
+function saveState(s) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+    updateSaveTag(true);
+  } catch (e) {
+    updateSaveTag(false);
+  }
+}
+let state = loadState();
+
+function updateSaveTag(ok) {
+  const tag = document.getElementById("saveTag");
+  if (!tag) return;
+  if (ok) {
+    const t = new Date().toLocaleTimeString("en-AU", {hour: "2-digit", minute: "2-digit"});
+    tag.innerHTML = `✅ Saved at ${t}`;
+    tag.style.color = "var(--green)";
+  } else {
+    tag.innerHTML = "❌ Couldn't save — take a screenshot!";
+    tag.style.color = "var(--red)";
+  }
+}
+
+/* ============================================================
+   FIELD WIRING — auto-save every input + update progress
+   ============================================================ */
+function fillFromState() {
+  // Text inputs
+  ["studentName", "studentClass", "studentDate", "studentSignature"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && state[id] !== undefined) el.value = state[id];
+  });
+  // Auto-fill today's date if empty
+  const dateEl = document.getElementById("studentDate");
+  if (dateEl && !dateEl.value) {
+    dateEl.value = new Date().toISOString().slice(0, 10);
+    state.studentDate = dateEl.value;
+  }
+  // Comprehension question textareas
+  document.querySelectorAll("textarea[data-field]").forEach(t => {
+    const f = t.dataset.field;
+    if (state[f] !== undefined) t.value = state[f];
+  });
+  // Checkboxes
+  ["d1", "d2", "d3", "d4", "d5"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = !!state[id];
+    syncCheckboxRow(id);
+  });
+}
+
+function syncCheckboxRow(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const li = el.closest("li");
+  if (li) li.classList.toggle("checked", el.checked);
+}
+
+function wireFields() {
+  // All text inputs + textareas
+  document.querySelectorAll("input[type=text], input[type=date], textarea").forEach(el => {
+    const id = el.id || el.dataset.field;
+    if (!id) return;
+    el.addEventListener("input", () => {
+      state[id] = el.value;
+      saveState(state);
+      updateProgress();
+      updateQCardDone(el);
+    });
+  });
+  // Checkboxes
+  document.querySelectorAll("input[type=checkbox]").forEach(el => {
+    el.addEventListener("change", () => {
+      state[el.id] = el.checked;
+      saveState(state);
+      syncCheckboxRow(el.id);
+      updateProgress();
+    });
+  });
+}
+
+function updateQCardDone(el) {
+  // If the textarea is in a q-card, mark the card "done" if it has content
+  const card = el.closest(".q-card");
+  if (!card) return;
+  card.classList.toggle("done", el.value.trim().length > 2);
+}
+
+/* ============================================================
+   PROGRESS CALCULATION
+   ============================================================ */
+function isFieldFilled(id) {
+  const v = state[id];
+  if (typeof v !== "string") return false;
+  return v.trim().length >= 2;
+}
+
+function calcProgress() {
+  let total = REQUIRED_FIELDS.length + REQUIRED_CHECKBOXES.length;
+  let done = 0;
+  REQUIRED_FIELDS.forEach(f => { if (isFieldFilled(f)) done++; });
+  REQUIRED_CHECKBOXES.forEach(c => { if (state[c]) done++; });
+  return { done, total, pct: Math.round(done / total * 100) };
+}
+
+function updateProgress() {
+  const { done, total, pct } = calcProgress();
+  const fill = document.getElementById("progressFill");
+  const label = document.getElementById("progressLabel");
+  const card = document.getElementById("progressCard");
+  fill.style.width = pct + "%";
+  label.textContent = `${pct}% complete (${done} of ${total})`;
+  card.classList.toggle("complete", done === total);
+
+  // Update step badges
+  updateStepStatus();
+
+  // Toggle PDF button
+  const btn = document.getElementById("pdfBtn");
+  const stat = document.getElementById("pdfStatus");
+  if (done === total) {
+    btn.disabled = false;
+    stat.textContent = "✅ Everything filled! Click the green button to save as PDF.";
+    stat.classList.add("ready");
+  } else {
+    btn.disabled = true;
+    stat.textContent = `${total - done} thing${total - done === 1 ? "" : "s"} left to fill in.`;
+    stat.classList.remove("ready");
+  }
+}
+
+function updateStepStatus() {
+  // Step 1 — student details
+  const s1Done = ["studentName", "studentClass", "studentDate"].every(isFieldFilled);
+  document.getElementById("step1").classList.toggle("complete", s1Done);
+  // Step 2 — comprehension
+  const s2Done = ["q1", "q2", "q3", "q4", "q5"].every(isFieldFilled);
+  document.getElementById("step2").classList.toggle("complete", s2Done);
+  // Step 3 — declaration
+  const s3Done = REQUIRED_CHECKBOXES.every(c => state[c]) && isFieldFilled("studentSignature");
+  document.getElementById("step3").classList.toggle("complete", s3Done);
+}
+
+/* ============================================================
+   PDF EXPORT
+   ============================================================ */
+function exportPDF() {
+  // Just trigger window.print — print stylesheet handles the rest
+  window.print();
+}
+
+document.getElementById("pdfBtn").addEventListener("click", exportPDF);
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  fillFromState();
+  wireFields();
+  updateProgress();
+  // Mark q-cards done on load
+  document.querySelectorAll(".q-card textarea").forEach(t => updateQCardDone(t));
+});
+</script>
+
+</body>
+</html>
