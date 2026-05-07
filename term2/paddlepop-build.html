@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔨 Build Your Bridge — Paddle Pop Stick Tutorial · Y7 Tech · Bridge It</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* ─── Page-specific styles (matches hub: light theme, orange = Phase 3 Build It) ─── */
+
+  body { font-size: 16.5px; line-height: 1.65; }
+
+  .pp-hero {
+    background: linear-gradient(135deg, #ea8b00 0%, #f59e0b 50%, #b45309 100%);
+    color:#fff; border-radius:16px; padding:1.8rem 2rem; margin:1.5rem 0;
+    box-shadow: 0 6px 22px rgba(234,139,0,.28);
+  }
+  .pp-hero h1 { color:#fff; margin:.2rem 0 .4rem; font-size:1.95rem; letter-spacing:-.02em; }
+  .pp-hero p  { margin:.35rem 0; opacity:.97; font-size:1.04rem; line-height:1.55; }
+  .pp-hero .pp-stats { display:flex; gap:1.2rem; margin-top:.9rem; flex-wrap:wrap; font-size:.9rem; }
+  .pp-hero .pp-stat { background:rgba(255,255,255,.18); padding:.4rem .8rem; border-radius:999px; font-weight:600; }
+
+  /* Big "tomorrow" banner so students immediately see today's focus */
+  .today-banner {
+    background:#fef3c7; border:2px solid #d97706; border-radius:14px;
+    padding:1.1rem 1.4rem; margin:1.2rem 0; display:flex; gap:1rem; align-items:center; flex-wrap:wrap;
+  }
+  .today-banner .today-pill {
+    background:#d97706; color:#fff; padding:.4rem .9rem; border-radius:999px;
+    font-weight:800; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; flex-shrink:0;
+  }
+  .today-banner .today-msg { color:#7c2d12; font-weight:600; font-size:1.02rem; line-height:1.5; }
+  .today-banner .today-msg strong { color:#9a3412; }
+
+  /* ─── BEFORE-YOU-START section (glossary + safety + how-to) ─── */
+  .pre-build {
+    background:#fff; border:1.5px solid #e4e7ec; border-radius:14px;
+    padding:1.4rem 1.6rem; margin:1.4rem 0; box-shadow:0 2px 10px rgba(0,0,0,.04);
+  }
+  .pre-build > h2 {
+    margin:0 0 1rem; color:#1f3a68; font-size:1.4rem; border-bottom:none; padding-bottom:0;
+  }
+  .pre-build > h2::before { content:"📖 "; }
+  .pre-build .pre-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;
+  }
+  .pre-build .pre-card {
+    background:#fafbfc; border:1.5px solid #e4e7ec; border-radius:10px;
+    padding:1rem 1.2rem;
+  }
+  .pre-build .pre-card h3 { margin:0 0 .55rem; font-size:1.05rem; color:#1f3a68; }
+
+  /* Safety big rules */
+  .safety-list { list-style:none; padding:0; margin:0; }
+  .safety-list li {
+    background:#fef2f2; border-left:4px solid #ef4444; border-radius:6px;
+    padding:.55rem .8rem; margin:.45rem 0; font-size:.95rem; color:#7f1d1d; line-height:1.5;
+  }
+  .safety-list li strong { color:#7f1d1d; }
+  .safety-list .safe-icon {
+    font-size:1.1rem; margin-right:.4rem;
+  }
+
+  /* Glossary table */
+  .gloss { display:grid; gap:.6rem; }
+  .gloss-item {
+    background:#fff; border:1.5px solid #e4e7ec; border-radius:8px;
+    padding:.6rem .85rem; display:grid; grid-template-columns:140px 1fr; gap:.7rem;
+    align-items:center;
+  }
+  .gloss-item .gloss-word {
+    font-weight:800; color:#9a3412; font-size:.95rem;
+    background:#fff7ed; padding:.3rem .55rem; border-radius:6px; text-align:center;
+    border:1px solid #fdba74; font-family:'JetBrains Mono', monospace;
+  }
+  .gloss-item .gloss-def { font-size:.92rem; color:#334155; line-height:1.45; }
+  .gloss-item .mini-pic {
+    font-family:'JetBrains Mono', monospace; font-size:.8rem; color:#64748b;
+    background:#0d1117; color:#e6edf3; padding:.25rem .5rem; border-radius:4px;
+    display:inline-block; margin-top:.2rem;
+  }
+
+  /* How to use list */
+  .howto-list { padding-left:1.2rem; margin:.3rem 0; font-size:.92rem; line-height:1.55; }
+  .howto-list li { margin:.3rem 0; }
+
+  /* Lesson tab navigation */
+  .lesson-nav {
+    display:flex; gap:.5rem; margin:1.4rem 0 .5rem;
+    overflow-x:auto; padding-bottom:.4rem; scrollbar-width:thin;
+  }
+  .lesson-nav button {
+    background:#fff; border:1.5px solid #e4e7ec; padding:.65rem 1.05rem;
+    border-radius:999px; cursor:pointer; font-weight:700; font-size:.92rem;
+    color:#475569; white-space:nowrap; transition:all .12s;
+    display:inline-flex; align-items:center; gap:.45rem; flex-shrink:0;
+    font-family:inherit;
+  }
+  .lesson-nav button:hover { background:#fff7ed; border-color:#fdba74; color:#9a3412; }
+  .lesson-nav button.active { background:#ea8b00; color:#fff; border-color:#ea8b00; }
+  .lesson-nav button.active:hover { background:#c2410c; border-color:#c2410c; }
+  .lesson-nav button .check {
+    display:inline-block; width:18px; height:18px; border-radius:50%;
+    background:#e4e7ec; font-size:.65rem;
+    color:#94a3b8; line-height:18px; text-align:center; font-weight:800;
+  }
+  .lesson-nav button.active .check { background:rgba(255,255,255,.28); color:#fff; }
+  .lesson-nav button.complete .check { background:#10b981; color:#fff; }
+  .lesson-nav button.complete .check::before { content:"✓"; }
+  .lesson-nav button.tomorrow {
+    background:#fef3c7; border-color:#d97706; color:#9a3412;
+    box-shadow:0 0 0 0 rgba(217,119,6,.6); animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow:0 0 0 0 rgba(217,119,6,.55); }
+    70%  { box-shadow:0 0 0 12px rgba(217,119,6,0); }
+    100% { box-shadow:0 0 0 0 rgba(217,119,6,0); }
+  }
+
+  /* Lesson section card */
+  .lesson {
+    background:#fff; border:1.5px solid #e4e7ec; border-radius:14px;
+    padding:1.6rem 1.8rem; margin:1.2rem 0; box-shadow: 0 2px 10px rgba(0,0,0,.04);
+    display:none;
+  }
+  .lesson.active { display:block; animation: fadeIn .25s ease-out; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+  .lesson-head {
+    display:flex; align-items:flex-start; gap:1rem; flex-wrap:wrap;
+    padding-bottom:1rem; border-bottom:2px solid #f1f5f9;
+  }
+  .lesson-head .badge {
+    background:linear-gradient(135deg,#ea8b00,#f59e0b);
+    color:#fff; padding:.5rem 1.1rem; border-radius:10px;
+    font-weight:800; font-size:.85rem; letter-spacing:.05em; flex-shrink:0;
+  }
+  .lesson-head h2 { margin:0; color:#1f3a68; font-size:1.55rem; border-bottom:none; padding-bottom:0; flex:1; min-width:240px; }
+  .lesson-head .meta {
+    display:flex; gap:1.1rem; font-size:.88rem; color:#64748b; flex-wrap:wrap; width:100%;
+    margin-top:.5rem;
+  }
+  .lesson-head .meta span { display:inline-flex; align-items:center; gap:.35rem; }
+
+  .lesson .goal {
+    background:#ecfdf5; border-left:4px solid #10b981;
+    padding:.95rem 1.1rem; border-radius:8px; margin:1rem 0;
+    color:#065f46; font-weight:600; font-size:1.02rem;
+  }
+  .lesson .goal::before { content:"🎯 "; }
+
+  /* Materials checklist */
+  .materials {
+    background:#fff7ed; border:1.5px solid #fdba74; border-radius:10px;
+    padding:1rem 1.2rem; margin:1.1rem 0;
+  }
+  .materials h3 { margin:0 0 .6rem; color:#9a3412; font-size:1.1rem; }
+  .materials h3::before { content:"🧰 "; }
+  .materials ul { list-style:none; padding:0; margin:0; }
+  .materials li {
+    padding:.5rem 0; display:flex; align-items:center; gap:.7rem;
+    border-bottom:1px dashed #fdba74;
+  }
+  .materials li:last-child { border-bottom:none; }
+  .materials li input[type="checkbox"] {
+    width:22px; height:22px; cursor:pointer; accent-color:#ea8b00; flex-shrink:0;
+  }
+  .materials li label { cursor:pointer; flex:1; color:#7c2d12; font-size:.97rem; }
+  .materials li label.done { text-decoration:line-through; opacity:.55; }
+
+  /* Atomic step block */
+  .step {
+    background:#fafbfc; border:1px solid #e4e7ec; border-left:4px solid #14b8a6;
+    border-radius:10px; padding:1.05rem 1.25rem; margin:1rem 0;
+  }
+  .step.done { background:#ecfdf5; border-left-color:#10b981; }
+  .step-head {
+    display:flex; gap:.8rem; align-items:flex-start; margin-bottom:.5rem;
+  }
+  .step-head .step-num {
+    background:#1f3a68; color:#fff; min-width:38px; height:38px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center; font-weight:800;
+    font-size:1.05rem; flex-shrink:0; padding:0 .4rem;
+  }
+  .step.done .step-head .step-num { background:#10b981; }
+  .step-head .step-title { flex:1; font-weight:700; color:#1f3a68; font-size:1.08rem; line-height:1.4; }
+  .step-head .step-time {
+    font-size:.78rem; color:#64748b; background:#f1f5f9; padding:.25rem .6rem;
+    border-radius:999px; flex-shrink:0; align-self:center;
+  }
+  .step-body { padding-left:3rem; }
+  .step-body p { margin:.45rem 0; line-height:1.6; color:#334155; font-size:.97rem; }
+  .step-body ol, .step-body ul { margin:.5rem 0 .65rem; padding-left:1.5rem; }
+  .step-body ol li, .step-body ul li {
+    margin:.45rem 0; line-height:1.6; color:#334155; font-size:.97rem;
+  }
+  .step-body strong { color:#1f3a68; }
+
+  /* Sub-action list — for true micro-instructions */
+  .micro-list {
+    list-style:none; padding-left:0; margin:.5rem 0;
+    counter-reset: micro;
+  }
+  .micro-list li {
+    position:relative; padding:.45rem .55rem .45rem 2rem;
+    margin:.35rem 0; background:#fff; border:1px solid #e4e7ec;
+    border-radius:6px; font-size:.94rem; line-height:1.5; color:#334155;
+  }
+  .micro-list li::before {
+    counter-increment: micro;
+    content: counter(micro);
+    position:absolute; left:.5rem; top:.5rem;
+    background:#14b8a6; color:#fff; width:20px; height:20px;
+    border-radius:50%; font-size:.72rem; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  .step-check {
+    display:flex; align-items:center; gap:.7rem; margin-top:.85rem;
+    padding-top:.75rem; border-top:1px dashed #cbd5e1;
+  }
+  .step-check input[type="checkbox"] { width:24px; height:24px; cursor:pointer; accent-color:#10b981; flex-shrink:0; }
+  .step-check label { cursor:pointer; font-weight:600; color:#065f46; font-size:.97rem; }
+  .step-check label.done { text-decoration:line-through; }
+
+  /* "What good looks like" callout */
+  .lookslike {
+    background:#eff6ff; border-left:4px solid #2e5b9e;
+    padding:.75rem 1rem; border-radius:8px; margin:.65rem 0;
+    font-size:.94rem; color:#1e3a8a; line-height:1.55;
+  }
+  .lookslike::before { content:"👀 "; font-weight:700; }
+  .lookslike strong { color:#1e3a8a; }
+
+  /* "If something goes wrong" */
+  .stuck {
+    background:#fef2f2; border-left:4px solid #ef4444;
+    padding:.75rem 1rem; border-radius:8px; margin:.65rem 0;
+    font-size:.94rem; color:#7f1d1d; line-height:1.55;
+  }
+  .stuck::before { content:"🆘 "; font-weight:700; }
+  .stuck strong { color:#7f1d1d; }
+
+  /* Pro tip */
+  .protip {
+    background:#fdf4ff; border-left:4px solid #a855f7;
+    padding:.75rem 1rem; border-radius:8px; margin:.65rem 0;
+    font-size:.94rem; color:#581c87; line-height:1.55;
+  }
+  .protip::before { content:"💡 "; }
+  .protip strong { color:#581c87; }
+
+  /* SAFETY reminder inline */
+  .safe-inline {
+    background:#fef2f2; border:1.5px dashed #ef4444; border-radius:8px;
+    padding:.6rem .9rem; margin:.5rem 0; font-size:.92rem; color:#7f1d1d;
+  }
+  .safe-inline::before { content:"🦺 "; font-weight:700; }
+
+  /* PARTNER CHECK gate — must agree before continuing */
+  .partner-check {
+    background:#f0fdfa; border:2px solid #14b8a6; border-radius:10px;
+    padding:.95rem 1.1rem; margin:1rem 0;
+  }
+  .partner-check h4 {
+    margin:0 0 .5rem; color:#0f766e; font-size:1rem;
+  }
+  .partner-check h4::before { content:"🤝 "; }
+  .partner-check p { margin:.3rem 0; font-size:.93rem; color:#134e4a; line-height:1.5; }
+  .partner-check .pc-checks {
+    display:flex; gap:1.2rem; margin-top:.6rem; flex-wrap:wrap;
+  }
+  .partner-check .pc-checks label {
+    display:flex; align-items:center; gap:.5rem; font-size:.93rem;
+    color:#0f766e; font-weight:600; cursor:pointer;
+  }
+  .partner-check .pc-checks input[type="checkbox"] {
+    width:22px; height:22px; accent-color:#14b8a6;
+  }
+
+  /* SHOW ME the teacher gate */
+  .teacher-gate {
+    background:linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+    border:2.5px solid #d97706; border-radius:12px;
+    padding:1rem 1.2rem; margin:1.2rem 0;
+    display:flex; gap:.9rem; align-items:flex-start;
+  }
+  .teacher-gate .tg-icon {
+    background:#d97706; color:#fff; width:42px; height:42px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:1.4rem;
+    flex-shrink:0;
+  }
+  .teacher-gate .tg-body h4 {
+    margin:0 0 .35rem; color:#9a3412; font-size:1.05rem;
+  }
+  .teacher-gate .tg-body p {
+    margin:.25rem 0; color:#7c2d12; font-size:.95rem; line-height:1.55;
+  }
+  .teacher-gate .tg-body .tg-check {
+    margin-top:.55rem; display:flex; align-items:center; gap:.5rem;
+  }
+  .teacher-gate .tg-body .tg-check input[type="checkbox"] {
+    width:22px; height:22px; accent-color:#d97706;
+  }
+  .teacher-gate .tg-body .tg-check label {
+    color:#9a3412; font-weight:600; font-size:.95rem; cursor:pointer;
+  }
+
+  /* 3-tier differentiation grid */
+  .diff-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:.95rem; margin:1.3rem 0;
+  }
+  .diff-card {
+    border-radius:10px; padding:1rem 1.15rem;
+    border:1.5px solid; display:flex; flex-direction:column;
+  }
+  .diff-card h4 { margin:0 0 .4rem; font-size:1.02rem; }
+  .diff-card p, .diff-card ul { margin:.3rem 0; font-size:.93rem; line-height:1.55; }
+  .diff-card ul { padding-left:1.15rem; }
+  .diff-card .diff-pill {
+    display:inline-block; font-size:.7rem; font-weight:800; letter-spacing:.06em;
+    text-transform:uppercase; padding:.22rem .6rem; border-radius:999px; margin-bottom:.45rem;
+  }
+  .diff-support { background:#fff7ed; border-color:#fdba74; }
+  .diff-support h4 { color:#9a3412; }
+  .diff-support .diff-pill { background:#ea8b00; color:#fff; }
+  .diff-core { background:#eff6ff; border-color:#93c5fd; }
+  .diff-core h4 { color:#1e3a8a; }
+  .diff-core .diff-pill { background:#2e5b9e; color:#fff; }
+  .diff-extension { background:#f5f3ff; border-color:#c4b5fd; }
+  .diff-extension h4 { color:#5b21b6; }
+  .diff-extension .diff-pill { background:#8b5cf6; color:#fff; }
+
+  /* Phase headers within a lesson */
+  .phase {
+    background:linear-gradient(90deg,#1f3a68,#2e5b9e); color:#fff;
+    padding:.7rem 1.2rem; border-radius:8px; margin:1.7rem 0 .9rem;
+    font-weight:800; font-size:.98rem; letter-spacing:.05em; text-transform:uppercase;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.7rem;
+  }
+  .phase .phase-time { font-weight:600; font-size:.85rem; opacity:.88; text-transform:none; letter-spacing:0; }
+
+  /* ASCII diagram block */
+  .diagram {
+    background:#0d1117; color:#e6edf3; border-radius:10px;
+    padding:1.1rem 1.3rem; font-family:'JetBrains Mono', Consolas, monospace;
+    font-size:.85rem; line-height:1.4; margin:1rem 0; overflow-x:auto;
+    white-space:pre; border:1px solid #30363d;
+  }
+  .diagram .label { color:#7dd3fc; }
+  .diagram .num { color:#fbbf24; font-weight:700; }
+  .diagram .ok { color:#10b981; }
+  .diagram .bad { color:#ef4444; }
+
+  /* Stretch break */
+  .stretch {
+    background:#fdf4ff; border:1.5px dashed #c4b5fd; border-radius:10px;
+    padding:.8rem 1rem; margin:1.2rem 0; text-align:center;
+    font-size:.95rem; color:#5b21b6; font-weight:600;
+  }
+  .stretch::before { content:"🌿 "; }
+
+  /* Materials inventory tracker */
+  .inventory {
+    background:#fff; border:1.5px solid #e4e7ec; border-radius:14px;
+    padding:1.4rem 1.6rem; margin:1.5rem 0;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+  }
+  .inventory h3 { margin:0 0 .8rem; color:#1f3a68; font-size:1.2rem; }
+  .inventory h3::before { content:"📦 "; }
+  .inventory .inv-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(170px,1fr)); gap:.8rem;
+  }
+  .inventory .inv-cell {
+    background:#fafbfc; border:1.5px solid #e4e7ec; border-radius:10px;
+    padding:.85rem 1rem; text-align:center;
+  }
+  .inventory .inv-cell .lbl { font-size:.78rem; color:#64748b; font-weight:700;
+    text-transform:uppercase; letter-spacing:.05em; }
+  .inventory .inv-cell .val {
+    font-size:1.7rem; font-weight:800; color:#ea8b00; margin:.15rem 0;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .inventory .inv-cell .sub { font-size:.75rem; color:#94a3b8; }
+  .inventory .inv-total {
+    margin-top:.9rem; padding-top:.8rem; border-top:1.5px dashed #cbd5e1;
+    text-align:center; font-size:1rem; color:#1f3a68; font-weight:700;
+  }
+
+  /* Sticky progress bar */
+  .progress-wrap {
+    position:sticky; top:66px; z-index:20; background:#fff;
+    border:1.5px solid #e4e7ec; border-radius:12px; padding:.8rem 1.1rem;
+    margin:1rem 0; display:flex; align-items:center; gap:.8rem;
+    flex-wrap:wrap; box-shadow:0 2px 10px rgba(0,0,0,.05);
+  }
+  .progress-wrap .bar { flex:1; min-width:180px; height:14px;
+    background:#f1f5f9; border-radius:8px; overflow:hidden; }
+  .progress-wrap .bar .fill {
+    height:100%; width:0%; background:linear-gradient(90deg,#ea8b00,#f59e0b);
+    border-radius:8px; transition:width .3s;
+  }
+  .progress-wrap .count { font-weight:700; color:#1f3a68; min-width:140px; font-size:.95rem; }
+  .progress-wrap.complete .bar .fill { background:linear-gradient(90deg,#10b981,#059669); }
+  .progress-wrap.complete .count { color:#059669; }
+
+  /* Reflection box */
+  .reflect {
+    background:#fdf4ff; border:1.5px solid #c4b5fd; border-radius:10px;
+    padding:1.1rem 1.3rem; margin:1.4rem 0;
+  }
+  .reflect h3 { margin:0 0 .5rem; color:#5b21b6; font-size:1.08rem; }
+  .reflect h3::before { content:"📝 "; }
+  .reflect textarea {
+    width:100%; min-height:90px; padding:.6rem .75rem; border:1.5px solid #c4b5fd;
+    border-radius:6px; font-family:inherit; font-size:.97rem; box-sizing:border-box;
+    resize:vertical;
+  }
+  .reflect textarea:focus { outline:none; border-color:#8b5cf6; box-shadow:0 0 0 3px rgba(139,92,246,.2); }
+  .reflect .saved { font-size:.8rem; color:#10b981; margin-top:.4rem; height:1em; font-weight:600; }
+
+  /* Action buttons row */
+  .btn-row {
+    display:flex; gap:.6rem; flex-wrap:wrap; margin:1.2rem 0 .5rem;
+  }
+  .btn-row button {
+    background:#1f3a68; color:#fff; border:none;
+    padding:.65rem 1.25rem; border-radius:8px; cursor:pointer;
+    font-weight:600; font-size:.93rem; font-family:inherit;
+  }
+  .btn-row button:hover { background:#2e5b9e; }
+  .btn-row button.secondary { background:#fff; color:#1f3a68; border:1.5px solid #1f3a68; }
+  .btn-row button.secondary:hover { background:#eff6ff; }
+  .btn-row button.danger { background:#fff; color:#b91c1c; border:1.5px solid #fca5a5; }
+  .btn-row button.danger:hover { background:#fef2f2; border-color:#ef4444; }
+
+  /* Teacher quickstart */
+  .teacher-quickstart {
+    background:#fef3c7; border:2px solid #d97706; border-radius:14px;
+    padding:1.4rem 1.6rem; margin:1.5rem 0; display:none;
+  }
+  .teacher-quickstart.visible { display:block; }
+  .teacher-quickstart h2 { color:#9a3412; margin:0 0 .6rem; font-size:1.4rem; border-bottom:none; padding-bottom:0; }
+  .teacher-quickstart .label {
+    display:inline-block; background:#9a3412; color:#fff;
+    padding:.22rem .75rem; border-radius:999px; font-size:.78rem;
+    font-weight:800; letter-spacing:.05em; text-transform:uppercase; margin-bottom:.55rem;
+  }
+  .teacher-quickstart ol { margin:.4rem 0 .2rem; padding-left:1.4rem; line-height:1.65; }
+  .teacher-quickstart ol li { margin:.55rem 0; }
+  .teacher-quickstart .tq-cols {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+    gap:1rem; margin-top:.8rem;
+  }
+  .teacher-quickstart .tq-col {
+    background:#fff; border-radius:8px; padding:.85rem 1rem;
+    border:1px solid #fde68a;
+  }
+  .teacher-quickstart .tq-col h4 { margin:0 0 .35rem; color:#9a3412; font-size:.95rem; }
+
+  /* Print styles */
+  @media print {
+    body { font-size:10.5pt; line-height:1.5; }
+    .lesson-nav, .progress-wrap, .btn-row, .reflect, .teacher-quickstart, .pp-hero .open-tool, .stretch { display:none !important; }
+    .lesson { display:block !important; page-break-inside:avoid; box-shadow:none; border:1px solid #999; padding:1rem; }
+    .pp-hero { background:#f5f5f5 !important; color:#000 !important; box-shadow:none; border:1px solid #999; }
+    .pp-hero h1, .pp-hero p { color:#000 !important; }
+    .step, .materials, .lookslike, .stuck, .protip, .diff-card, .partner-check, .teacher-gate {
+      page-break-inside:avoid;
+    }
+    .diagram { background:#fff !important; color:#000 !important; border:1px solid #999; }
+    .diagram .label, .diagram .num, .diagram .ok, .diagram .bad { color:#000 !important; }
+    @page { margin:1.4cm; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">🌉 Y7 Bridge It · Term 2</a>
+    <nav class="site-nav">
+      <a href="diagnostic.html">Diagnostic</a>
+      <a href="vocab-arena.html">Vocab Arena</a>
+      <a href="asce-tutorial.html">ASCE Tutorial</a>
+      <a href="paddlepop-build.html" style="text-decoration:underline;">Build Tutorial</a>
+      <a href="journal.html">Journal</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- HERO -->
+  <div class="pp-hero">
+    <h1>🔨 Build Your Bridge — Paddle Pop Stick Tutorial</h1>
+    <p>Take your simple build sheet and turn it into a strong, well-glued bridge — one tiny step at a time. Read EACH step out loud with your partner. Tick the box when you finish. The page remembers everything for you.</p>
+    <div class="pp-stats">
+      <span class="pp-stat">⏱️ 5 lessons total</span>
+      <span class="pp-stat">🪵 135 paddle pop sticks</span>
+      <span class="pp-stat">👥 Pair work</span>
+      <span class="pp-stat">📐 NESA: TE4-1DP, TE4-3DP, TE4-5AG</span>
+    </div>
+  </div>
+
+  <!-- TODAY BANNER -->
+  <div class="today-banner">
+    <span class="today-pill">Today's mission</span>
+    <span class="today-msg">Lesson 1 — <strong>Build the Road</strong> (the long Warren-truss beam, 23 plain sticks). By the end of the lesson your road must be glued, trimmed, named, and resting on the drying shelf.</span>
+  </div>
+
+  <!-- TEACHER QUICKSTART (hidden unless ?teacher=1) -->
+  <div class="teacher-quickstart" id="teacherBox">
+    <span class="label">Teacher prep · 10 min before bell</span>
+    <h2>Lesson 1 — Build the Road · Quick setup</h2>
+    <ol>
+      <li><strong>Pre-bag the sticks</strong> if not already done — 135 per pair (119 plain + 16 with holes). Keep the holed sticks in a separate small bag inside the main bag.</li>
+      <li><strong>Lay out per pair:</strong> 1 bag of sticks · 1 PVA glue bottle · 1 pair of scissors · 1 ruler · 1 sheet of A3 baking paper or scrap card · 1 marker pen · 1 damp paper towel.</li>
+      <li><strong>Project this page</strong> on the board, set to <strong>Lesson 1</strong>. Students follow on their own device or in pairs.</li>
+      <li><strong>Drying shelf:</strong> clear a flat shelf with name labels ready. Roads need to dry overnight — do NOT stack.</li>
+      <li><strong>Float points</strong> are at the 4 "Show Ms Gao" gates — use them to confirm correct stick count, correct pattern layout, and correct gluing technique before students proceed.</li>
+      <li><strong>Exit ticket:</strong> the reflection box at the bottom of Lesson 1 — students type one sentence and click Save.</li>
+    </ol>
+
+    <div class="tq-cols">
+      <div class="tq-col">
+        <h4>Pacing milestones</h4>
+        <ul style="margin:.2rem 0; padding-left:1.2rem; font-size:.88rem;">
+          <li>5 min — workspace set</li>
+          <li>15 min — 23 + 16 sticks counted, partner-checked</li>
+          <li>30 min — Warren pattern laid out (no glue), Show Ms Gao Gate 2</li>
+          <li>50 min — all glue done, Show Ms Gao Gate 3</li>
+          <li>60 min — trimmed, on shelf, reflection done</li>
+        </ul>
+      </div>
+      <div class="tq-col">
+        <h4>Common student errors to pre-empt</h4>
+        <ul style="margin:.2rem 0; padding-left:1.2rem; font-size:.88rem;">
+          <li>Using holed sticks for the road (wrong — they're for sides)</li>
+          <li>Big glue blobs that take 20 min to dry</li>
+          <li>Top and bottom chord not parallel (the truss goes wonky)</li>
+          <li>Picking up the road BEFORE glue dries → cracks</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:.7rem;font-size:.88rem;color:#7c2d12;"><em>To hide this box: remove <code>?teacher=1</code> from the URL.</em></p>
+  </div>
+
+
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <!--  BEFORE YOU START — safety, glossary, how to use            -->
+  <!-- ──────────────────────────────────────────────────────────── -->
+  <div class="pre-build">
+    <h2>Before you build — read this with your partner</h2>
+
+    <div class="pre-grid">
+
+      <!-- SAFETY -->
+      <div class="pre-card">
+        <h3>🦺 3 safety rules</h3>
+        <ul class="safety-list">
+          <li><span class="safe-icon">🧴</span> <strong>PVA glue</strong> is white and looks like milk. <strong>Do NOT</strong> put it in your mouth or eyes. If it gets on your skin — wipe it off with a damp paper towel.</li>
+          <li><span class="safe-icon">✂️</span> <strong>Scissors</strong> are for trimming sticks only. Always point them <strong>AWAY</strong> from your partner. Pass them <strong>handle first</strong>.</li>
+          <li><span class="safe-icon">🚶</span> <strong>Walking with wet glue</strong>? Hold the baking paper FLAT with both hands. Walk slowly. Do NOT run.</li>
+        </ul>
+      </div>
+
+      <!-- HOW TO USE -->
+      <div class="pre-card">
+        <h3>📲 How to use this page</h3>
+        <ol class="howto-list">
+          <li>Read each step <strong>OUT LOUD</strong> with your partner.</li>
+          <li>Do the action.</li>
+          <li>Tick the green box at the bottom of the step.</li>
+          <li>If you see a 🤝 <strong>partner check</strong> — both partners must agree before continuing.</li>
+          <li>If you see a 👩‍🏫 <strong>"Show Ms Gao"</strong> box — RAISE YOUR HAND and wait. Don't continue until the teacher ticks you off.</li>
+          <li>The page <strong>saves automatically</strong> — even if you close the tab and come back tomorrow, your ticks are still there.</li>
+        </ol>
+      </div>
+
+      <!-- GLOSSARY -->
+      <div class="pre-card" style="grid-column: 1 / -1;">
+        <h3>📚 Glossary — the 8 words you must know</h3>
+        <div class="gloss">
+
+          <div class="gloss-item">
+            <div class="gloss-word">stick</div>
+            <div class="gloss-def">A thin flat piece of wood that looks like an ice cream stick. We have <strong>135 of them</strong>.</div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">plain</div>
+            <div class="gloss-def">A stick with <strong>no holes</strong>. We have <strong>119</strong> plain sticks.<br><span class="mini-pic">━━━━━━━━━━━━━━</span></div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">holed</div>
+            <div class="gloss-def">A stick with <strong>3 small holes</strong> drilled through it. We have <strong>16</strong> holed sticks. They are special — for sides only.<br><span class="mini-pic">━━○━━━○━━━○━━</span></div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">overlap</div>
+            <div class="gloss-def">When the end of one stick lies <strong>on top of</strong> the end of another. Like shaking hands.<br><span class="mini-pic">━━━━━━━━<br>      ━━━━━━━━</span></div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">joint</div>
+            <div class="gloss-def">The <strong>spot where two sticks meet</strong>. Every joint needs glue.</div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">chord</div>
+            <div class="gloss-def">A <strong>long flat rail</strong> made of sticks joined end-to-end. The road has a top chord and a bottom chord — like railway tracks lying flat.</div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">diagonal</div>
+            <div class="gloss-def">A stick that <strong>leans on a slope</strong>, connecting the top chord to the bottom chord. Like the slash key on your keyboard.<br><span class="mini-pic">  ╱   ╲   ╱</span></div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">vertical</div>
+            <div class="gloss-def">A stick that stands <strong>straight up</strong>, connecting the top chord to the bottom chord. Like the letter "I".<br><span class="mini-pic">  │   │   │</span></div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">truss</div>
+            <div class="gloss-def">A pattern of <strong>triangles made of sticks</strong>. Triangles are the strongest shape in engineering — they don't squash.</div>
+          </div>
+
+          <div class="gloss-item">
+            <div class="gloss-word">Warren truss</div>
+            <div class="gloss-def">A truss that uses a <strong>W-pattern</strong> of diagonals — like a row of triangles standing on their points and on their flat sides. This is the road we'll build today.</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LESSON NAV -->
+  <div class="lesson-nav" id="lessonNav">
+    <button data-lesson="1" class="active tomorrow"><span class="check">1</span> Lesson 1 — The Road</button>
+    <button data-lesson="2"><span class="check">2</span> Lesson 2 — Cross Trusses</button>
+    <button data-lesson="3"><span class="check">3</span> Lesson 3 — Left Side</button>
+    <button data-lesson="4"><span class="check">4</span> Lesson 4 — Right Side</button>
+    <button data-lesson="5"><span class="check">5</span> Lesson 5 — Final Assembly</button>
+  </div>
+
+  <!-- STICKY PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="count" id="progressCount">0 / 0 steps done</div>
+    <div class="bar"><div class="fill" id="progressFill"></div></div>
+  </div>
+
+
+  <!-- ============================================================ -->
+  <!-- LESSON 1 — THE ROAD (TOMORROW — ULTRA DETAILED)             -->
+  <!-- ============================================================ -->
+  <section class="lesson active" data-lesson="1">
+
+    <div class="lesson-head">
+      <span class="badge">LESSON 1</span>
+      <h2>Build the Road — Warren Truss Beam</h2>
+      <div class="meta">
+        <span>⏱️ 60 min</span>
+        <span>🪵 23 plain sticks</span>
+        <span>👥 Pair work</span>
+        <span>🎯 Outcome TE4-3DP</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      By the end of this lesson, you and your partner will have <strong>ONE glued road beam</strong> made from <strong>23 plain paddle pop sticks</strong>, in a Warren truss pattern with <strong>5 triangular bays</strong>. Your road will be named, dated, and resting on the drying shelf at the front of the room.
+    </div>
+
+    <!-- MATERIALS -->
+    <div class="materials">
+      <h3>Materials check — tick each one before you start</h3>
+      <ul>
+        <li><input type="checkbox" id="m1-1" data-mat="l1m1"> <label for="m1-1">1 bag of 135 paddle pop sticks (119 plain + 16 with holes)</label></li>
+        <li><input type="checkbox" id="m1-2" data-mat="l1m2"> <label for="m1-2">1 bottle of PVA glue (white craft glue)</label></li>
+        <li><input type="checkbox" id="m1-3" data-mat="l1m3"> <label for="m1-3">1 pair of scissors (for trimming, NOT for cutting sticks in the middle)</label></li>
+        <li><input type="checkbox" id="m1-4" data-mat="l1m4"> <label for="m1-4">1 ruler (15 cm or 30 cm)</label></li>
+        <li><input type="checkbox" id="m1-5" data-mat="l1m5"> <label for="m1-5">1 sheet of baking paper OR scrap card to glue on</label></li>
+        <li><input type="checkbox" id="m1-6" data-mat="l1m6"> <label for="m1-6">1 marker pen (to write your names)</label></li>
+        <li><input type="checkbox" id="m1-7" data-mat="l1m7"> <label for="m1-7">1 damp paper towel (for sticky fingers and glue spills)</label></li>
+        <li><input type="checkbox" id="m1-8" data-mat="l1m8"> <label for="m1-8">A pencil (for marking the 20 mm overlap line later — handy to have)</label></li>
+      </ul>
+    </div>
+
+
+    <!-- ─────────────── PHASE A — SETUP ─────────────── -->
+    <div class="phase"><span>Phase A · Set up your workspace</span><span class="phase-time">5 min</span></div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">1</span>
+        <span class="step-title">Clear your desk completely.</span>
+        <span class="step-time">2 min</span>
+      </div>
+      <div class="step-body">
+        <p>Right now your desk probably has pencil cases, water bottles, and books. We need a <strong>completely empty desk</strong> to build on.</p>
+        <ol class="micro-list">
+          <li>Pick up your <strong>pencil case</strong>. Put it on the floor next to your chair.</li>
+          <li>Pick up your <strong>water bottle</strong>. Put it on the floor too.</li>
+          <li>Pick up your <strong>books and laptop</strong>. Put them on a separate surface — the chair behind you, or a side bench.</li>
+          <li>Wipe your desk with the <strong>damp paper towel</strong> — get rid of dust and crumbs.</li>
+        </ol>
+        <div class="lookslike"><strong>What good looks like:</strong> a totally empty, clean desk. Like a blank canvas.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-1" data-step="l1s1"> <label for="s1-1">Desk is empty and wiped clean</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">2</span>
+        <span class="step-title">Lay your "build mat" — the baking paper.</span>
+        <span class="step-time">1 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Take the <strong>sheet of baking paper</strong>.</li>
+          <li>Lay it FLAT in the middle of your desk. Smooth it out so there are no wrinkles.</li>
+          <li>The shiny side faces up. Glue does <strong>not stick</strong> to baking paper — that's why we use it.</li>
+        </ol>
+        <div class="lookslike"><strong>What good looks like:</strong> one big flat sheet of baking paper covering most of the desk. The corners can be taped down with a tiny piece of tape if it curls.</div>
+        <div class="protip"><strong>Pro tip:</strong> when your bridge is dry, you can peel it off the baking paper without breaking it.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-2" data-step="l1s2"> <label for="s1-2">Build mat is laid flat</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">3</span>
+        <span class="step-title">Arrange your tools at the TOP of the mat in a neat row.</span>
+        <span class="step-time">1 min</span>
+      </div>
+      <div class="step-body">
+        <p>Tools always live at the TOP of the mat — the area you're building on stays clear.</p>
+        <ol class="micro-list">
+          <li>Put the <strong>glue bottle</strong> at the top-left.</li>
+          <li>Put the <strong>scissors</strong> next to the glue (handles facing you).</li>
+          <li>Put the <strong>ruler</strong> next to the scissors.</li>
+          <li>Put the <strong>marker pen</strong> next to the ruler.</li>
+          <li>Put the <strong>damp paper towel</strong> at the top-right.</li>
+        </ol>
+        <div class="diagram">  <span class="label">[GLUE]</span>  <span class="label">[SCISSORS]</span>  <span class="label">[RULER]</span>  <span class="label">[MARKER]</span>          <span class="label">[TOWEL]</span>
+  ─────────────────────────────────────────────────────────────
+  │                                                           │
+  │              ←  YOUR BUILD AREA HERE  →                   │
+  │                                                           │
+  │                                                           │
+  ─────────────────────────────────────────────────────────────</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-3" data-step="l1s3"> <label for="s1-3">Tools arranged at the top</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">4</span>
+        <span class="step-title">Decide who is the BUILDER and who is the CHECKER.</span>
+        <span class="step-time">30 sec</span>
+      </div>
+      <div class="step-body">
+        <p>You will both do every job — but you start with one role each.</p>
+        <ol class="micro-list">
+          <li><strong>Builder</strong> — does the picking up, the placing, and the gluing.</li>
+          <li><strong>Checker</strong> — reads the steps OUT LOUD, holds sticks in place while glue tacks, and ticks the box.</li>
+          <li>You will <strong>swap</strong> at the START of each new Phase. So you'll switch about 4 times this lesson.</li>
+        </ol>
+        <div class="protip"><strong>Pro tip:</strong> the checker is just as important as the builder — a good checker stops mistakes BEFORE they happen.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-4" data-step="l1s4"> <label for="s1-4">Roles agreed</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">5</span>
+        <span class="step-title">Write your names on the corner of the baking paper.</span>
+        <span class="step-time">1 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Pick up the marker.</li>
+          <li>In the <strong>top-left corner</strong> of the baking paper, write: <strong>your first names</strong> + <strong>your class</strong> (e.g. <em>John D. &amp; Jane D. — 7TECJ</em>).</li>
+          <li>Write big — at least <strong>2 cm tall</strong> letters. About as big as your thumbnail.</li>
+        </ol>
+        <div class="stuck"><strong>If the marker bleeds through the paper:</strong> use a pencil instead, or write on a sticky label and stick it to the corner.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-5" data-step="l1s5"> <label for="s1-5">Names and class written clearly</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEACHER GATE 1 -->
+    <div class="teacher-gate">
+      <div class="tg-icon">👩‍🏫</div>
+      <div class="tg-body">
+        <h4>Show Ms Gao — Gate 1: Workspace ready</h4>
+        <p>Raise your hand. Wait for Ms Gao to walk by and look at your desk. She will check that your build mat is laid flat, your tools are arranged at the top, and your names are written on the corner.</p>
+        <p>Do <strong>NOT</strong> open your bag of sticks until Ms Gao ticks you off here.</p>
+        <div class="tg-check">
+          <input type="checkbox" id="g1-1" data-step="l1g1"> <label for="g1-1">Ms Gao has checked our workspace</label>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ─────────────── PHASE B — COUNT YOUR STICKS ─────────────── -->
+    <div class="phase"><span>Phase B · Count out your 23 road sticks (carefully!)</span><span class="phase-time">10 min</span></div>
+
+    <div class="callout warn" style="margin:1rem 0;">
+      ⚠️ <strong>Counting matters!</strong> If you start gluing with the wrong number of sticks, you'll have to take it apart. Take your time here.
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">6</span>
+        <span class="step-title">Open the bag and tip ALL the sticks gently onto the mat.</span>
+        <span class="step-time">1 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Hold the bag <strong>over the centre</strong> of your build mat.</li>
+          <li>Tip slowly — let the sticks slide out, don't shake. We don't want sticks rolling onto the floor.</li>
+          <li>Spread the pile out gently with your hand so you can see each stick.</li>
+        </ol>
+        <div class="lookslike"><strong>What good looks like:</strong> a flat-ish pile of 135 sticks spread across the middle of your mat. None on the floor.</div>
+        <div class="stuck"><strong>If sticks roll onto the floor:</strong> stop. Pick them up carefully. Add them back to the pile. Don't step on them.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-6" data-step="l1s6"> <label for="s1-6">All sticks on the mat</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">7</span>
+        <span class="step-title">Find every stick with HOLES in it. Move them into a small pile on the LEFT.</span>
+        <span class="step-time">3 min</span>
+      </div>
+      <div class="step-body">
+        <p>Holed sticks have <strong>3 small round holes</strong> drilled through them. Look at the glossary picture if you forgot what they look like.</p>
+        <ol class="micro-list">
+          <li>Use one finger to <strong>scan slowly</strong> over the pile.</li>
+          <li>Each time you spot a holed stick, <strong>pick it up</strong> and put it on the LEFT side of your mat in a small pile.</li>
+          <li>Keep going until you have looked at every stick.</li>
+          <li>Now <strong>COUNT</strong> the holed pile. There should be <strong>16</strong>. Count out loud: <em>"one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen."</em></li>
+        </ol>
+        <div class="diagram">  <span class="label">HOLED STICK looks like:</span>
+  ━━━━○━━━━○━━━━○━━━━
+
+  <span class="label">PLAIN STICK looks like:</span>
+  ━━━━━━━━━━━━━━━━━━━━</div>
+        <div class="lookslike"><strong>What good looks like:</strong> exactly 16 holed sticks in a small pile on the left. No holed sticks left in the main pile.</div>
+        <div class="stuck"><strong>If you can't find 16:</strong> stop and re-check. Look once more — sometimes a stick is half-buried. If you still can't find 16, raise your hand and ask Ms Gao for replacements <strong>before continuing</strong>.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-7" data-step="l1s7"> <label for="s1-7">16 holed sticks found and separated</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">8</span>
+        <span class="step-title">Put the 16 holed sticks BACK INTO the bag and seal it shut.</span>
+        <span class="step-time">1 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Pick up your 16 holed sticks.</li>
+          <li>Put them ALL back into the empty plastic bag.</li>
+          <li>Twist the top shut, or zip the seal closed.</li>
+          <li>With the marker, write on the bag: <strong>"DON'T TOUCH — Lesson 3 only"</strong>.</li>
+          <li>Place this bag at the very <strong>back corner</strong> of your desk. Far away from where you'll be working.</li>
+        </ol>
+        <div class="protip"><strong>Pro tip:</strong> putting the holed sticks AWAY now means there's no chance you'll accidentally use them in the road. Out of sight, out of mind.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-8" data-step="l1s8"> <label for="s1-8">Holed sticks bagged, labelled, moved away</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">9</span>
+        <span class="step-title">Count out 23 PLAIN sticks for the road.</span>
+        <span class="step-time">3 min</span>
+      </div>
+      <div class="step-body">
+        <p>From the big pile of 119 plain sticks left on your mat, you need to take out <strong>exactly 23</strong>. Twenty-three. Two-three.</p>
+        <p><strong>The easy way to count 23:</strong></p>
+        <ol class="micro-list">
+          <li>Lay sticks side by side in groups of <strong>FIVE</strong>.</li>
+          <li>Make <strong>FOUR groups of 5</strong> — that's 20 sticks (5+5+5+5).</li>
+          <li>Then add <strong>3 more sticks</strong>. Now you have 20 + 3 = <strong>23</strong>.</li>
+          <li>Move these 23 sticks to the LEFT side of your mat.</li>
+        </ol>
+        <div class="diagram">  <span class="label">Group your 23 sticks like this — easier to count:</span>
+
+   <span class="num">●●●●●</span>   <span class="num">●●●●●</span>   <span class="num">●●●●●</span>   <span class="num">●●●●●</span>   <span class="num">●●●</span>
+    <span class="ok">5</span>       <span class="ok">5</span>       <span class="ok">5</span>       <span class="ok">5</span>      <span class="ok">3</span>
+  ────────────────────────────────────
+              5 + 5 + 5 + 5 + 3 = <span class="ok">23</span> ✓</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-9" data-step="l1s9"> <label for="s1-9">23 sticks counted into 4 groups of 5 + 3</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">10</span>
+        <span class="step-title">Put the LEFTOVER 96 plain sticks back in the bag for next time.</span>
+        <span class="step-time">2 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Scoop up all the plain sticks that are NOT in your group of 23.</li>
+          <li>Put them into the second bag (or the same bag as before — your choice).</li>
+          <li>With the marker, write: <strong>"96 plain — for sides + cross trusses"</strong>.</li>
+          <li>Place this bag at the back corner with the holed bag.</li>
+        </ol>
+        <div class="lookslike"><strong>What good looks like:</strong> only the 23 road sticks are on your build mat. Everything else is bagged at the back of the desk.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-10" data-step="l1s10"> <label for="s1-10">Leftover 96 sticks safely stored</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNER CHECK 1 -->
+    <div class="partner-check">
+      <h4>Partner check — both must agree</h4>
+      <p>Stop. Look at your build mat. Together with your partner, count the sticks on the mat <strong>once more</strong>. There must be exactly <strong>23</strong>. If not, find the missing or extra ones now.</p>
+      <div class="pc-checks">
+        <label><input type="checkbox" data-step="l1pc1a"> Builder agrees: 23 sticks on the mat</label>
+        <label><input type="checkbox" data-step="l1pc1b"> Checker agrees: 23 sticks on the mat</label>
+      </div>
+    </div>
+
+    <div class="stretch">Stand up. Stretch your arms. Wiggle your fingers. Sit back down. 🌿</div>
+
+
+    <!-- ─────────────── PHASE C — LAY OUT (NO GLUE!) ─────────────── -->
+    <div class="phase"><span>Phase C · Lay out the Warren truss pattern (NO glue yet)</span><span class="phase-time">15 min</span></div>
+
+    <div class="callout warn" style="margin:1rem 0;">
+      ⚠️ <strong>NO GLUE in this phase.</strong> Lay everything out DRY first. Get the shape right. Then we'll glue.<br>
+      Mistakes are FREE at this stage. Mistakes are EXPENSIVE after the glue dries.
+    </div>
+
+    <p style="font-style:italic; color:#64748b; margin:.5rem 0 1rem;">SWAP ROLES NOW — checker becomes builder, builder becomes checker.</p>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">11</span>
+        <span class="step-title">Lay the BOTTOM CHORD — 5 sticks in a long straight line.</span>
+        <span class="step-time">3 min</span>
+      </div>
+      <div class="step-body">
+        <p>The chord is the long flat rail. We'll make TWO chords — top and bottom — like railway tracks lying flat.</p>
+        <ol class="micro-list">
+          <li>Take <strong>5 sticks</strong> from your group of 23.</li>
+          <li>Place the 1st stick flat on the mat, pointing left-to-right.</li>
+          <li>Place the 2nd stick so its LEFT end <strong>overlaps the RIGHT end</strong> of the 1st stick by about <strong>2 cm</strong> (about 2 finger-widths).</li>
+          <li>Place the 3rd stick the same way — overlap the right end of the 2nd by 2 cm.</li>
+          <li>Repeat for the 4th and 5th sticks.</li>
+          <li>You should now have <strong>one long line</strong> made of 5 sticks, with 4 small overlap joins. About 50 cm long total.</li>
+        </ol>
+        <div class="diagram">  <span class="label">BOTTOM CHORD — 5 sticks, 4 overlaps:</span>
+
+  ━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━
+       1            2            3            4            5
+                <span class="label">←─ 4 overlap joints ─→</span></div>
+        <div class="lookslike"><strong>What good looks like:</strong> one long straight rail, ~50 cm, four small overlap joins. No gaps. No big bumps.</div>
+        <div class="stuck"><strong>If your chord is wonky (curves to one side):</strong> straighten the sticks — they should all be in one straight line. Use the long edge of your ruler to test.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-11" data-step="l1s11"> <label for="s1-11">Bottom chord laid out — 5 sticks, straight line</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">12</span>
+        <span class="step-title">Lay the TOP CHORD — another 5 sticks parallel to the bottom.</span>
+        <span class="step-time">3 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Take <strong>5 more sticks</strong>.</li>
+          <li>Lay them in a SECOND straight line, <strong>4 cm above</strong> the bottom chord.</li>
+          <li>4 cm = roughly the width of one paddle pop stick standing on its edge. Or, use your ruler.</li>
+          <li>Match the same overlap pattern as the bottom chord — 4 overlaps of 2 cm each.</li>
+          <li>The two chords should look like two PARALLEL LINES — like two rails of a railway track lying flat.</li>
+        </ol>
+        <div class="diagram">  <span class="label">TOP CHORD →</span>   ━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━
+                                                                                       <span class="num">↕  4 cm gap</span>
+  <span class="label">BOT CHORD →</span>   ━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━╪━━━━━━━━━━━━━</div>
+        <div class="lookslike"><strong>What good looks like:</strong> two long straight rails, parallel, with a 4 cm gap between them. Like the top of a flat ladder.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-12" data-step="l1s12"> <label for="s1-12">Top chord laid out, parallel to bottom, 4 cm gap</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">13</span>
+        <span class="step-title">Add 5 DIAGONALS — sticks that lean to make the W-pattern.</span>
+        <span class="step-time">5 min</span>
+      </div>
+      <div class="step-body">
+        <p>This is the tricky bit. Go slowly. Look at your printed build sheet — the diagram shows 5 numbered triangles. We're making those triangles now.</p>
+        <ol class="micro-list">
+          <li>Take <strong>5 sticks</strong>.</li>
+          <li>Place the <strong>1st diagonal</strong>: it leans <strong>up from bottom-LEFT to top-RIGHT</strong>. The bottom end touches the start of the bottom chord. The top end touches the top chord.</li>
+          <li>Place the <strong>2nd diagonal</strong> right next to it, leaning the OTHER way: <strong>down from top-LEFT to bottom-RIGHT</strong>. Together with the 1st, it forms a "V" or upside-down "V" shape.</li>
+          <li>Place the <strong>3rd diagonal</strong> leaning the same way as the 1st.</li>
+          <li>Place the <strong>4th diagonal</strong> leaning the same way as the 2nd.</li>
+          <li>Place the <strong>5th diagonal</strong> leaning the same way as the 1st.</li>
+          <li>Now you should see <strong>5 triangle shapes</strong> in a row between your two rails — the Warren truss pattern.</li>
+        </ol>
+        <div class="diagram">  <span class="label">5 diagonals make 5 triangle bays — the Warren truss:</span>
+
+  TOP   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              ╲    ╱╲    ╱╲    ╱╲    ╱╲    ╱
+               ╲  ╱  ╲  ╱  ╲  ╱  ╲  ╱  ╲  ╱
+                ╲╱    ╲╱    ╲╱    ╲╱    ╲╱
+  BOT   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         <span class="label">bay</span>  <span class="num">1</span>     <span class="num">2</span>     <span class="num">3</span>     <span class="num">4</span>     <span class="num">5</span></div>
+        <div class="lookslike"><strong>What good looks like:</strong> 5 clear triangles in a zig-zag fence between your two rails. The pattern matches the diagram on your build sheet.</div>
+        <div class="stuck"><strong>If the triangles look messy:</strong> one diagonal might be the wrong way. Compare to the picture above. Re-arrange — no glue yet, mistakes are free.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-13" data-step="l1s13"> <label for="s1-13">5 diagonals placed in the W-pattern</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">14</span>
+        <span class="step-title">Add the LAST 8 sticks as VERTICALS at every joint.</span>
+        <span class="step-time">3 min</span>
+      </div>
+      <div class="step-body">
+        <p>Verticals are short sticks that stand <strong>straight up</strong> between the two chords. They make the truss extra stiff.</p>
+        <p><strong>Stick check:</strong> 23 (total) − 5 (bottom chord) − 5 (top chord) − 5 (diagonals) = <strong>8 sticks left</strong>. ✓</p>
+        <ol class="micro-list">
+          <li>Take your <strong>last 8 sticks</strong>.</li>
+          <li>Place 1 vertical at the very <strong>LEFT end</strong> — it stands straight up between the chords.</li>
+          <li>Place 1 vertical at the very <strong>RIGHT end</strong>.</li>
+          <li>Place the remaining 6 verticals at the joints <strong>WHERE the diagonals meet the chords</strong> (one between each pair of triangles). That's 6 joints.</li>
+        </ol>
+        <div class="diagram">  <span class="label">All 23 sticks — verticals added at joints (│):</span>
+
+  TOP   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        │     ╲    ╱╲    ╱╲    ╱╲    ╱╲    ╱     │
+        │      ╲  ╱  ╲  ╱  ╲  ╱  ╲  ╱  ╲  ╱      │
+        │       ╲╱    ╲╱    ╲╱    ╲╱    ╲╱       │
+        │   │       │       │       │       │    │
+  BOT   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ↑        verticals at every joint        ↑
+       end                                       end</div>
+        <div class="stuck"><strong>If you have more or fewer than 8 sticks left:</strong> STOP. Re-count the sticks in each part. Common mistake — using 6 sticks for the chord instead of 5.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-14" data-step="l1s14"> <label for="s1-14">All 23 sticks placed. Pattern matches the diagram.</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNER CHECK 2 -->
+    <div class="partner-check">
+      <h4>Partner check — both must agree on the layout</h4>
+      <p>Look at your truss carefully. Compare with the diagram on your printed build sheet. Both partners must agree:</p>
+      <div class="pc-checks">
+        <label><input type="checkbox" data-step="l1pc2a"> Top &amp; bottom chords are parallel (4 cm apart)</label>
+        <label><input type="checkbox" data-step="l1pc2b"> 5 clear triangle bays</label>
+        <label><input type="checkbox" data-step="l1pc2c"> 8 verticals stand straight up at the joints</label>
+      </div>
+    </div>
+
+    <!-- TEACHER GATE 2 -->
+    <div class="teacher-gate">
+      <div class="tg-icon">👩‍🏫</div>
+      <div class="tg-body">
+        <h4>Show Ms Gao — Gate 2: Layout looks right</h4>
+        <p>Raise your hand. Wait for Ms Gao to come and look at your dry layout. She'll check the pattern matches the diagram BEFORE you glue. This is the <strong>most important check</strong> — once glued, the pattern is locked.</p>
+        <p>Do <strong>NOT</strong> open the glue until Ms Gao ticks you off here.</p>
+        <div class="tg-check">
+          <input type="checkbox" id="g1-2" data-step="l1g2"> <label for="g1-2">Ms Gao has approved our layout</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="stretch">Stand up. Roll your shoulders. Look out the window for 5 seconds. Sit back down. 🌿</div>
+
+
+    <!-- ─────────────── PHASE D — GLUE EVERY JOINT ─────────────── -->
+    <div class="phase"><span>Phase D · Glue every joint, one at a time</span><span class="phase-time">20 min</span></div>
+
+    <p style="font-style:italic; color:#64748b; margin:.5rem 0 1rem;">SWAP ROLES NOW.</p>
+
+    <div class="callout info" style="margin:1rem 0;">
+      ℹ️ <strong>The Glue Rule:</strong> a TINY DOT is enough. Big blobs make weak, slow-drying joints.<br>
+      <strong>Less is more.</strong> The dot should be about the size of a grain of rice — 5 mm wide.
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">15</span>
+        <span class="step-title">Practise the "dot, press, count to 10" technique on a SCRAP joint first.</span>
+        <span class="step-time">2 min</span>
+      </div>
+      <div class="step-body">
+        <p>Before you glue your real bridge, practise the technique on the corner of your mat where it doesn't matter.</p>
+        <ol class="micro-list">
+          <li>Take 2 spare sticks (or move 2 of your road sticks aside temporarily).</li>
+          <li>Squeeze a <strong>tiny 5-mm dot of glue</strong> onto one stick.</li>
+          <li>Press the second stick on top.</li>
+          <li>Hold for <strong>10 seconds</strong>. Count out loud with your partner: <em>"one-elephant, two-elephant…"</em> all the way to ten.</li>
+          <li>Let go. The sticks should hold together.</li>
+        </ol>
+        <div class="protip"><strong>Pro tip:</strong> "one-elephant, two-elephant" is roughly 1 second per word — better than counting fast.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-15" data-step="l1s15"> <label for="s1-15">Practised the technique successfully</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">16</span>
+        <span class="step-title">Glue the BOTTOM CHORD's 4 overlap joints.</span>
+        <span class="step-time">5 min</span>
+      </div>
+      <div class="step-body">
+        <p>Don't lift the whole chord — lift only the TOP stick at each overlap.</p>
+        <ol class="micro-list">
+          <li>Find the LEFT-most overlap on your bottom chord.</li>
+          <li>Gently lift the top stick at the overlap. Keep the bottom stick still.</li>
+          <li>Squeeze a <strong>5-mm dot of glue</strong> onto the bottom stick where the overlap was.</li>
+          <li>Press the top stick back down. Hold for 10 seconds.</li>
+          <li>Move to the next overlap on the right. Repeat.</li>
+          <li>Repeat for all <strong>4 overlap joints</strong>.</li>
+          <li>If glue squeezes out the side, wipe with the damp paper towel.</li>
+        </ol>
+        <div class="step-check">
+          <input type="checkbox" id="s1-16" data-step="l1s16"> <label for="s1-16">Bottom chord glued at all 4 overlap joints</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">17</span>
+        <span class="step-title">Glue the TOP CHORD's 4 overlap joints.</span>
+        <span class="step-time">4 min</span>
+      </div>
+      <div class="step-body">
+        <p>Same technique as step 16. Tiny dot, 10 seconds, wipe excess.</p>
+        <ol class="micro-list">
+          <li>Lift the top stick at each overlap.</li>
+          <li>5-mm dot of glue.</li>
+          <li>Press, count to 10.</li>
+          <li>Repeat for all 4 overlaps.</li>
+        </ol>
+        <div class="step-check">
+          <input type="checkbox" id="s1-17" data-step="l1s17"> <label for="s1-17">Top chord glued at all 4 overlap joints</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">18</span>
+        <span class="step-title">Glue each DIAGONAL where it touches the chords (10 glue dots total).</span>
+        <span class="step-time">6 min</span>
+      </div>
+      <div class="step-body">
+        <p>Each of the 5 diagonals touches the top chord at one end and the bottom chord at the other. That's <strong>2 glue dots per diagonal × 5 diagonals = 10 dots</strong>.</p>
+        <ol class="micro-list">
+          <li>Pick the <strong>1st diagonal</strong> (left-most one).</li>
+          <li>Gently lift the TOP end of the diagonal off the top chord.</li>
+          <li>Put a 5-mm glue dot on the chord where the diagonal was touching.</li>
+          <li>Press the diagonal back down. Hold 10 seconds.</li>
+          <li>Now do the BOTTOM end of the same diagonal — same way.</li>
+          <li>Move to the <strong>2nd diagonal</strong>. Repeat.</li>
+          <li>Continue for all 5 diagonals (10 glue dots total).</li>
+        </ol>
+        <div class="lookslike"><strong>What good looks like:</strong> when you tap a diagonal lightly with your finger, it doesn't move. The truss stays flat.</div>
+        <div class="safe-inline">If glue squeezes out, wipe with the paper towel — neat joints look better and grade better.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-18" data-step="l1s18"> <label for="s1-18">All 5 diagonals glued at both ends (10 glue dots done)</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">19</span>
+        <span class="step-title">Glue the 8 VERTICALS at top and bottom (16 glue dots total).</span>
+        <span class="step-time">5 min</span>
+      </div>
+      <div class="step-body">
+        <p>Each vertical touches the top chord at the top and the bottom chord at the bottom. <strong>2 dots per vertical × 8 verticals = 16 dots</strong>.</p>
+        <ol class="micro-list">
+          <li>Start with the <strong>left-end vertical</strong>.</li>
+          <li>Lift its top end. Put a 5-mm glue dot. Press. Count to 10.</li>
+          <li>Lift its bottom end. Glue dot. Press. Count to 10.</li>
+          <li>Move to the <strong>next vertical</strong>. Same way.</li>
+          <li>Continue across the truss — there should be <strong>8 verticals</strong> in total.</li>
+        </ol>
+        <div class="protip"><strong>Pro tip:</strong> work with your checker — checker reads the next vertical's number out loud, builder glues. Then swap. Less chance of skipping one.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-19" data-step="l1s19"> <label for="s1-19">All 8 verticals glued at both ends (16 glue dots done)</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success" style="margin:1rem 0;">
+      🎉 <strong>You just made 34 glue joints in this phase</strong> (8 chord overlaps + 10 diagonal joints + 16 vertical joints). Take a moment to look at your road. Be proud!
+    </div>
+
+    <!-- PARTNER CHECK 3 -->
+    <div class="partner-check">
+      <h4>Partner check — every joint glued?</h4>
+      <p>Together, count and confirm:</p>
+      <div class="pc-checks">
+        <label><input type="checkbox" data-step="l1pc3a"> 4 bottom chord overlap joints glued</label>
+        <label><input type="checkbox" data-step="l1pc3b"> 4 top chord overlap joints glued</label>
+        <label><input type="checkbox" data-step="l1pc3c"> 5 diagonals × 2 ends = 10 joints glued</label>
+        <label><input type="checkbox" data-step="l1pc3d"> 8 verticals × 2 ends = 16 joints glued</label>
+      </div>
+    </div>
+
+
+    <!-- ─────────────── PHASE E — TRIM, NAME, DRY ─────────────── -->
+    <div class="phase"><span>Phase E · Trim, name, and store on the drying shelf</span><span class="phase-time">10 min</span></div>
+
+    <p style="font-style:italic; color:#64748b; margin:.5rem 0 1rem;">SWAP ROLES one last time.</p>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">20</span>
+        <span class="step-title">Wait 5 minutes for the glue to start setting.</span>
+        <span class="step-time">5 min (passive)</span>
+      </div>
+      <div class="step-body">
+        <p>Glue takes about 5 minutes to "tack" (start holding) and 24 hours to fully dry. We'll do useful work while we wait.</p>
+        <p><strong>Use these 5 minutes to:</strong></p>
+        <ol class="micro-list">
+          <li>Cap the glue bottle tightly.</li>
+          <li>Tidy your desk — wipe up any glue smudges with the damp towel.</li>
+          <li>Re-check the bag of <strong>96 plain sticks</strong> — count them in groups of 10 to confirm 96 are there.</li>
+          <li>Update the bag label so it says: <strong>"96 plain — Lessons 2, 3, 4"</strong>.</li>
+        </ol>
+        <div class="step-check">
+          <input type="checkbox" id="s1-20" data-step="l1s20"> <label for="s1-20">Used the wait time well — desk tidy, bag re-counted</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">21</span>
+        <span class="step-title">Gently test each joint with your fingertip — re-glue any loose ones.</span>
+        <span class="step-time">2 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>With your fingertip, lightly press DOWN on each joint.</li>
+          <li>If a stick moves, the joint isn't glued well — add a <strong>tiny extra dot</strong> of glue and hold for 15 seconds.</li>
+          <li>Don't push hard! Just a feather touch.</li>
+        </ol>
+        <div class="step-check">
+          <input type="checkbox" id="s1-21" data-step="l1s21"> <label for="s1-21">All joints checked, loose ones fixed</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">22</span>
+        <span class="step-title">Trim off any sticks that hang past the end verticals.</span>
+        <span class="step-time">2 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Look at the LEFT end of your road. Any sticks poking past the end vertical?</li>
+          <li>If yes, use scissors to trim them <strong>flush with the vertical</strong>.</li>
+          <li>Do the same at the RIGHT end.</li>
+          <li><strong>DO NOT cut diagonals or verticals.</strong> Only trim chord ends that hang out.</li>
+        </ol>
+        <div class="safe-inline"><strong>Scissor safety:</strong> point AWAY from your partner. Cut on a hard surface. Pass the scissors handle-first when sharing.</div>
+        <div class="stuck"><strong>If you can't cut a stick because it's too thick:</strong> twist gently and the end will snap off. Or just leave it — slightly long ends are fine.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-22" data-step="l1s22"> <label for="s1-22">Ends trimmed neatly (or accepted as-is)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEACHER GATE 3 -->
+    <div class="teacher-gate">
+      <div class="tg-icon">👩‍🏫</div>
+      <div class="tg-body">
+        <h4>Show Ms Gao — Gate 3: Road finished</h4>
+        <p>Raise your hand. Ms Gao will look at your finished road and say "great job!" 🎉</p>
+        <p>This is the moment you've been working toward all lesson.</p>
+        <div class="tg-check">
+          <input type="checkbox" id="g1-3" data-step="l1g3"> <label for="g1-3">Ms Gao has approved our finished road</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">23</span>
+        <span class="step-title">Carry your road (still on the baking paper) to the drying shelf.</span>
+        <span class="step-time">2 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Slide your <strong>FLAT hand</strong> under the baking paper. Use both hands.</li>
+          <li>Lift the entire baking paper + road together — keep it FLAT.</li>
+          <li>Walk SLOWLY to the drying shelf at the front of the room.</li>
+          <li>Place the road FLAT on the shelf.</li>
+          <li><strong>Do NOT stack</strong> other roads on top of yours. Find an empty spot.</li>
+          <li>Make sure your names and class label are visible from above.</li>
+        </ol>
+        <div class="safe-inline"><strong>Walking with wet glue:</strong> hold flat, walk slowly. If someone bumps you, stop and re-balance before moving on.</div>
+        <div class="step-check">
+          <input type="checkbox" id="s1-23" data-step="l1s23"> <label for="s1-23">Road safely on the drying shelf 🎉</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">24</span>
+        <span class="step-title">Pack down — return tools, wipe desk, store your bag.</span>
+        <span class="step-time">3 min</span>
+      </div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Cap the glue tightly and return to the trolley.</li>
+          <li>Return scissors and ruler to the trolley.</li>
+          <li>Wipe your desk with the damp paper towel.</li>
+          <li>Make sure your <strong>bag of 96 plain + 16 holed sticks</strong> is sealed, labelled with your names, and placed in the class storage bin.</li>
+          <li>Put your pencil case, water bottle, and books back on your desk.</li>
+        </ol>
+        <div class="step-check">
+          <input type="checkbox" id="s1-24" data-step="l1s24"> <label for="s1-24">Pack down complete</label>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- DIFFERENTIATION -->
+    <h3 style="margin-top:1.6rem; color:#1f3a68; border-bottom:2px solid #f1f5f9; padding-bottom:.4rem;">🎯 Choose your challenge level</h3>
+    <p style="color:#64748b; font-style:italic; margin-top:.3rem;">Pick the level that suits you and your partner. There's no "right" choice — the goal is a road that holds.</p>
+
+    <div class="diff-grid">
+      <div class="diff-card diff-support">
+        <span class="diff-pill">Support</span>
+        <h4>Take it slow — focus on chords + diagonals</h4>
+        <ul>
+          <li>You and your partner finish steps 1–18 together (setup + count + lay out + glue chords + glue diagonals).</li>
+          <li>If you don't finish the verticals (steps 19+), that's OK — Ms Gao will help you in the morning.</li>
+          <li>Goal: a road that <strong>stays flat</strong> when you lift the baking paper corner.</li>
+        </ul>
+      </div>
+      <div class="diff-card diff-core">
+        <span class="diff-pill">Core (everyone)</span>
+        <h4>Complete all 24 steps</h4>
+        <ul>
+          <li>Finish the road by the end of the lesson — all 23 sticks glued in the Warren pattern.</li>
+          <li>Trimmed, named, on the drying shelf.</li>
+          <li>Reflection box filled in.</li>
+        </ul>
+      </div>
+      <div class="diff-card diff-extension">
+        <span class="diff-pill">Extension</span>
+        <h4>For early finishers</h4>
+        <ul>
+          <li>Sketch your road truss in your journal — label the chords, diagonals, verticals, and joints using glossary words.</li>
+          <li>Mark with arrows where you think the strongest forces will act when the bridge holds a load. (Hint: think about which sticks would push and which would pull.)</li>
+          <li>Predict: which TWO joints are most likely to fail under load? Write a sentence explaining why.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div class="reflect">
+      <h3>Exit ticket — fill in before you leave</h3>
+      <p style="margin-top:0;font-size:.94rem;color:#5b21b6;">In one sentence: <strong>what was the hardest part of building the road, and how did you solve it?</strong></p>
+      <textarea id="reflect1" placeholder="e.g. The hardest part was making sure all the diagonals touched both chords — we solved it by laying them all out dry first before any gluing, then asking Ms Gao to check before we used the glue." data-reflect="l1"></textarea>
+      <div class="saved" id="saved1"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- LESSON 2 — CROSS TRUSSES                                    -->
+  <!-- ============================================================ -->
+  <section class="lesson" data-lesson="2">
+
+    <div class="lesson-head">
+      <span class="badge">LESSON 2</span>
+      <h2>Cross Trusses — 8 Strong Pairs</h2>
+      <div class="meta">
+        <span>⏱️ 50 min</span>
+        <span>🪵 16 plain sticks</span>
+        <span>👥 Pair work</span>
+        <span>🎯 Outcome TE4-3DP</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      Build <strong>8 cross trusses</strong> by gluing 16 plain sticks together in pairs. Each pair must overlap by EXACTLY <strong>20 mm</strong>. These will tie the LEFT side of your bridge to the RIGHT side later.
+    </div>
+
+    <!-- MATERIALS -->
+    <div class="materials">
+      <h3>Materials check</h3>
+      <ul>
+        <li><input type="checkbox" id="m2-1" data-mat="l2m1"> <label for="m2-1">Your bag with the 96 plain + 16 holed sticks (from Lesson 1)</label></li>
+        <li><input type="checkbox" id="m2-2" data-mat="l2m2"> <label for="m2-2">PVA glue, ruler (the 20 mm overlap is critical), scissors, pencil</label></li>
+        <li><input type="checkbox" id="m2-3" data-mat="l2m3"> <label for="m2-3">Baking paper or scrap card</label></li>
+        <li><input type="checkbox" id="m2-4" data-mat="l2m4"> <label for="m2-4">Damp paper towel</label></li>
+      </ul>
+    </div>
+
+    <div class="phase"><span>Phase A · Set up &amp; count</span><span class="phase-time">8 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">1</span><span class="step-title">Set up your workspace (same as Lesson 1).</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Clear the desk. Wipe with damp towel.</li>
+          <li>Lay baking paper flat in the middle.</li>
+          <li>Tools at the top in a row: glue, scissors, ruler, pencil, damp towel.</li>
+          <li>Write your names on the corner.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s2-1" data-step="l2s1"> <label for="s2-1">Workspace ready</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">2</span><span class="step-title">Count out 16 plain sticks from your bag.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Open your bag.</li>
+          <li>Take out exactly <strong>16 plain</strong> sticks (no holes!). Count in groups of 5 + 5 + 5 + 1 = 16, or 4 groups of 4 = 16.</li>
+          <li>Put the leftovers (80 plain + 16 holed) BACK in the bag and seal it.</li>
+        </ol>
+        <div class="lookslike"><strong>What good looks like:</strong> 16 plain sticks in a small pile on your mat. Bag sealed and pushed to the back of the desk.</div>
+        <div class="step-check"><input type="checkbox" id="s2-2" data-step="l2s2"> <label for="s2-2">16 plain sticks counted; rest sealed in bag</label></div>
+      </div>
+    </div>
+
+    <!-- PARTNER CHECK -->
+    <div class="partner-check">
+      <h4>Partner check — confirm 16 sticks</h4>
+      <p>Both partners count the pile of sticks on the mat. There must be exactly 16.</p>
+      <div class="pc-checks">
+        <label><input type="checkbox" data-step="l2pc1a"> Builder counted: 16 ✓</label>
+        <label><input type="checkbox" data-step="l2pc1b"> Checker counted: 16 ✓</label>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase B · Mark the 20 mm overlap line</span><span class="phase-time">5 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">3</span><span class="step-title">Make a "20 mm jig" — a marked stick to copy from.</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <p>A "jig" is an engineer's tool — a thing you use to make sure every part comes out the same. Ours is just a stick with a pencil mark.</p>
+        <ol class="micro-list">
+          <li>Take ONE stick from your pile of 16 — call it the JIG STICK.</li>
+          <li>Put the ruler against it.</li>
+          <li>Find <strong>20 mm</strong> on the ruler (= 2 cm).</li>
+          <li>With the pencil, draw a small line on the stick exactly at the 20 mm mark.</li>
+          <li>This is your overlap target. Every pair must overlap exactly to this line.</li>
+        </ol>
+        <div class="diagram">  <span class="label">Your JIG stick:</span>
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ↑          ↑
+  end       <span class="num">20 mm</span> mark</div>
+        <div class="step-check"><input type="checkbox" id="s2-3" data-step="l2s3"> <label for="s2-3">Jig stick marked at 20 mm</label></div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase C · Glue 8 pairs (the production line)</span><span class="phase-time">28 min</span></div>
+
+    <div class="callout info" style="margin:1rem 0;">
+      ℹ️ Set up an "assembly line" with your partner. <strong>Builder</strong> places sticks and applies glue. <strong>Checker</strong> measures the overlap and counts to 10 for each hold. Swap roles after pair #4.
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">4</span><span class="step-title">Glue Pair #1 with a 20 mm overlap.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Take 2 plain sticks (not the jig stick).</li>
+          <li>Place stick A flat on the mat.</li>
+          <li>Apply a 5-mm dot of PVA glue near one end of stick A.</li>
+          <li>Place stick B on top of stick A, end aligned so the overlap matches the 20 mm line on your jig stick.</li>
+          <li>Press and hold for 10 seconds (one-elephant…ten-elephant).</li>
+          <li>Set Pair #1 aside on the right of your mat. <strong>Don't move it</strong> for at least 2 minutes.</li>
+        </ol>
+        <div class="lookslike"><strong>What good looks like:</strong> Pair #1 looks like a long stick with a fat middle. The overlap is exactly 20 mm — same as your jig.</div>
+        <div class="step-check"><input type="checkbox" id="s2-4" data-step="l2s4"> <label for="s2-4">Pair #1 glued and set aside</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">5</span><span class="step-title">Glue Pairs #2–4 the same way.</span><span class="step-time">9 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Repeat step 4 for the next 3 pairs.</li>
+          <li>Each time, check overlap with the jig.</li>
+          <li>Set each finished pair aside in a row.</li>
+          <li>By now you should have <strong>4 finished pairs</strong> on your mat.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s2-5" data-step="l2s5"> <label for="s2-5">Pairs #2, 3, 4 finished</label></div>
+      </div>
+    </div>
+
+    <div class="stretch">SWAP ROLES! Stretch your hands. Wiggle your shoulders. 🌿</div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">6</span><span class="step-title">Glue Pairs #5–8 (final 4).</span><span class="step-time">12 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Same technique — 5-mm dot, 20 mm overlap, hold 10 seconds.</li>
+          <li>By the end, you should have <strong>8 finished pairs</strong>.</li>
+          <li>You used 16 sticks total (8 pairs × 2 sticks). The jig stick can stay on the mat — you'll bag it for later.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s2-6" data-step="l2s6"> <label for="s2-6">Pairs #5, 6, 7, 8 finished — all 8 pairs done</label></div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase D · Inspect and store</span><span class="phase-time">9 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">7</span><span class="step-title">Test each pair gently — they must NOT bend at the joint.</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Hold each pair flat between your fingertips.</li>
+          <li>Lightly press in the middle.</li>
+          <li>The joint should stay rigid. If it flexes or cracks, add another small dot of glue and hold for 30 seconds.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s2-7" data-step="l2s7"> <label for="s2-7">All 8 pairs are rigid</label></div>
+      </div>
+    </div>
+
+    <div class="teacher-gate">
+      <div class="tg-icon">👩‍🏫</div>
+      <div class="tg-body">
+        <h4>Show Ms Gao — your 8 pairs</h4>
+        <p>Raise your hand. Ms Gao will look at your 8 pairs and check the overlap is consistent.</p>
+        <div class="tg-check">
+          <input type="checkbox" id="g2-1" data-step="l2g1"> <label for="g2-1">Ms Gao has approved our 8 pairs</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">8</span><span class="step-title">Label and store on the drying shelf.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Write on the baking paper: <strong>"8 cross trusses — [your names]"</strong>.</li>
+          <li>Carry flat to the drying shelf.</li>
+          <li>Place next to (NOT on top of) your road from Lesson 1.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s2-8" data-step="l2s8"> <label for="s2-8">Stored safely</label></div>
+      </div>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card diff-support">
+        <span class="diff-pill">Support</span>
+        <h4>Aim for 6 strong pairs</h4>
+        <p>If 8 feels too many in one lesson, finish 6 properly and complete the last 2 at the start of next lesson.</p>
+      </div>
+      <div class="diff-card diff-core">
+        <span class="diff-pill">Core</span>
+        <h4>All 8 pairs glued and stored</h4>
+        <p>Every pair has a clean 20 mm overlap and is rigid when pressed.</p>
+      </div>
+      <div class="diff-card diff-extension">
+        <span class="diff-pill">Extension</span>
+        <h4>Reinforce 2 pairs</h4>
+        <p>Add a third stick laminated on top of 2 pairs. Predict in your journal: will laminating make the bridge stronger or just heavier?</p>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <h3>Exit ticket</h3>
+      <p style="margin-top:0;font-size:.94rem;color:#5b21b6;">Why does the build sheet say <strong>"20 mm overlap"</strong> exactly — what would happen if the overlap was only 5 mm?</p>
+      <textarea id="reflect2" placeholder="Type your idea here…" data-reflect="l2"></textarea>
+      <div class="saved" id="saved2"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- LESSON 3 — LEFT SIDE PANEL                                  -->
+  <!-- ============================================================ -->
+  <section class="lesson" data-lesson="3">
+
+    <div class="lesson-head">
+      <span class="badge">LESSON 3</span>
+      <h2>Build the LEFT Side Panel</h2>
+      <div class="meta">
+        <span>⏱️ 60 min</span>
+        <span>🪵 48 sticks (40 plain + 8 holed)</span>
+        <span>👥 Pair work</span>
+        <span>🎯 Outcome TE4-1DP</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      Build the LEFT triangular side panel — the main load-bearing wall of the bridge. The 8 holed sticks must go in <strong>specific places</strong> — they are where the cross trusses will attach later.
+    </div>
+
+    <div class="materials">
+      <h3>Materials check</h3>
+      <ul>
+        <li><input type="checkbox" id="m3-1" data-mat="l3m1"> <label for="m3-1">Your bag of remaining 80 plain + 16 holed sticks</label></li>
+        <li><input type="checkbox" id="m3-2" data-mat="l3m2"> <label for="m3-2">PVA glue, scissors, ruler, marker, pencil</label></li>
+        <li><input type="checkbox" id="m3-3" data-mat="l3m3"> <label for="m3-3">A LARGER sheet of baking paper (A3 minimum) — the side panel is tall</label></li>
+        <li><input type="checkbox" id="m3-4" data-mat="l3m4"> <label for="m3-4">Your printed Step 5 diagram from the original build sheet</label></li>
+      </ul>
+    </div>
+
+    <div class="phase"><span>Phase A · Divide your sticks into LEFT and RIGHT bags</span><span class="phase-time">8 min</span></div>
+
+    <div class="callout warn" style="margin:1rem 0;">
+      ⚠️ This is the <strong>most important counting step</strong> in the whole build. If LEFT and RIGHT bags are different, your bridge won't fit together.
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">1</span><span class="step-title">Empty your bag and separate plain from holed sticks.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Tip your bag onto the mat.</li>
+          <li>Pull out all the <strong>holed</strong> sticks. There should be 16. Put them in a small pile on the LEFT.</li>
+          <li>Plain sticks stay in a pile on the RIGHT. There should be 80.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s3-1" data-step="l3s1"> <label for="s3-1">Plain (80) and holed (16) separated</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">2</span><span class="step-title">Count out the LEFT pile: 40 plain + 8 holed = 48 sticks.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Take <strong>40 plain</strong> sticks (8 groups of 5).</li>
+          <li>Take <strong>8 holed</strong> sticks (4 groups of 2, or 8 ones).</li>
+          <li>Put both into a bag. Label it boldly: <strong>LEFT — 40+8</strong>.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s3-2" data-step="l3s2"> <label for="s3-2">LEFT bag ready: 40 plain + 8 holed</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">3</span><span class="step-title">Repeat for RIGHT bag: 40 plain + 8 holed = 48 sticks.</span><span class="step-time">2 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>The leftover 40 plain + 8 holed go into the RIGHT bag.</li>
+          <li>Label it boldly: <strong>RIGHT — 40+8</strong>.</li>
+          <li>Push the RIGHT bag to the back of the desk — we won't open it today.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s3-3" data-step="l3s3"> <label for="s3-3">RIGHT bag sealed and stored away</label></div>
+      </div>
+    </div>
+
+    <div class="partner-check">
+      <h4>Partner check — count both bags</h4>
+      <p>Both partners count both bags before you start gluing.</p>
+      <div class="pc-checks">
+        <label><input type="checkbox" data-step="l3pc1a"> LEFT = exactly 48 sticks ✓</label>
+        <label><input type="checkbox" data-step="l3pc1b"> RIGHT = exactly 48 sticks ✓</label>
+        <label><input type="checkbox" data-step="l3pc1c"> Each bag has exactly 8 holed ✓</label>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase B · Lay out the triangular side (NO glue yet)</span><span class="phase-time">15 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">4</span><span class="step-title">Study the Step 5 diagram with your partner.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <p>The side is a tall TRIANGLE with horizontal CROSS-BARS inside. The 8 holed sticks go on certain cross-bars where the cross trusses (from Lesson 2) will attach.</p>
+        <div class="diagram">  <span class="label">Side panel — triangle shape:</span>
+
+                    /\                  ← peak (top)
+                   /  \
+                  /----\                ← cross-bar (top)
+                 /      \
+                /--------\              ← cross-bar (with hole)
+               /          \
+              /------------\            ← cross-bar (with hole)
+             /              \
+            /----------------\          ← cross-bar (bottom)
+           ▲                ▲
+           bottom corners</div>
+        <div class="step-check"><input type="checkbox" id="s3-4" data-step="l3s4"> <label for="s3-4">Diagram studied with partner</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">5</span><span class="step-title">Lay out the 2 long sloping rails (the sides of the triangle).</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Take <strong>plain sticks</strong> (no holes).</li>
+          <li>Make the LEFT-leaning rail: lay sticks end-to-end, with 2 cm overlaps. About 5 sticks long.</li>
+          <li>Make the RIGHT-leaning rail the same way.</li>
+          <li>The two rails meet at the TOP at a point (like the roof of a house).</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s3-5" data-step="l3s5"> <label for="s3-5">Two sloping rails laid out, meeting at top</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">6</span><span class="step-title">Lay out cross-bars — INCLUDING the 8 holed sticks at the marked positions.</span><span class="step-time">7 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Place horizontal cross-bars between the two rails, from the bottom up.</li>
+          <li>Look at your printed Step 5 diagram — the arrows show where the holed sticks go.</li>
+          <li>At each "arrow" position, use a <strong>holed stick</strong>. Everywhere else, use plain.</li>
+        </ol>
+        <div class="callout warn" style="margin:.5rem 0;">⚠️ <strong>Holed stick placement is critical.</strong> The holes are where cross trusses attach. Wrong position = bridge won't assemble.</div>
+        <div class="step-check"><input type="checkbox" id="s3-6" data-step="l3s6"> <label for="s3-6">Cross-bars laid; 8 holed sticks in correct positions</label></div>
+      </div>
+    </div>
+
+    <div class="teacher-gate">
+      <div class="tg-icon">👩‍🏫</div>
+      <div class="tg-body">
+        <h4>Show Ms Gao — Layout check (before glue)</h4>
+        <p>Raise your hand. Ms Gao will check the holed sticks are in the right positions before you glue.</p>
+        <div class="tg-check">
+          <input type="checkbox" id="g3-1" data-step="l3g1"> <label for="g3-1">Ms Gao has approved the layout</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase C · Glue every joint</span><span class="phase-time">25 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">7</span><span class="step-title">Glue all sloping rail overlaps first.</span><span class="step-time">8 min</span></div>
+      <div class="step-body">
+        <p>Same technique as Lesson 1: tiny dot, 10 second hold, move on.</p>
+        <div class="step-check"><input type="checkbox" id="s3-7" data-step="l3s7"> <label for="s3-7">Sloping rails fully glued</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">8</span><span class="step-title">Glue every cross-bar at both ends.</span><span class="step-time">12 min</span></div>
+      <div class="step-body">
+        <p>Each cross-bar touches the LEFT rail and the RIGHT rail. Two glue dots per cross-bar.</p>
+        <div class="protip"><strong>Pro tip:</strong> the holed sticks are slightly weaker because of the holes. Use a <strong>slightly larger glue dot</strong> at their joins.</div>
+        <div class="step-check"><input type="checkbox" id="s3-8" data-step="l3s8"> <label for="s3-8">All cross-bars glued at both ends</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">9</span><span class="step-title">Glue the top peak where the two rails meet.</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>The two sloping rails meet at the top in a point.</li>
+          <li>Apply glue at the joint where they meet.</li>
+          <li>Press and hold for <strong>20 seconds</strong> (this joint takes more force than others).</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s3-9" data-step="l3s9"> <label for="s3-9">Top peak glued and held</label></div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase D · Trim, label, dry</span><span class="phase-time">10 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">10</span><span class="step-title">Trim, label "LEFT", and place on the drying shelf.</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Trim any sticks poking out beyond the triangle outline.</li>
+          <li>Write on the baking paper: <strong>"LEFT side — [your names]"</strong>.</li>
+          <li>Move flat to the drying shelf. Don't stack on the road or cross trusses.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s3-10" data-step="l3s10"> <label for="s3-10">LEFT panel labelled and stored</label></div>
+      </div>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card diff-support">
+        <span class="diff-pill">Support</span>
+        <h4>Focus on rails + bottom cross-bars</h4>
+        <p>Get the 2 sloping rails and the bottom 3 cross-bars perfect. The rest can be finished at the start of Lesson 4 if needed.</p>
+      </div>
+      <div class="diff-card diff-core">
+        <span class="diff-pill">Core</span>
+        <h4>Complete LEFT panel, all 48 sticks</h4>
+        <p>Triangle shape, 8 holed sticks in the right positions, fully glued, on the drying shelf.</p>
+      </div>
+      <div class="diff-card diff-extension">
+        <span class="diff-pill">Extension</span>
+        <h4>Engineer the corners</h4>
+        <p>Add small triangular reinforcement pieces (gussets) at the top apex where the two rails meet. In your journal, sketch a free-body diagram showing forces at this joint.</p>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <h3>Exit ticket</h3>
+      <p style="margin-top:0;font-size:.94rem;color:#5b21b6;">Where did you place the 8 holed sticks, and why does their position matter?</p>
+      <textarea id="reflect3" placeholder="Type your answer here…" data-reflect="l3"></textarea>
+      <div class="saved" id="saved3"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- LESSON 4 — RIGHT SIDE PANEL                                 -->
+  <!-- ============================================================ -->
+  <section class="lesson" data-lesson="4">
+
+    <div class="lesson-head">
+      <span class="badge">LESSON 4</span>
+      <h2>Build the RIGHT Side Panel — Mirror of LEFT</h2>
+      <div class="meta">
+        <span>⏱️ 55 min</span>
+        <span>🪵 48 sticks (40 plain + 8 holed)</span>
+        <span>👥 Pair work</span>
+        <span>🎯 Outcome TE4-3DP</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      Build the RIGHT side panel — it must be a <strong>mirror image</strong> of the LEFT panel. The 8 holed sticks must be at IDENTICAL positions so the cross trusses fit cleanly between LEFT and RIGHT.
+    </div>
+
+    <div class="materials">
+      <h3>Materials check</h3>
+      <ul>
+        <li><input type="checkbox" id="m4-1" data-mat="l4m1"> <label for="m4-1">Your RIGHT bag (40 plain + 8 holed)</label></li>
+        <li><input type="checkbox" id="m4-2" data-mat="l4m2"> <label for="m4-2">PVA glue, scissors, ruler, marker</label></li>
+        <li><input type="checkbox" id="m4-3" data-mat="l4m3"> <label for="m4-3">Baking paper (A3)</label></li>
+        <li><input type="checkbox" id="m4-4" data-mat="l4m4"> <label for="m4-4">Your finished LEFT panel from Lesson 3 (to copy from)</label></li>
+      </ul>
+    </div>
+
+    <div class="callout info" style="margin:1rem 0;">
+      ℹ️ <strong>The trick this lesson:</strong> get the LEFT panel down from the shelf and put it next to your build mat. Use it as a TEMPLATE — your RIGHT panel must match it exactly.
+    </div>
+
+    <div class="phase"><span>Phase A · Mirror the LEFT panel</span><span class="phase-time">15 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">1</span><span class="step-title">Set up workspace and place LEFT panel as a TEMPLATE.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Set up build mat, tools, names — same as last time.</li>
+          <li>Carefully bring your LEFT panel down from the shelf.</li>
+          <li>Place LEFT panel on the desk to one side of your build mat — close enough to see, but where glue won't drip on it.</li>
+        </ol>
+        <div class="safe-inline">Don't put glue near LEFT panel. It's already done — protect it.</div>
+        <div class="step-check"><input type="checkbox" id="s4-1" data-step="l4s1"> <label for="s4-1">LEFT panel placed as reference, build mat ready</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">2</span><span class="step-title">Lay out RIGHT side rails — same length, same angle as LEFT.</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Take plain sticks from your RIGHT bag.</li>
+          <li>Lay 2 sloping rails on your build mat — match the angle and length of LEFT rails.</li>
+          <li>Use your ruler to compare lengths.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s4-2" data-step="l4s2"> <label for="s4-2">Rails match LEFT</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">3</span><span class="step-title">Lay out cross-bars and 8 holed sticks at IDENTICAL positions to LEFT.</span><span class="step-time">7 min</span></div>
+      <div class="step-body">
+        <p>Eye-check each holed stick — its position on RIGHT must MIRROR LEFT. If a holed stick on LEFT is the 2nd cross-bar from the bottom, the same is true on RIGHT.</p>
+        <div class="callout warn" style="margin:.5rem 0;">⚠️ Get your partner to <strong>compare both panels side by side</strong> BEFORE you glue.</div>
+        <div class="step-check"><input type="checkbox" id="s4-3" data-step="l4s3"> <label for="s4-3">Holed stick positions confirmed by partner check</label></div>
+      </div>
+    </div>
+
+    <div class="teacher-gate">
+      <div class="tg-icon">👩‍🏫</div>
+      <div class="tg-body">
+        <h4>Show Ms Gao — Mirror check (before glue)</h4>
+        <p>Both panels must be visible side by side. Ms Gao confirms they mirror each other.</p>
+        <div class="tg-check">
+          <input type="checkbox" id="g4-1" data-step="l4g1"> <label for="g4-1">Ms Gao has approved the mirror layout</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase B · Glue everything</span><span class="phase-time">28 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">4</span><span class="step-title">Glue rails, then cross-bars — same technique as Lesson 3.</span><span class="step-time">28 min</span></div>
+      <div class="step-body">
+        <p>Tiny dot, 10-second hold, work through all joints. Holed sticks get a slightly larger dot.</p>
+        <div class="step-check"><input type="checkbox" id="s4-4" data-step="l4s4"> <label for="s4-4">RIGHT panel fully glued</label></div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase C · Final compare and store</span><span class="phase-time">10 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">5</span><span class="step-title">Lay LEFT and RIGHT side by side. Do they match?</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <p>Compare every cross-bar position. Tweak before the glue fully sets if anything is out of place.</p>
+        <div class="lookslike"><strong>What good looks like:</strong> when laid flat next to each other, the LEFT and RIGHT panels could be photo-copies of each other.</div>
+        <div class="step-check"><input type="checkbox" id="s4-5" data-step="l4s5"> <label for="s4-5">LEFT and RIGHT confirmed as mirror images</label></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">6</span><span class="step-title">Trim, label "RIGHT", and place on the drying shelf next to LEFT.</span><span class="step-time">3 min</span></div>
+      <div class="step-body">
+        <div class="step-check"><input type="checkbox" id="s4-6" data-step="l4s6"> <label for="s4-6">RIGHT panel labelled and stored</label></div>
+      </div>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card diff-support">
+        <span class="diff-pill">Support</span>
+        <h4>Focus on identical rails + 4 cross-bars</h4>
+        <p>If you don't finish all 8 holed sticks, get the rails and bottom 4 cross-bars perfectly mirrored.</p>
+      </div>
+      <div class="diff-card diff-core">
+        <span class="diff-pill">Core</span>
+        <h4>Complete RIGHT panel, mirrored to LEFT</h4>
+        <p>All 48 sticks, 8 holed in correct mirror positions, fully glued.</p>
+      </div>
+      <div class="diff-card diff-extension">
+        <span class="diff-pill">Extension</span>
+        <h4>Calculate symmetry</h4>
+        <p>Measure each cross-bar's distance from the bottom on LEFT and RIGHT. Record in a table — what is the maximum difference? Is it acceptable for the cross trusses to fit?</p>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <h3>Exit ticket</h3>
+      <p style="margin-top:0;font-size:.94rem;color:#5b21b6;">What is one thing you would do differently if you built another RIGHT panel?</p>
+      <textarea id="reflect4" placeholder="Type your answer here…" data-reflect="l4"></textarea>
+      <div class="saved" id="saved4"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- LESSON 5 — FINAL ASSEMBLY                                   -->
+  <!-- ============================================================ -->
+  <section class="lesson" data-lesson="5">
+
+    <div class="lesson-head">
+      <span class="badge">LESSON 5</span>
+      <h2>Final Assembly — Stand Your Bridge Up</h2>
+      <div class="meta">
+        <span>⏱️ 60 min</span>
+        <span>🪵 All 4 components</span>
+        <span>👥 Pair work</span>
+        <span>🎯 Outcomes TE4-1DP, TE4-5AG</span>
+      </div>
+    </div>
+
+    <div class="goal">
+      Connect the LEFT panel, RIGHT panel, the road, and the 8 cross trusses into a complete 3D bridge. By the end of this lesson your bridge stands upright on the desk.
+    </div>
+
+    <div class="materials">
+      <h3>Materials check</h3>
+      <ul>
+        <li><input type="checkbox" id="m5-1" data-mat="l5m1"> <label for="m5-1">Your dried LEFT panel, RIGHT panel, ROAD, and 8 cross trusses</label></li>
+        <li><input type="checkbox" id="m5-2" data-mat="l5m2"> <label for="m5-2">PVA glue, scissors, ruler</label></li>
+        <li><input type="checkbox" id="m5-3" data-mat="l5m3"> <label for="m5-3">2 small books or boxes (to hold the side panels upright while glue dries)</label></li>
+      </ul>
+    </div>
+
+    <div class="phase"><span>Phase A · Stand the side panels upright</span><span class="phase-time">10 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">1</span><span class="step-title">Stand LEFT and RIGHT panels parallel, ~10 cm apart.</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Place LEFT panel on its bottom edge, standing upright on the desk.</li>
+          <li>Place RIGHT panel parallel to LEFT, about 10 cm away.</li>
+          <li>Use small books on the OUTSIDE of each panel to prop them upright.</li>
+          <li>The two panels should look like two sides of a corridor.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s5-1" data-step="l5s1"> <label for="s5-1">Side panels standing parallel</label></div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase B · Glue the road across the bottom cross-bars</span><span class="phase-time">15 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">2</span><span class="step-title">Place the road across the bottom of the side panels.</span><span class="step-time">10 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Lift your road carefully. Place it FLAT across the bottom cross-bars of both side panels.</li>
+          <li>Glue at the points where the road touches each side panel — at least 4 contact points (2 each side).</li>
+          <li>Hold for 30 seconds — these joints carry weight!</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s5-2" data-step="l5s2"> <label for="s5-2">Road glued in place at the bottom</label></div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase C · Attach the 8 cross trusses at the holed positions</span><span class="phase-time">25 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">3</span><span class="step-title">Glue each cross truss between LEFT and RIGHT at a holed position.</span><span class="step-time">20 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Take 1 cross truss.</li>
+          <li>Match it to a HOLED stick on the LEFT panel and the SAME holed stick position on the RIGHT panel.</li>
+          <li>Apply glue at both ends.</li>
+          <li>Press into place and hold 30 seconds.</li>
+          <li>Repeat for all 8 cross trusses — one per holed-stick position.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s5-3" data-step="l5s3"> <label for="s5-3">All 8 cross trusses fitted</label></div>
+      </div>
+    </div>
+
+    <div class="phase"><span>Phase D · Final inspection and naming</span><span class="phase-time">10 min</span></div>
+
+    <div class="step">
+      <div class="step-head"><span class="step-num">4</span><span class="step-title">Sign your bridge and prepare it for testing.</span><span class="step-time">5 min</span></div>
+      <div class="step-body">
+        <ol class="micro-list">
+          <li>Write your team name on a small label and stick it to the road.</li>
+          <li>Take 3 photos with your device: <strong>front view, top view, side view</strong>.</li>
+          <li>Upload all 3 photos to Google Classroom.</li>
+        </ol>
+        <div class="step-check"><input type="checkbox" id="s5-4" data-step="l5s4"> <label for="s5-4">Bridge signed and photos uploaded</label></div>
+      </div>
+    </div>
+
+    <div class="teacher-gate">
+      <div class="tg-icon">👩‍🏫</div>
+      <div class="tg-body">
+        <h4>Show Ms Gao — Final bridge!</h4>
+        <p>This is the big moment. Stand your bridge in the middle of the desk and call Ms Gao over.</p>
+        <div class="tg-check">
+          <input type="checkbox" id="g5-1" data-step="l5g1"> <label for="g5-1">Ms Gao has seen our finished bridge 🎉</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-card diff-support">
+        <span class="diff-pill">Support</span>
+        <h4>Get the 2 sides + road glued</h4>
+        <p>Even if you only fit 4 of the 8 cross trusses, your bridge will stand. Add the others next lesson with help.</p>
+      </div>
+      <div class="diff-card diff-core">
+        <span class="diff-pill">Core</span>
+        <h4>Complete bridge with all 8 cross trusses</h4>
+        <p>Standing, all joints glued, signed and photographed.</p>
+      </div>
+      <div class="diff-card diff-extension">
+        <span class="diff-pill">Extension</span>
+        <h4>Predict the failure point</h4>
+        <p>Before testing, write a prediction: which joint will fail first under load? Why? Sketch a diagram. We'll check after load testing in Week 9.</p>
+      </div>
+    </div>
+
+    <div class="reflect">
+      <h3>Exit ticket — End of build</h3>
+      <p style="margin-top:0;font-size:.94rem;color:#5b21b6;">What are you most proud of in this bridge? What would you change next time?</p>
+      <textarea id="reflect5" placeholder="Type your answer here…" data-reflect="l5"></textarea>
+      <div class="saved" id="saved5"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- MATERIALS INVENTORY                                          -->
+  <!-- ============================================================ -->
+  <div class="inventory">
+    <h3>Stick inventory — track all 135 sticks across 5 lessons</h3>
+    <div class="inv-grid">
+      <div class="inv-cell"><div class="lbl">Lesson 1</div><div class="val">23</div><div class="sub">plain · road</div></div>
+      <div class="inv-cell"><div class="lbl">Lesson 2</div><div class="val">16</div><div class="sub">plain · cross trusses</div></div>
+      <div class="inv-cell"><div class="lbl">Lesson 3</div><div class="val">48</div><div class="sub">40 plain + 8 holed · LEFT</div></div>
+      <div class="inv-cell"><div class="lbl">Lesson 4</div><div class="val">48</div><div class="sub">40 plain + 8 holed · RIGHT</div></div>
+    </div>
+    <div class="inv-total">Total: 23 + 16 + 48 + 48 = <strong>135 sticks</strong> (119 plain + 16 holed) ✓</div>
+  </div>
+
+
+  <!-- ACTION BUTTONS -->
+  <div class="btn-row">
+    <button onclick="window.print()">🖨️ Print this tutorial</button>
+    <button class="secondary" onclick="exportProgress()">💾 Export my progress as text</button>
+    <button class="danger" onclick="resetAll()">↺ Reset all progress</button>
+  </div>
+
+  <p style="font-size:.85rem; color:#64748b; text-align:center; margin:2rem 0 1rem;">
+    Y7 Technology · Bridge It · Term 2 2026 · Arthur Phillip High School<br>
+    Built by Ms Y. Gao · Save progress is automatic and stored only on your device.
+  </p>
+
+</main>
+
+<script>
+  // ============================================================
+  //  STATE & STORAGE
+  // ============================================================
+  const STORAGE_KEY = 'y7-paddlepop-build-v2';
+  const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  // ============================================================
+  //  LESSON TAB SWITCHING
+  // ============================================================
+  const navButtons = document.querySelectorAll('#lessonNav button');
+  const lessons = document.querySelectorAll('.lesson');
+
+  function showLesson(n) {
+    navButtons.forEach(b => b.classList.toggle('active', b.dataset.lesson == n));
+    lessons.forEach(l => l.classList.toggle('active', l.dataset.lesson == n));
+    state.currentLesson = n;
+    save();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => showLesson(btn.dataset.lesson));
+  });
+
+  // Restore last viewed lesson on load
+  if (state.currentLesson) {
+    showLesson(state.currentLesson);
+  }
+
+  // ============================================================
+  //  CHECKBOX PERSISTENCE
+  // ============================================================
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    const key = cb.dataset.step || cb.dataset.mat;
+    if (!key) return;
+    if (state[key]) {
+      cb.checked = true;
+      const label = cb.parentElement.querySelector('label');
+      if (label) label.classList.add('done');
+      const step = cb.closest('.step');
+      if (step) step.classList.add('done');
+    }
+    cb.addEventListener('change', () => {
+      state[key] = cb.checked;
+      save();
+      const label = cb.parentElement.querySelector('label');
+      if (label) label.classList.toggle('done', cb.checked);
+      const step = cb.closest('.step');
+      if (step) step.classList.toggle('done', cb.checked);
+      updateProgress();
+    });
+  });
+
+  // ============================================================
+  //  REFLECTION TEXTAREA AUTOSAVE
+  // ============================================================
+  document.querySelectorAll('textarea[data-reflect]').forEach(ta => {
+    const key = 'r-' + ta.dataset.reflect;
+    if (state[key]) ta.value = state[key];
+
+    let saveTimer;
+    ta.addEventListener('input', () => {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        state[key] = ta.value;
+        save();
+        const savedEl = document.getElementById('saved' + ta.dataset.reflect.replace('l',''));
+        if (savedEl) {
+          savedEl.textContent = '✓ Saved';
+          setTimeout(() => savedEl.textContent = '', 1500);
+        }
+      }, 400);
+    });
+  });
+
+  // ============================================================
+  //  PROGRESS BAR
+  // ============================================================
+  function updateProgress() {
+    const activeLesson = document.querySelector('.lesson.active');
+    if (!activeLesson) return;
+    const stepBoxes = activeLesson.querySelectorAll('input[type="checkbox"][data-step]');
+    const total = stepBoxes.length;
+    const done = Array.from(stepBoxes).filter(c => c.checked).length;
+    const fill = document.getElementById('progressFill');
+    const count = document.getElementById('progressCount');
+    const wrap = document.getElementById('progressWrap');
+    const lessonNum = activeLesson.dataset.lesson;
+
+    fill.style.width = total ? (done / total * 100) + '%' : '0%';
+    count.textContent = `Lesson ${lessonNum}: ${done} / ${total} steps done`;
+    wrap.classList.toggle('complete', total > 0 && done === total);
+
+    const navBtn = document.querySelector(`#lessonNav button[data-lesson="${lessonNum}"]`);
+    if (navBtn) navBtn.classList.toggle('complete', total > 0 && done === total);
+  }
+
+  function refreshNavCompletion() {
+    lessons.forEach(l => {
+      const stepBoxes = l.querySelectorAll('input[type="checkbox"][data-step]');
+      const total = stepBoxes.length;
+      const done = Array.from(stepBoxes).filter(c => c.checked).length;
+      const navBtn = document.querySelector(`#lessonNav button[data-lesson="${l.dataset.lesson}"]`);
+      if (navBtn && total > 0) navBtn.classList.toggle('complete', done === total);
+    });
+  }
+  refreshNavCompletion();
+  updateProgress();
+
+  // ============================================================
+  //  TEACHER VIEW
+  // ============================================================
+  if (new URLSearchParams(window.location.search).get('teacher') === '1') {
+    document.getElementById('teacherBox').classList.add('visible');
+  }
+
+  // ============================================================
+  //  EXPORT PROGRESS
+  // ============================================================
+  function exportProgress() {
+    let txt = 'Y7 Tech · Bridge It · Build Tutorial — Progress export\n';
+    txt += 'Date: ' + new Date().toLocaleString('en-AU') + '\n\n';
+    lessons.forEach(l => {
+      const num = l.dataset.lesson;
+      const title = l.querySelector('h2').textContent.trim();
+      const stepBoxes = l.querySelectorAll('input[type="checkbox"][data-step]');
+      const total = stepBoxes.length;
+      const done = Array.from(stepBoxes).filter(c => c.checked).length;
+      txt += `Lesson ${num} — ${title}\n  ${done} / ${total} steps complete\n`;
+      const reflect = l.querySelector('textarea[data-reflect]');
+      if (reflect && reflect.value) txt += `  Reflection: ${reflect.value}\n`;
+      txt += '\n';
+    });
+    navigator.clipboard.writeText(txt).then(() => {
+      alert('✓ Progress copied to clipboard. Paste it into Google Classroom or your journal.');
+    }).catch(() => {
+      const w = window.open('', '_blank', 'width=600,height=600');
+      w.document.write('<pre style="font-family:monospace;padding:20px;">' + txt + '</pre>');
+    });
+  }
+
+  // ============================================================
+  //  RESET
+  // ============================================================
+  function resetAll() {
+    if (!confirm('Reset all your progress? This cannot be undone.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    location.reload();
+  }
+</script>
+</body>
+</html>
