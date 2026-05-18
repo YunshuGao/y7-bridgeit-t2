@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌉 Bridge Planning Task · 7TECJ · Y7 Tech · Bridge It</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  body { font-size: 16.5px; line-height: 1.65; }
+
+  /* Hero — orange = Phase 3 Build It */
+  .bp-hero {
+    background: linear-gradient(135deg, #ea8b00 0%, #f59e0b 50%, #b45309 100%);
+    color:#fff; border-radius:16px; padding:1.8rem 2rem; margin:1.5rem 0;
+    box-shadow: 0 6px 22px rgba(234,139,0,.28);
+  }
+  .bp-hero h1 { color:#fff; margin:.2rem 0 .4rem; font-size:1.95rem; }
+  .bp-hero p  { margin:.35rem 0; opacity:.97; font-size:1.05rem; line-height:1.55; }
+  .bp-hero .bp-stats { display:flex; gap:1rem; margin-top:.9rem; flex-wrap:wrap; font-size:.9rem; }
+  .bp-hero .bp-stat { background:rgba(255,255,255,.18); padding:.4rem .85rem; border-radius:999px; font-weight:600; }
+
+  /* How-it-works strip */
+  .how-strip {
+    background:#fff7ed; border:1.5px solid #fdba74; border-radius:12px;
+    padding:1rem 1.3rem; margin:1.2rem 0; color:#7c2d12; font-size:.97rem; line-height:1.6;
+  }
+  .how-strip strong { color:#9a3412; }
+
+  /* Brief card */
+  .brief {
+    background:#fff; border:1.5px solid #e4e7ec; border-radius:14px;
+    padding:1.5rem 1.7rem; margin:1.3rem 0; box-shadow:0 2px 10px rgba(0,0,0,.04);
+  }
+  .brief h2 { color:#1f3a68; margin:0 0 .7rem; font-size:1.35rem; }
+  .brief h2:not(:first-child) { margin-top:1.4rem; }
+  .brief h2 .ico { margin-right:.4rem; }
+  .brief ol, .brief ul { margin:.5rem 0; padding-left:1.5rem; }
+  .brief li { margin:.45rem 0; line-height:1.6; }
+  .brief .sub-bullets { margin:.3rem 0 .3rem 0; padding-left:1.3rem; }
+  .brief .sub-bullets li { color:#475569; }
+  .brief .note {
+    background:#ecfdf5; border-left:4px solid #10b981; border-radius:8px;
+    padding:.7rem 1rem; margin:.9rem 0; color:#065f46; font-weight:600;
+  }
+  .brief .note::before { content:"✅ "; }
+
+  /* Worksheet */
+  .worksheet {
+    background:#fff; border:2px solid #ea8b00; border-radius:14px;
+    padding:1.6rem 1.8rem; margin:1.5rem 0; box-shadow:0 2px 12px rgba(234,139,0,.1);
+  }
+  .worksheet > h2 {
+    color:#9a3412; margin:0 0 .3rem; font-size:1.5rem;
+    display:flex; align-items:center; gap:.5rem;
+  }
+  .worksheet > .ws-sub { color:#7c2d12; margin:0 0 1.2rem; font-size:.97rem; }
+
+  .q-block {
+    border:1px solid #e4e7ec; border-left:4px solid #14b8a6;
+    border-radius:10px; padding:1.1rem 1.3rem; margin:1rem 0; background:#fafbfc;
+  }
+  .q-block.answered { border-left-color:#10b981; background:#f0fdf4; }
+  .q-block .q-title {
+    font-weight:700; color:#1f3a68; font-size:1.08rem; margin:0 0 .6rem;
+    display:flex; align-items:flex-start; gap:.55rem;
+  }
+  .q-block .q-num {
+    background:#1f3a68; color:#fff; min-width:30px; height:30px; border-radius:7px;
+    display:flex; align-items:center; justify-content:center; font-weight:800;
+    font-size:.95rem; flex-shrink:0;
+  }
+  .q-block.answered .q-num { background:#10b981; }
+  .q-hint { font-size:.88rem; color:#64748b; margin:.1rem 0 .7rem 2.1rem; font-style:italic; }
+
+  input[type="text"], textarea {
+    width:100%; padding:.65rem .8rem; border:1.5px solid #cbd5e1;
+    border-radius:8px; font-family:inherit; font-size:1rem; box-sizing:border-box;
+    background:#fff; color:#1a202c;
+  }
+  input[type="text"]:focus, textarea:focus {
+    outline:none; border-color:#ea8b00; box-shadow:0 0 0 3px rgba(234,139,0,.18);
+  }
+  textarea { resize:vertical; min-height:80px; line-height:1.55; }
+
+  .field-row { display:flex; gap:.8rem; flex-wrap:wrap; }
+  .field-row > div { flex:1; min-width:200px; }
+  .field-label { font-size:.9rem; font-weight:600; color:#475569; margin:0 0 .3rem; display:block; }
+
+  /* Materials table */
+  table.materials {
+    width:100%; border-collapse:collapse; margin:.5rem 0;
+  }
+  table.materials th {
+    background:#1f3a68; color:#fff; text-align:left; padding:.6rem .8rem;
+    font-size:.95rem;
+  }
+  table.materials th:first-child { border-radius:8px 0 0 0; }
+  table.materials th:last-child  { border-radius:0 8px 0 0; }
+  table.materials td {
+    border:1px solid #e4e7ec; padding:.5rem .7rem; font-size:.97rem;
+  }
+  table.materials td:first-child { font-weight:600; color:#1f3a68; width:40%; background:#f8fafc; }
+  table.materials input[type="text"] { border:1.5px solid #e4e7ec; }
+
+  /* Picture URL preview */
+  .pic-preview {
+    margin-top:.7rem; border:1.5px dashed #cbd5e1; border-radius:8px;
+    padding:.7rem; text-align:center; background:#fff; display:none;
+  }
+  .pic-preview.show { display:block; }
+  .pic-preview img { max-width:100%; max-height:240px; border-radius:6px; }
+  .pic-preview .pic-err { color:#b91c1c; font-size:.88rem; }
+
+  /* Sketch pad */
+  .sketch-tools {
+    display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin:.5rem 0 .6rem;
+  }
+  .sketch-tools button {
+    border:1.5px solid #cbd5e1; background:#fff; border-radius:8px;
+    padding:.4rem .7rem; cursor:pointer; font-family:inherit; font-size:.88rem;
+    font-weight:600; color:#475569;
+  }
+  .sketch-tools button:hover { background:#f1f5f9; }
+  .sketch-tools .pen {
+    width:30px; height:30px; border-radius:50%; padding:0; border:3px solid #fff;
+    box-shadow:0 0 0 1.5px #cbd5e1;
+  }
+  .sketch-tools .pen.active { box-shadow:0 0 0 3px #ea8b00; }
+  .sketch-tools .pen.black { background:#1a202c; }
+  .sketch-tools .pen.blue  { background:#2563eb; }
+  .sketch-tools .pen.red   { background:#dc2626; }
+  .sketch-tools .pen.eraser{ background:#fff; }
+  .sketch-tools .pen.eraser::after { content:"⌫"; font-size:.8rem; color:#64748b; }
+  #sketchCanvas {
+    width:100%; max-width:640px; height:300px; border:2px solid #cbd5e1;
+    border-radius:10px; background:#fff; touch-action:none; cursor:crosshair;
+    display:block;
+  }
+  .sketch-hint { font-size:.85rem; color:#64748b; margin:.4rem 0; }
+
+  /* Teacher check */
+  .teacher-check {
+    background:#fef3c7; border:2px solid #d97706; border-radius:12px;
+    padding:1.2rem 1.4rem; margin:1.4rem 0;
+  }
+  .teacher-check h3 { margin:0 0 .3rem; color:#9a3412; font-size:1.15rem; }
+  .teacher-check h3::before { content:"👩‍🏫 "; }
+  .teacher-check p.tc-sub { margin:0 0 .8rem; color:#7c2d12; font-size:.92rem; }
+  .teacher-check label {
+    display:flex; align-items:center; gap:.7rem; padding:.55rem 0;
+    font-size:1rem; color:#7c2d12; font-weight:600; cursor:pointer;
+    border-bottom:1px dashed #fcd34d;
+  }
+  .teacher-check label:last-child { border-bottom:none; }
+  .teacher-check input[type="checkbox"] { width:24px; height:24px; accent-color:#d97706; }
+
+  /* Sticky progress */
+  .progress-wrap {
+    position:sticky; top:66px; z-index:20; background:#fff;
+    border:1.5px solid #e4e7ec; border-radius:12px; padding:.8rem 1.1rem;
+    margin:1rem 0; display:flex; align-items:center; gap:.8rem;
+    flex-wrap:wrap; box-shadow:0 2px 10px rgba(0,0,0,.05);
+  }
+  .progress-wrap .bar { flex:1; min-width:170px; height:14px;
+    background:#f1f5f9; border-radius:8px; overflow:hidden; }
+  .progress-wrap .bar .fill {
+    height:100%; width:0%; background:linear-gradient(90deg,#ea8b00,#f59e0b);
+    border-radius:8px; transition:width .3s;
+  }
+  .progress-wrap.complete .bar .fill { background:linear-gradient(90deg,#10b981,#059669); }
+  .progress-wrap .count { font-weight:700; color:#1f3a68; min-width:150px; font-size:.95rem; }
+  .progress-wrap.complete .count { color:#059669; }
+
+  /* Submission steps */
+  .submit-box {
+    background:#eff6ff; border:1.5px solid #93c5fd; border-radius:12px;
+    padding:1.2rem 1.4rem; margin:1.4rem 0;
+  }
+  .submit-box h3 { margin:0 0 .6rem; color:#1e3a8a; font-size:1.15rem; }
+  .submit-box h3::before { content:"📤 "; }
+  .submit-box ol { margin:.4rem 0; padding-left:1.4rem; line-height:1.7; }
+  .submit-box li { margin:.4rem 0; }
+
+  /* Buttons */
+  .btn-row { display:flex; gap:.6rem; flex-wrap:wrap; margin:1.2rem 0 .5rem; }
+  .btn-row button {
+    background:#1f3a68; color:#fff; border:none;
+    padding:.7rem 1.3rem; border-radius:8px; cursor:pointer;
+    font-weight:700; font-size:.95rem; font-family:inherit;
+  }
+  .btn-row button:hover { background:#2e5b9e; }
+  .btn-row button.primary { background:#ea8b00; }
+  .btn-row button.primary:hover { background:#c2410c; }
+  .btn-row button.secondary { background:#fff; color:#1f3a68; border:1.5px solid #1f3a68; }
+  .btn-row button.secondary:hover { background:#eff6ff; }
+  .btn-row button.danger { background:#fff; color:#b91c1c; border:1.5px solid #fca5a5; }
+  .btn-row button.danger:hover { background:#fef2f2; border-color:#ef4444; }
+
+  .save-flag { font-size:.85rem; color:#10b981; font-weight:600; margin-left:.4rem; }
+
+  /* Print */
+  @media print {
+    .site-header, .how-strip, .progress-wrap, .btn-row, .submit-box, .sketch-tools { display:none !important; }
+    body { font-size:11pt; }
+    .bp-hero { background:#f5f5f5 !important; color:#000 !important; box-shadow:none; border:1px solid #999; }
+    .bp-hero h1, .bp-hero p { color:#000 !important; }
+    .worksheet, .brief, .q-block, .teacher-check { page-break-inside:avoid; box-shadow:none; border:1px solid #999; }
+    input[type="text"], textarea { border:1px solid #999 !important; }
+    #sketchCanvas { border:1px solid #999 !important; }
+    @page { margin:1.4cm; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="site-brand">🌉 Y7 Bridge It · Term 2</a>
+    <nav class="site-nav">
+      <a href="diagnostic.html">Diagnostic</a>
+      <a href="vocab-arena.html">Vocab Arena</a>
+      <a href="asce-tutorial.html">ASCE Tutorial</a>
+      <a href="bridge-planning.html" style="text-decoration:underline;">Planning Task</a>
+      <a href="paddlepop-build.html">Build Tutorial</a>
+      <a href="journal.html">Journal</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- HERO -->
+  <div class="bp-hero">
+    <h1>🌉 Bridge Design Planning Task</h1>
+    <p>Excellent work completing your roads! Today, each group will <strong>plan</strong> their bridge before building. Research, decide, and fill in this worksheet — your teacher checks it before you start building.</p>
+    <div class="bp-stats">
+      <span class="bp-stat">👥 Work in your group</span>
+      <span class="bp-stat">⏱️ Plan first, build later</span>
+      <span class="bp-stat">💾 Saves automatically</span>
+      <span class="bp-stat">📐 NESA: TE4-1DP, TE4-6FO</span>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="how-strip">
+    <strong>How this page works:</strong> Type your answers straight into the boxes. Everything <strong>saves automatically on this device</strong> — even if you close the tab. When you finish, click <strong>“Save as PDF”</strong> and upload it to Google Classroom. Both group members should be looking at one screen together.
+  </div>
+
+  <!-- TASK BRIEF -->
+  <div class="brief">
+    <h2><span class="ico">🎯</span>Your Task Today</h2>
+    <ol>
+      <li><strong>Search online</strong> for different bridge designs.</li>
+      <li><strong>Choose ONE</strong> bridge your group wants to build.</li>
+      <li><strong>Complete the worksheet</strong> below with a clear idea of:
+        <ul class="sub-bullets">
+          <li>what your bridge will look like</li>
+          <li>what materials you may need</li>
+          <li>approximately how many pop sticks you may use</li>
+        </ul>
+      </li>
+    </ol>
+    <div class="note">Once your worksheet is completed and checked by the teacher, you may begin building.</div>
+
+    <h2><span class="ico">📋</span>Expectations</h2>
+    <ul>
+      <li>Both group members contribute equally.</li>
+      <li>Stay focused on planning before building.</li>
+      <li>Make realistic decisions about your design and materials.</li>
+    </ul>
+  </div>
+
+  <!-- STICKY PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="count" id="progressCount">0 / 7 done</div>
+    <div class="bar"><div class="fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- WORKSHEET -->
+  <div class="worksheet">
+    <h2>📝 Bridge Planning Worksheet</h2>
+    <p class="ws-sub">Fill in every box. Your answers save as you type.</p>
+
+    <!-- Group members -->
+    <div class="q-block" id="q-group">
+      <div class="q-title"><span class="q-num">👥</span><span>Group Members</span></div>
+      <div class="field-row">
+        <div>
+          <label class="field-label" for="member1">Group member 1</label>
+          <input type="text" id="member1" data-field="member1" placeholder="First name and surname">
+        </div>
+        <div>
+          <label class="field-label" for="member2">Group member 2</label>
+          <input type="text" id="member2" data-field="member2" placeholder="First name and surname">
+        </div>
+      </div>
+      <div class="field-row" style="margin-top:.7rem;">
+        <div style="max-width:220px;">
+          <label class="field-label" for="className">Class</label>
+          <input type="text" id="className" data-field="className" placeholder="e.g. 7TECJ" value="7TECJ">
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-block" id="q1">
+      <div class="q-title"><span class="q-num">1</span><span>What type of bridge would you like to build?</span></div>
+      <div class="q-hint">e.g. beam bridge, arch bridge, truss bridge, suspension bridge, cable-stayed bridge</div>
+      <input type="text" id="a1" data-field="a1" data-required="1" placeholder="Type your bridge type here…">
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-block" id="q2">
+      <div class="q-title"><span class="q-num">2</span><span>Find a picture online or describe your bridge design.</span></div>
+      <div class="q-hint">Paste a link to a bridge picture you found, AND describe what your bridge will look like.</div>
+      <label class="field-label" for="a2url">🔗 Link to a bridge picture (optional)</label>
+      <input type="text" id="a2url" data-field="a2url" placeholder="Paste the web address of a bridge image here…">
+      <button type="button" class="secondary" style="margin-top:.5rem;padding:.45rem .9rem;border-radius:8px;border:1.5px solid #1f3a68;background:#fff;color:#1f3a68;font-weight:700;cursor:pointer;font-family:inherit;" onclick="previewPic()">👁️ Preview picture</button>
+      <div class="pic-preview" id="picPreview"></div>
+      <label class="field-label" for="a2" style="margin-top:.9rem;">✏️ Describe your bridge design</label>
+      <textarea id="a2" data-field="a2" data-required="1" placeholder="What does your bridge look like? How long is it? What shape? What makes it strong?"></textarea>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-block" id="q3">
+      <div class="q-title"><span class="q-num">3</span><span>Why did you choose this design?</span></div>
+      <div class="q-hint">Think about: strength, how easy it is to build, the materials you have, how it looks.</div>
+      <textarea id="a3" data-field="a3" data-required="1" placeholder="We chose this design because…"></textarea>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-block" id="q4">
+      <div class="q-title"><span class="q-num">4</span><span>What materials do you think you will need?</span></div>
+      <div class="q-hint">Give a realistic estimate for each material.</div>
+      <table class="materials">
+        <thead><tr><th>Material</th><th>Estimated Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Pop sticks</td><td><input type="text" id="mat-pop" data-field="mat-pop" placeholder="e.g. about 60"></td></tr>
+          <tr><td>Tape</td><td><input type="text" id="mat-tape" data-field="mat-tape" placeholder="e.g. 1 roll"></td></tr>
+          <tr><td>Glue</td><td><input type="text" id="mat-glue" data-field="mat-glue" placeholder="e.g. 1 bottle PVA"></td></tr>
+          <tr><td>Other</td><td><input type="text" id="mat-other" data-field="mat-other" placeholder="Anything else? (string, card, etc.)"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-block" id="q5">
+      <div class="q-title"><span class="q-num">5</span><span>Draw a quick sketch of your bridge idea.</span></div>
+      <div class="q-hint">Use your finger (on a tablet) or your mouse to draw. It saves automatically. Or describe it in words below.</div>
+      <div class="sketch-tools">
+        <span style="font-size:.88rem;font-weight:600;color:#475569;">Pen:</span>
+        <button type="button" class="pen black active" data-colour="#1a202c" onclick="setPen(this,'#1a202c',3)" title="Black pen"></button>
+        <button type="button" class="pen blue" data-colour="#2563eb" onclick="setPen(this,'#2563eb',3)" title="Blue pen"></button>
+        <button type="button" class="pen red" data-colour="#dc2626" onclick="setPen(this,'#dc2626',3)" title="Red pen"></button>
+        <button type="button" class="pen eraser" onclick="setPen(this,'#ffffff',18)" title="Eraser"></button>
+        <button type="button" onclick="clearSketch()">🗑️ Clear all</button>
+      </div>
+      <canvas id="sketchCanvas" width="640" height="300"></canvas>
+      <p class="sketch-hint">Tip: keep it simple — labelled boxes and lines are enough for a planning sketch.</p>
+      <label class="field-label" for="a5" style="margin-top:.6rem;">Or describe your sketch in words (optional)</label>
+      <textarea id="a5" data-field="a5" placeholder="My bridge has… (e.g. two tall towers, a flat road across the middle, triangle braces underneath)"></textarea>
+    </div>
+
+  </div>
+
+  <!-- TEACHER CHECK -->
+  <div class="teacher-check">
+    <h3>Teacher Check</h3>
+    <p class="tc-sub">Your teacher ticks these once your plan is ready. Do not tick these yourself.</p>
+    <label><input type="checkbox" id="tc1" data-field="tc1"> Clear bridge idea</label>
+    <label><input type="checkbox" id="tc2" data-field="tc2"> Materials planned</label>
+    <label><input type="checkbox" id="tc3" data-field="tc3"> Ready to build</label>
+  </div>
+
+  <!-- SUBMISSION -->
+  <div class="submit-box">
+    <h3>How to hand this in</h3>
+    <ol>
+      <li>Check every box has an answer (the bar at the top should be green).</li>
+      <li>Click <strong>“💾 Save as PDF”</strong> below.</li>
+      <li>In the print window, choose <strong>“Save as PDF”</strong> as the destination, then Save.</li>
+      <li>Go to <strong>Google Classroom → Bridge Planning Task</strong> and upload your PDF.</li>
+      <li>One PDF per group is enough — make sure both names are on it.</li>
+    </ol>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="btn-row">
+    <button class="primary" onclick="window.print()">💾 Save as PDF</button>
+    <button class="secondary" onclick="copyAnswers()">📋 Copy answers as text</button>
+    <button class="danger" onclick="resetAll()">↺ Clear everything</button>
+    <span class="save-flag" id="saveFlag"></span>
+  </div>
+
+  <p style="font-size:.85rem; color:#64748b; text-align:center; margin:2rem 0 1rem;">
+    Y7 Technology · Bridge It · Term 2 2026 · Arthur Phillip High School<br>
+    Built by Ms Y. Gao · Your answers are saved only on this device.
+  </p>
+
+</main>
+
+<script>
+  // ============================================================
+  //  STORAGE
+  // ============================================================
+  const KEY = 'y7-bridge-planning-7tecj-v1';
+  const state = JSON.parse(localStorage.getItem(KEY) || '{}');
+  let saveTimer;
+
+  function flashSaved() {
+    const f = document.getElementById('saveFlag');
+    f.textContent = '✓ Saved';
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => f.textContent = '', 1400);
+  }
+  function save() {
+    localStorage.setItem(KEY, JSON.stringify(state));
+    flashSaved();
+    updateProgress();
+  }
+
+  // ============================================================
+  //  TEXT / TEXTAREA / CHECKBOX FIELDS
+  // ============================================================
+  document.querySelectorAll('[data-field]').forEach(el => {
+    const f = el.dataset.field;
+    if (el.type === 'checkbox') {
+      if (state[f]) el.checked = true;
+      el.addEventListener('change', () => { state[f] = el.checked; save(); });
+    } else {
+      if (state[f] !== undefined) el.value = state[f];
+      el.addEventListener('input', () => { state[f] = el.value; save(); });
+    }
+  });
+
+  // ============================================================
+  //  PROGRESS — counts the 7 required answers
+  //  (Q1, Q2-desc, Q3, group member 1, member 2, + materials pop, + a bridge type)
+  // ============================================================
+  function updateProgress() {
+    const checks = [
+      (state.member1 || '').trim() !== '',
+      (state.member2 || '').trim() !== '',
+      (state.a1 || '').trim() !== '',
+      (state.a2 || '').trim() !== '',
+      (state.a3 || '').trim() !== '',
+      (state['mat-pop'] || '').trim() !== '',
+      hasSketch() || (state.a5 || '').trim() !== ''
+    ];
+    const done = checks.filter(Boolean).length;
+    const total = checks.length;
+    document.getElementById('progressFill').style.width = (done/total*100) + '%';
+    document.getElementById('progressCount').textContent = `${done} / ${total} done`;
+    document.getElementById('progressWrap').classList.toggle('complete', done === total);
+
+    // green tint answered question blocks
+    setAnswered('q-group', (state.member1||'').trim() && (state.member2||'').trim());
+    setAnswered('q1', (state.a1||'').trim());
+    setAnswered('q2', (state.a2||'').trim());
+    setAnswered('q3', (state.a3||'').trim());
+    setAnswered('q4', (state['mat-pop']||'').trim());
+    setAnswered('q5', hasSketch() || (state.a5||'').trim());
+  }
+  function setAnswered(id, cond) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('answered', !!cond);
+  }
+
+  // ============================================================
+  //  PICTURE PREVIEW (loads the pasted URL, fails gracefully)
+  // ============================================================
+  function previewPic() {
+    const url = (document.getElementById('a2url').value || '').trim();
+    const box = document.getElementById('picPreview');
+    if (!url) { box.classList.remove('show'); box.innerHTML=''; return; }
+    box.classList.add('show');
+    box.innerHTML = '<span style="color:#64748b;font-size:.9rem;">Loading…</span>';
+    const img = new Image();
+    img.onload = () => { box.innerHTML=''; box.appendChild(img); };
+    img.onerror = () => {
+      box.innerHTML = '<span class="pic-err">Could not load that picture. Check the link, or just describe your bridge in the box below — that’s fine too.</span>';
+    };
+    img.alt = 'Bridge design reference';
+    img.src = url;
+  }
+
+  // ============================================================
+  //  SKETCH PAD — canvas drawing, touch + mouse, autosave
+  // ============================================================
+  const canvas = document.getElementById('sketchCanvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false, penColour = '#1a202c', penSize = 3, dirty = false;
+
+  // Crisp lines on high-DPI screens
+  function fitCanvas() {
+    const ratio = window.devicePixelRatio || 1;
+    const cssW = canvas.clientWidth, cssH = canvas.clientHeight;
+    const data = canvas.toDataURL();
+    canvas.width = cssW * ratio;
+    canvas.height = cssH * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    // restore prior drawing
+    if (state.sketch) { const im=new Image(); im.onload=()=>ctx.drawImage(im,0,0,cssW,cssH); im.src=state.sketch; }
+  }
+
+  function pos(e) {
+    const r = canvas.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    return { x: p.clientX - r.left, y: p.clientY - r.top };
+  }
+  function start(e){ drawing=true; const{ x,y }=pos(e); ctx.beginPath(); ctx.moveTo(x,y); e.preventDefault(); }
+  function move(e){
+    if(!drawing) return;
+    const{ x,y }=pos(e);
+    ctx.strokeStyle=penColour; ctx.lineWidth=penSize;
+    ctx.lineTo(x,y); ctx.stroke();
+    dirty=true; e.preventDefault();
+  }
+  function end(){ if(!drawing) return; drawing=false; if(dirty){ state.sketch=canvas.toDataURL(); save(); dirty=false; } }
+
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false});
+  canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+
+  function setPen(btn, colour, size) {
+    penColour = colour; penSize = size;
+    document.querySelectorAll('.sketch-tools .pen').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function clearSketch() {
+    if (!confirm('Clear the whole sketch? This cannot be undone.')) return;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    delete state.sketch; save();
+  }
+  function hasSketch(){ return !!state.sketch; }
+
+  // ============================================================
+  //  COPY ANSWERS AS TEXT
+  // ============================================================
+  function copyAnswers() {
+    const g = id => (state[id] || '').trim() || '—';
+    let t = `BRIDGE PLANNING TASK — ${g('className')}\n`;
+    t += `Group: ${g('member1')} & ${g('member2')}\n`;
+    t += `Date: ${new Date().toLocaleDateString('en-AU')}\n\n`;
+    t += `1. Bridge type: ${g('a1')}\n\n`;
+    t += `2. Design link: ${g('a2url')}\n   Description: ${g('a2')}\n\n`;
+    t += `3. Why this design: ${g('a3')}\n\n`;
+    t += `4. Materials:\n   - Pop sticks: ${g('mat-pop')}\n   - Tape: ${g('mat-tape')}\n   - Glue: ${g('mat-glue')}\n   - Other: ${g('mat-other')}\n\n`;
+    t += `5. Sketch: ${hasSketch() ? '[drawn on canvas]' : '—'}\n   Description: ${g('a5')}\n`;
+    navigator.clipboard.writeText(t).then(
+      () => alert('✓ Answers copied. You can paste them into Google Classroom as a comment if asked.'),
+      () => { const w=window.open('','_blank','width=560,height=620'); w.document.write('<pre style="font-family:monospace;padding:18px;white-space:pre-wrap;">'+t.replace(/</g,'&lt;')+'</pre>'); }
+    );
+  }
+
+  // ============================================================
+  //  RESET
+  // ============================================================
+  function resetAll() {
+    if (!confirm('Clear ALL answers and the sketch? This cannot be undone.')) return;
+    localStorage.removeItem(KEY);
+    location.reload();
+  }
+
+  // ============================================================
+  //  INIT
+  // ============================================================
+  window.addEventListener('load', () => { fitCanvas(); updateProgress(); });
+  window.addEventListener('resize', () => { /* keep drawing; no refit to avoid clearing */ });
+  updateProgress();
+</script>
+</body>
+</html>
